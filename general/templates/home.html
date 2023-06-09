@@ -1,0 +1,83 @@
+{% extends 'plantilla1.html' %}
+
+{% block content%}
+
+<h2>
+    AFNET CONTABILIDAD
+</h2>
+
+<h3>Pagina de inicio</h3>
+
+
+
+<div class="container text-center">
+    <div class="row">
+      <div class="col">
+   
+              <div class="card">
+                  <img src="..." class="card-img-top" alt="...">
+                
+                  <div class="card-body">
+                    <h5 class="card-title">Ingresos</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <a href="{% url 'registroIngresos'%}" class="btn btn-primary">Registrar</a>
+                  </div>
+               </div>
+        
+      </div>
+      <div class="col">
+      
+        <div class="card">
+          <img src="..." class="card-img-top" alt="...">
+        
+          <div class="card-body">
+            <h5 class="card-title">Egresos</h5>
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <a href="{% url 'CatalogoRegistroEgresos'%}" class="btn btn-primary">Registrar</a>
+          </div>
+       </div>
+      </div>
+      <div class="col">
+        <div class="card">
+          <img src="..." class="card-img-top" alt="...">
+        
+          <div class="card-body">
+            <h5 class="card-title">Historicos</h5>
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <a href="{% url 'registroIngresos'%}" class="btn btn-primary">Ver</a>
+          </div>
+       </div>
+      </div>
+    </div>
+
+
+
+
+
+    <div class="container text-center">
+      <div class="row">
+        <div class="col">
+          Column
+          <div class="card">
+            <img src="..." class="card-img-top" alt="...">
+          
+            <div class="card-body">
+              <h5 class="card-title">Movimientos</h5>
+              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+              <a href="{% url 'registroMovimientos'%}" class="btn btn-primary">Registrar</a>
+            </div>
+         </div>
+        </div>
+        <div class="col">
+          Column
+        </div>
+        <div class="col">
+          Column
+        </div>
+      </div>
+    </div>
+  
+
+
+  
+{%endblock%}

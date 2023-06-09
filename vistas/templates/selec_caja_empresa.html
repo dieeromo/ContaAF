@@ -1,0 +1,66 @@
+{% extends 'plantilla1.html' %}
+
+{% block content%}
+
+<h2>
+    AFNET CONTABILIDAD
+</h2>
+
+<h3>Seleccion caja empresa</h3>
+
+<form method="POST">
+    {% csrf_token %}
+    {{form}}
+    <button>Seleccionar</button>
+</form>
+<h3>Ingresos</h3>
+
+
+
+{%for ing in ingresos %}
+<p>{{ing.empresaIngreso}} {{ing.nombreCaja}}  {{ing.valorIngreso}} {{ing.fecha}}</p>
+{% endfor %}
+
+
+<h3>Egresos</h3>
+<h5>Facturas</h5>
+ {%for egrefac in egrefac %}
+ <p>{{egrefac.id_empresa}} {{egrefac.id_caja}}  {{egrefac.valor}} {{egrefac.fechafactura}}</p>
+ {% endfor%}
+
+ <h5>Colaboradores</h5>
+
+ {%for egrecol in egrecolaboradores %}
+ <p>{{egrecol.id_caja}}  {{egrecol.valor}} {{egrecol.fecha_pago}}</p>
+ {% endfor%}
+
+<h5>IESS</h5>
+
+ {%for egreiess in egre_iess %}
+ <p>{{egrecol.caja}}  {{egreiess.valor}} {{egreiess.fecha}}  {{egreiess.colaborador}} {{egreiess.mesPago}}  {{egreiess.anio_pago}}</p>
+ {% endfor%}
+
+<h5>Decimos</h5>
+
+ {%for egrede in egre_decimos %}
+ <p>{{egrede.caja}}  {{egrede.valor}} {{egrede.fecha}}  {{egrede.colaborador}}  </p>
+ {% endfor%}
+
+ <h5>Servicios</h5>
+
+ {%for egreser in egre_servicios %}
+ <p>{{egreser.empresa_nuestra}} {{egreser.caja}} {{egreser.servicio}}  {{egreser.empresa_servicio}}  {{egreser.valor}} {{egreser.fecha}}  </p>
+ {% endfor%}
+
+ <h5>Creditos</h5>
+
+ {%for egrecre in egre_creditos %}
+ <p>{{egrecre.caja}} {{egrecre.nombre_coop}} {{egrecre.valor}}  {{egrecre.fecha}}  {{egrecre.mes_de_Pago}} {{egrecre.anio_de_pago}}  </p>
+ {% endfor%}
+
+
+ <h5>Movimientos</h5>
+ {%for mov in mov_movimientos%}
+ <p>{{mov.empresaCaja}} {{mov.caja_origen}} {{mov.caja_destino}}  {{mov.valor}}  {{mov.fecha}}  </p>
+ {% endfor%}
+{%endblock%}

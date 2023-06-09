@@ -1,0 +1,13 @@
+{% extends 'plantilla1.html' %}
+
+{% block content%}
+
+Registro pago servicios
+<form method="POST">
+    {% csrf_token %}
+    {{form.as_p}}
+    <label for="fecha">Fecha Pago:</label>
+    <input type="date" id="fecha" name="fecha">
+    <button> Guardar</button>
+</form>
+{%endblock%}

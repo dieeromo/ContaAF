@@ -1,0 +1,14 @@
+{% extends 'plantilla1.html' %}
+
+{% block content%}
+
+<form method="POST">
+    {% csrf_token %}
+    {{form.as_p}}
+    <label for="fecha">Fecha:</label>
+    <input type="date" id="fecha" name="fecha">
+
+    <button> Guardar</button>
+</form>
+
+{%endblock%}

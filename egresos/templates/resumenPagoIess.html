@@ -1,0 +1,49 @@
+{% extends 'plantilla1.html' %}
+{%load static%}
+{% block content%}
+Resumen pago Iess
+<link rel="stylesheet" href="  https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css">
+<!-- bOTSTRAP-->
+<!--
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+-->
+<!---->
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<!-- -->
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+<!--Custom JS-->
+<script src="{% static 'js/iess.js' %}"></script>
+<!-- custom css-->
+<link rel="stylesheet" href="{% static 'css/iess.css' %}">
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-12">
+            <div class="table-responsive">
+                <table id="datatable-pago_iess" class="table">
+                    <caption>Pago creditos</caption>
+                    <thead>
+                        <tr>
+                            <th class="centeresDiego">#</th>
+                            <th class="centeresDiego">Empresa</th>
+                            <th class="centeresDiego">Caja</th>
+                            <th class="centeresDiego">Colaborador</th>
+                            <th class="centeresDiego">Valor</th>
+                            <th class="centeresDiego">Mes</th>
+                            <th class="centeresDiego">Año</th> 
+                            <th class="centeresDiego">Fecha</th>
+                            <th class="centeresDiego">Descripcion</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody_pagoIess"></tbody>
+
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{%endblock%}

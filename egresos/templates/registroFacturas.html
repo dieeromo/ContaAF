@@ -1,0 +1,20 @@
+{% extends 'plantilla1.html' %}
+
+{% block content%}
+
+Registro facturas
+
+<form method="POST">
+    {% csrf_token %}
+    {{form.as_p}}
+
+    <label for="fecha_factura">Fecha factura:</label>
+    <input type="date" id="fecha_factura" name="fecha_factura">
+
+    <label for="fechapago">Fecha Pago:</label>
+    <input type="date" id="fechapago" name="fechapago">
+    <button> Guardar</button>
+</form>
+{% endblock %}
+
+

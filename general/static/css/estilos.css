@@ -1,0 +1,11 @@
+.small-text {
+    font-size: 11px; /* Ajusta el tamaño de la letra según tus necesidades */
+    background-color: rgb(238, 242, 237);
+    border-collapse: collapse;
+  }
+
+
+.ali-totales{
+    text-align: left;
+    
+}
