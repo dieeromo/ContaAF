@@ -1,4 +1,5 @@
 from datetime import datetime, timedelta
+from django.utils.dateparse import parse_date
 #import json
 #from django.core import serializers
 from django.http.response import JsonResponse
@@ -10,6 +11,14 @@ from . models import facturasProveedores, pagoColaboradores, pagoServicios, pago
 from .models import decimos, planillasIESS
 
 # Create your views here.
+def is_valid_date(date_string):
+    try:
+        parse_date(date_string)
+        return True
+    except ValueError:
+        print("fecha invalida")
+        return False
+
 
 def catalogoRegistroEgresos(request):
     return render(request, 'catalogoRegistroEgresos.html')
@@ -27,9 +36,14 @@ def registroFacturas(request):
         caja_regfactura = cajasReg.objects.get(usuario=request.user)
         nuevo_regfactura.estadoEntrega = False
         nuevo_regfactura.fechafactura = request.POST['fecha_factura']
-        nuevo_regfactura.fechapago = request.POST['fechapago']
+        
         nuevo_regfactura.id_caja = caja_regfactura
         nuevo_regfactura.id_usuario = request.user
+
+        print(request.POST['fechapago'])
+        if is_valid_date(request.POST['fechapago']):
+            nuevo_regfactura.fechapago = request.POST['fechapago']
+            print("guardo fecha")
         nuevo_regfactura.save()
         return redirect('ResumenRegistroFacturas')
 

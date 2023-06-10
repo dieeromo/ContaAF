@@ -23,7 +23,7 @@
     <header>
         <nav class="navbar navbar-expand-lg bg-light">
             <div class="container-fluid">
-              <a class="navbar-brand" href="/">AFnet 232426</a>
+              <a class="navbar-brand" href="/">AFnet</a>
               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
               </button>
@@ -39,17 +39,10 @@
                     <a class="nav-link active" aria-current="page" href="{%url 'registroIngresos'%}">Ingresos</a>
                   </li>
 
-                  <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                      Movimientos
-                    </a>
-                    <ul class="dropdown-menu">
-                      <li><a class="dropdown-item" href="/movimientos/movimientos">Movimientos cajas</a></li>
-                      <li><a class="dropdown-item" href="/col/semanacolaboradores">Semana colaboradores</a></li>
-                      <li><a class="dropdown-item" href="#">ibiub</a></li>
-                      <li><a class="dropdown-item" href="#">Something else here</a></li>
-                    </ul>
+                  <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="{%url 'CatalogoRegistroEgresos'%}">Registro Egresos</a>
                   </li>
+
 
 
 
@@ -80,9 +73,13 @@
                   </li>
                   {% endif %}
 
+                  {% if user.is_authenticated %}
+                  <li class="nav-link">{{user}}</li>
+                  {% endif %}
 
 
                 </ul>
+
               </div>
             </div>
           </nav>

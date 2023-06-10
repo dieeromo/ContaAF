@@ -2,19 +2,43 @@
 
 {% block content%}
 
-Registro facturas
+  
 
-<form method="POST">
-    {% csrf_token %}
-    {{form.as_p}}
 
-    <label for="fecha_factura">Fecha factura:</label>
-    <input type="date" id="fecha_factura" name="fecha_factura">
+<div class="container text-start">
+    <div class="row">
+      <div class="col">
+        <!-- aqui va codigo de la colomna-->
+      </div>
+      <div class="col">
+        <div class="container text-centered">
+            <h4>Registro facturas</h4>
+        </div>
+        
 
-    <label for="fechapago">Fecha Pago:</label>
-    <input type="date" id="fechapago" name="fechapago">
-    <button> Guardar</button>
-</form>
+        <form method="POST" >
+            {% csrf_token %}
+            {{form.as_p}}
+            <div>
+                <label for="fecha_factura">Fecha factura:</label>
+                <input type="date" id="fecha_factura" name="fecha_factura">
+            </div>
+
+            <div>
+                <label for="fechapago">Fecha Pago:</label>
+                <input type="date" id="fechapago" name="fechapago">
+            </div>
+
+            <button> Guardar</button>
+    
+         </form>
+      </div>
+      <div class="col">
+         <!-- aqui va codigo de la colomna-->
+      </div>
+    </div>
+  </div>
+
 {% endblock %}
 
 
