@@ -2,12 +2,28 @@
 
 {% block content%}
 
-registro pago colaboradores
-    <form method="POST">
-        {% csrf_token %}
-        {{form.as_p}}
-        <label for="fecha_pago">Fecha Pago:</label>
-        <input type="date" id="fecha_pago" name="fecha_pago">
-        <button> Guardar</button>
-    </form>
+
+    <div class="container text-start">
+        <div class="row">
+          <div class="col">
+            <!-- aqui va codigo de la colomna-->
+          </div>
+          <div class="col">
+            <div class="container text-centered">
+                <h4>Registro pago colaboradores</h4>
+            </div>
+            
+            <form method="POST">
+                {% csrf_token %}
+                {{form.as_p}}
+                <label for="fecha_pago">Fecha Pago:</label>
+                <input type="date" id="fecha_pago" name="fecha_pago">
+                <button> Guardar</button>
+            </form>
+          </div>
+          <div class="col">
+             <!-- aqui va codigo de la colomna-->
+          </div>
+        </div>
+      </div>
 {%endblock%}

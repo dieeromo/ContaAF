@@ -2,12 +2,29 @@
 
 {% block content%}
 
-Registro pago servicios
-<form method="POST">
-    {% csrf_token %}
-    {{form.as_p}}
-    <label for="fecha">Fecha Pago:</label>
-    <input type="date" id="fecha" name="fecha">
-    <button> Guardar</button>
-</form>
+
+
+<div class="container text-start">
+    <div class="row">
+      <div class="col">
+        <!-- aqui va codigo de la colomna-->
+      </div>
+      <div class="col">
+        <div class="container text-centered">
+            <h4>Registro pago servicios</h4>
+        </div>
+        
+            <form method="POST">
+                {% csrf_token %}
+                {{form.as_p}}
+                <label for="fecha">Fecha Pago:</label>
+                <input type="date" id="fecha" name="fecha">
+                <button> Guardar</button>
+            </form>
+      </div>
+      <div class="col">
+         <!-- aqui va codigo de la colomna-->
+      </div>
+    </div>
+  </div>
 {%endblock%}
