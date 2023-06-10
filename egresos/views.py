@@ -14,6 +14,7 @@ from .models import decimos, planillasIESS
 def is_valid_date(date_string):
     try:
         parse_date(date_string)
+        print(parse_date(date_string))
         return True
     except ValueError:
         print("fecha invalida")
@@ -41,9 +42,12 @@ def registroFacturas(request):
         nuevo_regfactura.id_usuario = request.user
 
         print(request.POST['fechapago'])
-        if is_valid_date(request.POST['fechapago']):
+        #if is_valid_date(request.POST['fechapago']):
+        #    nuevo_regfactura.fechapago = request.POST['fechapago']
+        #    print("guardo fecha")
+
+        if parse_date(request.POST['fechapago']) is not None:
             nuevo_regfactura.fechapago = request.POST['fechapago']
-            print("guardo fecha")
         nuevo_regfactura.save()
         return redirect('ResumenRegistroFacturas')
 
