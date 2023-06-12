@@ -53,7 +53,13 @@ def registroFacturas(request):
 
 def resumenRegistroFacturas(request):
     #return render(request, 'resumenRegistroFacturas.html')
-    return render(request, 'resumenFacturas.html')
+    fecha_actual = datetime.now().date()
+    fecha_inicial = fecha_actual - timedelta(days=0)
+    caja_fac = cajasReg.objects.get(usuario=request.user)
+    facturasConsulta = facturasProveedores.objects.filter(fechapago__range=[fecha_inicial,fecha_actual],id_caja=caja_fac)
+    return render(request, 'resumenFacturas.html',{
+        'facturasConsulta':facturasConsulta,
+    })
 
 def json_facturas(request):
     #facturasConsulta = facturasProveedores.objects.all()
@@ -116,7 +122,14 @@ def jsonColaboradores(request):
     return JsonResponse({'listaPagoColaboradores':listaPagoColaboradores}, safe=False)
 
 def resumenPagoColaboradores(request):
-    return render(request,'resumenPagoColaboradores.html')
+    fecha_actual = datetime.now().date()
+    caja_col = cajasReg.objects.get(usuario=request.user)
+    
+    colaboradoresConsulta = pagoColaboradores.objects.filter(fecha_pago=fecha_actual,id_caja=caja_col)
+    
+    return render(request,'resumenPagoColaboradores.html',{
+        'colaboradoresConsulta':colaboradoresConsulta,
+    })
 
 def registroPagoServicios(request):
     if request.method == 'GET':
@@ -157,7 +170,14 @@ def JsonPagoServicios(request):
     return JsonResponse({'ListaPagoServicios':ListaPagoServicios}, safe=False)
 
 def resumenPagoServicios(request):
-    return render(request, 'resumenPagoServicios.html')
+    caja_ser = cajasReg.objects.get(usuario=request.user)
+    fecha_actual = datetime.now().date()
+    fecha_inicial = fecha_actual - timedelta(days=0)
+    PagoServiciosConsulta = pagoServicios.objects.filter(fecha__range=[fecha_inicial,fecha_actual], caja=caja_ser).order_by('-caja')
+
+    return render(request, 'resumenPagoServicios.html',{
+        'PagoServiciosConsulta':PagoServiciosConsulta,
+    })
 
 def registroPagoCreditos(request):
     if request.method == 'GET':
@@ -198,8 +218,13 @@ def JsonPagoCreditos(request):
     return JsonResponse({'ListaPagoCreditos':ListaPagoCreditos}, safe=False)
 
 def resumenPagoCredito(request):
+    fecha_actual = datetime.now().date()
+    fecha_inicial = fecha_actual - timedelta(days=0)
+    pagoCreditosConsulta = pagoCreditos.objects.filter(fecha__range=[fecha_inicial,fecha_actual]).order_by('-fecha')
 
-    return render(request, 'resumenPagoCredito.html')
+    return render(request, 'resumenPagoCredito.html',{
+        'pagoCreditosConsulta':pagoCreditosConsulta, 
+    })
 
 def registroPagoDecimos(request):
     if request.method == 'GET':
@@ -240,7 +265,13 @@ def jsonPagoDecimos(request):
     return JsonResponse({'ListaPagoDecimos':ListaPagoDecimos},safe=False)
 
 def resumenPagoDecimos(request):
-    return render(request, 'resumenPagodecimos.html')
+    fecha_actual = datetime.now().date()
+    fecha_inicial = fecha_actual - timedelta(days=0)
+    caja_decimos = cajasReg.objects.get(usuario=request.user)
+    decimosConsulta = decimos.objects.filter(fecha__range=[fecha_inicial,fecha_actual],caja=caja_decimos)
+    return render(request, 'resumenPagodecimos.html',{
+        'decimosConsulta':decimosConsulta,
+    })
 
 def registroPagoIess(request):
     if request.method == 'GET':
@@ -259,7 +290,13 @@ def registroPagoIess(request):
         return redirect('ResumenPagoIess')
 
 def resumenPagoIess(request):
-    return render(request, 'resumenPagoIess.html')
+    fecha_actual = datetime.now().date()
+    fecha_inicial = fecha_actual - timedelta(days=0)
+    caja_Iess = cajasReg.objects.get(usuario=request.user)
+    IessConsulta = planillasIESS.objects.filter(fecha__range=[fecha_inicial,fecha_actual],caja=caja_Iess)
+    return render(request, 'resumenPagoIess.html',{
+        'IessConsulta':IessConsulta,
+    })
 
 def jsonPagoIess(request):
     fecha_actual = datetime.now().date()

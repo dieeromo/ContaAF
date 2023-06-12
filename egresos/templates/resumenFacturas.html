@@ -3,52 +3,46 @@
 {% extends 'plantilla1.html' %}
 {%load static%}
 {% block content%}
-<link rel="stylesheet" href="  https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css">
-<!-- bOTSTRAP-->
-<!--
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
--->
-<!---->
-<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-<!-- -->
-<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
-<!--Custom JS-->
-<script src="{% static 'js/resfacturas.js' %}"></script>
-<!-- custom css-->
-<link rel="stylesheet" href="{% static 'css/resfacturas.css' %}">
-
-<div class="container">
-    <div class="row">
-        <div class="col-sm-12 col-md-12 col-lg-12">
-            <div class="table-responsive">
-                <table id="datatable-facturas" class="table">
-                    <caption>Tabla de ingresos</caption>
-                    <thead>
-                        <tr>
-                            <th class="centeresDiego">#</th>
-                            <th class="centeresDiego">Proveedor</th>
-                            <th class="centeresDiego">N factura</th>
-                            <th class="centeresDiego">Valor</th>
-                            <th class="centeresDiego">Modo Compra</th>
-                            <th class="centeresDiego">Fecha factura</th>
-                            <th class="centeresDiego">Fecha pago</th>
-                            <th class="centeresDiego">Caja</th>
 
 
-                        </tr>
-                    </thead>
-                    <tbody id="tableBody_facturas"></tbody>
+<table class="table small-text">
+       
+    <thead>
+        <tr>
+          <th scope="col" >#</th>
+          <th scope="col" >Proveedor</th>
+          <th scope="col" >N Factura</th>
+          <th scope="col" >Fecha factura</th>
+          <th scope="col" >Valor</th>
+          <th scope="col" >Modo Compra</th>
+          <th scope="col" >Estado pago</th>
+          <th scope="col" >Fecha pago</th>
+          <th scope="col" >Empresa</th>
+          <th scope="col" >Caja</th>
+          <th scope="col" >Observacion</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for f in facturasConsulta%}
+        <tr>
+          <th scope="row">{{forloop.counter}}</th>
+          <td>{{f.idproveedor}}</td>
+          <td>{{f.numeroFactura}}</td>
+          <td>{{f.fechafactura}}</td>
+          <td>{{f.valor}}</td>
+          <td>{{f.id_modoCompra}}</td>
+          <td>{{f.id_estadoPago}}</td>
+          <td>{{f.fechapago}}</td>
+          <td>{{f.id_empresa}}</td>
+          <td>{{f.id_caja}}</td>
+          <td>{{f.observacion}}</td>
 
-                </table>
+          
+        </tr>
+        {% endfor%}
 
-            </div>
-        </div>
-
-    </div>
-
-</div>
-
+      </tbody>
+</table>
 
 
 

@@ -65,7 +65,7 @@ def cierresDiarios(request):
         mov_movimientos_salida = movimientos.objects.filter(caja_origen_id=cajaid,fecha=fecha_consulta)
         mov_movimientos_ingreso = movimientos.objects.filter(caja_destino_id=cajaid, fecha=fecha_consulta)
         cierreAnterior = CierresCajas.objects.filter(caja=cajaid, fecha=fecha_consulta )
-        
+
         valorTotalIngresos = 0
         for ing_dia in ingresos_dia:
             valorTotalIngresos = ing_dia.valorIngreso + valorTotalIngresos
@@ -119,7 +119,7 @@ def cierresDiarios(request):
             'egre_servicios':egre_servicios,
             'egre_creditos':egre_creditos,
             'mov_movimientos_salida':mov_movimientos_salida,
-            'mov_movimientos_ingreso' : mov_movimientos_ingreso,
+            'mov_movimientos_ingreso':mov_movimientos_ingreso,
 
             'valorTotalIngresos':valorTotalIngresos,
             'valorTotalFacturas' : valorTotalFacturas,
@@ -152,7 +152,8 @@ def cierresDiarios(request):
         mov_movimientos = movimientos.objects.filter(caja_origen_id=caja_cierre ,empresaCaja=request.POST['empresa_selec'], fecha=fecha_filtro)
         mov_movimientos_salida = movimientos.objects.filter(caja_origen_id=caja_cierre,empresaCaja=request.POST['empresa_selec'],fecha=fecha_filtro)
         mov_movimientos_ingreso = movimientos.objects.filter(caja_destino_id=caja_cierre,empresaCaja=request.POST['empresa_selec'], fecha=fecha_filtro)
-        
+        print("*******")
+        print(mov_movimientos_ingreso)
         formato_str = "%Y-%m-%d"
        #fecha_ayer = datetime.strptime(fecha_consulta,formato_str) - timedelta(days=1)
         fecha_ayer = datetime.strptime(fecha_filtro,formato_str) - timedelta(days=1)
@@ -222,7 +223,9 @@ def cierresDiarios(request):
         'egre_decimos':egre_decimos,
         'egre_servicios':egre_servicios,
         'egre_creditos':egre_creditos,
-        'mov_movimientos':mov_movimientos,
+        'mov_movimientos_ingreso':mov_movimientos_ingreso,
+        'mov_movimientos_salida':mov_movimientos_salida,
+
         'caja_id':caja_cierre.id,
         'empresa_id':request.POST['empresa_selec'],
         'fecha_consulta':fecha_filtro,  
