@@ -59,8 +59,9 @@ def json_facturas(request):
     #facturasConsulta = facturasProveedores.objects.all()
     fecha_actual = datetime.now().date()
     fecha_inicial = fecha_actual - timedelta(days=0)
-    caja_fac = cajasReg.objects.get(usuario=request.user)
-    facturasConsulta = facturasProveedores.objects.filter(fechapago__range=[fecha_inicial,fecha_actual],id_caja=caja_fac)
+    #caja_fac = cajasReg.objects.get(usuario=request.user)
+    #facturasConsulta = facturasProveedores.objects.filter(fechapago__range=[fecha_inicial,fecha_actual],id_caja=caja_fac)
+    facturasConsulta = facturasProveedores.objects.filter(fechapago__range=[fecha_inicial,fecha_actual])
     listaFacturas = []
     for fac in facturasConsulta:
         data_factura = {}

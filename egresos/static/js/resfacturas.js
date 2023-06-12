@@ -21,7 +21,7 @@ const initDataTable=async()=>{
 
 const listFacturas = async() =>{
     try{
-        const response=await fetch('http://0.0.0.0:8000/egresos/jsonfacturas/');
+        const response=await fetch('http://127.0.0.1:8000/egresos/jsonfacturas/');
         const data=await response.json();
         let content=``;
         let content1=``;
