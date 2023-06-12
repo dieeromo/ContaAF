@@ -15,9 +15,8 @@ resumen pago servicios
           <th scope="col" >Empresa</th>
           <th scope="col" >Valor</th>
           <th scope="col" >Fecha</th>
-          <th scope="col" >mes_de_Pago</th>
-          <th scope="col" >anio_de_pago</th>
-          <th scope="col" >Empresa</th>
+          <th scope="col" >Mes</th>
+          <th scope="col" >Año</th>
           <th scope="col" >Caja</th>
           <th scope="col" >descripcion</th>
         </tr>
@@ -26,16 +25,15 @@ resumen pago servicios
         {% for f in PagoServiciosConsulta%}
         <tr>
           <th scope="row">{{forloop.counter}}</th>
-          <td>{{f.idproveedor}}</td>
-          <td>{{f.numeroFactura}}</td>
-          <td>{{f.fechafactura}}</td>
+          <td>{{f.empresa_servicio}}</td>
+          <td>{{f.servicio}}</td>
+          <td>{{f.empresa_nuestra}}</td>
           <td>{{f.valor}}</td>
-          <td>{{f.id_modoCompra}}</td>
-          <td>{{f.id_estadoPago}}</td>
-          <td>{{f.fechapago}}</td>
-          <td>{{f.id_empresa}}</td>
-          <td>{{f.id_caja}}</td>
-          <td>{{f.observacion}}</td>
+          <td>{{f.fecha}}</td>
+          <td>{{f.mes_de_Pago}}</td>
+          <td>{{f.anio_de_pago}}</td>
+          <td>{{f.caja}}</td>
+          <td>{{f.descripcion}}</td>
 
           
         </tr>

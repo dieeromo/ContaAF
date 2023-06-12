@@ -26,8 +26,16 @@ def registroMovimientos(request):
         return redirect('resumenMovimientos')
     
 def resumenMovimientos(request):
+    fecha_actual = datetime.now().date()
+    fecha_inicial = fecha_actual - timedelta(days=0)
+    caja_Mov = cajasReg.objects.get(usuario=request.user)
+    cajassMovimiento = movimientos.objects.filter(fecha__range=[fecha_inicial,fecha_actual],caja_origen=caja_Mov)
+    cajassMovimientoIn = movimientos.objects.filter(fecha__range=[fecha_inicial,fecha_actual],caja_destino=caja_Mov)
 
-    return render(request,'resumenMovimientos.html' )
+    return render(request,'resumenMovimientos.html',{
+        'cajassMovimiento':cajassMovimiento,
+        'cajassMovimientoIn':cajassMovimientoIn,
+    } )
 
 
 def jsonMovimiento(request):

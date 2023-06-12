@@ -29,8 +29,13 @@ def registroIngresos(request):
     
 
 def resumenIngresos(request):
+    fecha_actual = datetime.now().date()
+    fecha_inicial = fecha_actual - timedelta(days=0)
+    ingresosConsulta = ingresosCajas.objects.filter(fecha__range=[fecha_inicial,fecha_actual])
 
-    return render(request, 'resumenIngresos.html')
+    return render(request, 'resumenIngresos.html',{
+        'ingresosConsulta':ingresosConsulta,
+    })
 
 def JsonIngresos(request):
     fecha_actual = datetime.now().date()

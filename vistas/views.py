@@ -426,3 +426,205 @@ def CierresResumen(request):
     return render(request, 'resumenCierres.html',{
             'cierres':cierres2,
     })
+
+
+
+
+
+def misMovimientos(request):
+    if request.method == 'GET':
+        fecha_consulta = datetime.now()
+        cajau = cajasReg.objects.filter(usuario=request.user)
+        cajaid = cajau[0].id
+
+        ingresos_dia = ingresosCajas.objects.filter(nombreCaja=cajaid,fecha=fecha_consulta)
+        egre_facturas = facturasProveedores.objects.filter(id_caja=cajaid,fechapago=fecha_consulta)
+        egre_colaboradores = pagoColaboradores.objects.filter(id_caja=cajaid,fecha_pago=fecha_consulta)
+        egre_iess = planillasIESS.objects.filter(caja=cajaid, fecha=fecha_consulta)
+        egre_decimos = decimos.objects.filter(caja=cajaid, fecha=fecha_consulta)
+        egre_servicios = pagoServicios.objects.filter(caja=cajaid, fecha=fecha_consulta)
+        egre_creditos = pagoCreditos.objects.filter(caja=cajaid,fecha=fecha_consulta)
+        mov_movimientos_salida = movimientos.objects.filter(caja_origen_id=cajaid,fecha=fecha_consulta)
+        mov_movimientos_ingreso = movimientos.objects.filter(caja_destino_id=cajaid, fecha=fecha_consulta)
+        cierreAnterior = CierresCajas.objects.filter(caja=cajaid, fecha=fecha_consulta )
+
+        valorTotalIngresos = 0
+        for ing_dia in ingresos_dia:
+            valorTotalIngresos = ing_dia.valorIngreso + valorTotalIngresos
+        
+        valorTotalFacturas = 0
+        for egresosEnFacturas in egre_facturas:
+            valorTotalFacturas = valorTotalFacturas + egresosEnFacturas.valor
+
+        valorTotalColaboradores = 0
+        for egresosPagocolaboradores in egre_colaboradores:
+            valorTotalColaboradores = valorTotalColaboradores + egresosPagocolaboradores.valor
+
+        valorTotalPlanillasIees = 0
+        for egresosPlanillasIees in egre_iess:
+            valorTotalPlanillasIees = valorTotalPlanillasIees + egresosPlanillasIees.valor
+
+        valorTotalDecinos = 0
+        for egresosPagoDecimos in egre_decimos:
+            valorTotalDecinos = valorTotalDecinos + egresosPagoDecimos.valor
+    
+        valorTotalServicios = 0
+        for egrePagoServicios in egre_servicios:
+            valorTotalServicios = valorTotalServicios + egrePagoServicios.valor
+
+        valorTotalCreditos = 0
+        for egresosPagoCreditos in egre_creditos:
+            valorTotalCreditos = valorTotalCreditos + egresosPagoCreditos.valor
+        
+        valorTotalMovimientosIngreso = 0
+        for TotalMovimientosIngreso in mov_movimientos_ingreso:
+            valorTotalMovimientosIngreso = valorTotalMovimientosIngreso + TotalMovimientosIngreso.valor
+
+        valorTotalMovimientosSalida = 0
+        for TotalMovimientosSalida in mov_movimientos_salida:
+            valorTotalMovimientosSalida = valorTotalMovimientosSalida + TotalMovimientosSalida.valor
+
+        valor_cierre_anterior = 0
+        for valor in cierreAnterior:
+            valor_cierre_anterior = valor_cierre_anterior + valor.valorCierreActual
+
+        valorTotalEgresosSis = valorTotalFacturas + valorTotalColaboradores + valorTotalPlanillasIees + valorTotalDecinos + valorTotalServicios + valorTotalCreditos
+        valorTotalDia = valorTotalIngresos - valorTotalEgresosSis + valorTotalMovimientosIngreso - valorTotalMovimientosSalida
+        valor_cierre_dia = valorTotalDia + valor_cierre_anterior
+        return render(request, 'mis_movimientos.html',{
+            'form': form_caja_empresa_cierre,
+            'ingresos':ingresos_dia,
+            'egrefac':egre_facturas,
+            'egrecolaboradores':egre_colaboradores,
+            'egre_iess':egre_iess,
+            'egre_decimos':egre_decimos,
+            'egre_servicios':egre_servicios,
+            'egre_creditos':egre_creditos,
+            'mov_movimientos_salida':mov_movimientos_salida,
+            'mov_movimientos_ingreso':mov_movimientos_ingreso,
+
+            'valorTotalIngresos':valorTotalIngresos,
+            'valorTotalFacturas' : valorTotalFacturas,
+            'valorTotalColaboradores' : valorTotalColaboradores,
+            'valorTotalPlanillasIees' : valorTotalPlanillasIees,
+            'valorTotalDecinos':valorTotalDecinos,
+            'valorTotalServicios':valorTotalServicios,
+            'valorTotalCreditos':valorTotalCreditos,
+            'valorTotalMovimientosIngreso':valorTotalMovimientosIngreso,
+            'valorTotalMovimientosSalida': valorTotalMovimientosSalida,
+
+            'valorTotalEgresosSis':valorTotalEgresosSis,
+            'valorTotalDia':valorTotalDia,
+            'valor_cierre_anterior':valor_cierre_anterior,
+            'valor_cierre_dia':valor_cierre_dia ,
+
+
+        })
+    else:
+        caja_cierre = cajasReg.objects.get(usuario=request.user)
+        fecha_filtro = request.POST['fecha']
+        #ingresos_dia = ingresosCajas.objects.filter(nombreCaja=request.POST['caja_selec'],empresaIngreso=request.POST['empresa_selec']).order_by('-fecha')
+        ingresos_dia = ingresosCajas.objects.filter(nombreCaja=caja_cierre ,empresaIngreso=request.POST['empresa_selec'],fecha=fecha_filtro)
+        egre_facturas = facturasProveedores.objects.filter(id_caja=caja_cierre ,id_empresa=request.POST['empresa_selec'],fechapago=fecha_filtro)
+        egre_colaboradores = pagoColaboradores.objects.filter(id_caja=caja_cierre ,id_empresa=request.POST['empresa_selec'],fecha_pago=fecha_filtro)
+        egre_iess = planillasIESS.objects.filter(caja=caja_cierre ,id_empresa=request.POST['empresa_selec'], fecha=fecha_filtro)
+        egre_decimos = decimos.objects.filter(caja=caja_cierre ,id_empresa=request.POST['empresa_selec'], fecha=fecha_filtro)
+        egre_servicios = pagoServicios.objects.filter(caja=caja_cierre ,empresa_nuestra=request.POST['empresa_selec'], fecha=fecha_filtro)
+        egre_creditos = pagoCreditos.objects.filter(caja=caja_cierre ,id_empresa=request.POST['empresa_selec'], fecha=fecha_filtro)
+        mov_movimientos = movimientos.objects.filter(caja_origen_id=caja_cierre ,empresaCaja=request.POST['empresa_selec'], fecha=fecha_filtro)
+        mov_movimientos_salida = movimientos.objects.filter(caja_origen_id=caja_cierre,empresaCaja=request.POST['empresa_selec'],fecha=fecha_filtro)
+        mov_movimientos_ingreso = movimientos.objects.filter(caja_destino_id=caja_cierre,empresaCaja=request.POST['empresa_selec'], fecha=fecha_filtro)
+        print("*******")
+        print(mov_movimientos_ingreso)
+        formato_str = "%Y-%m-%d"
+       #fecha_ayer = datetime.strptime(fecha_consulta,formato_str) - timedelta(days=1)
+        fecha_ayer = datetime.strptime(fecha_filtro,formato_str) - timedelta(days=1)
+        empresaCierre = empresa.objects.get(id=request.POST['empresa_selec'])
+        cajaCierre = cajasReg.objects.get(id=caja_cierre.id)
+
+        cierre_realizado = CierresCajas.objects.filter(empresa=empresaCierre, caja=cajaCierre, fecha=fecha_ayer)
+    
+        passCierre = False
+        if not cierre_realizado.exists():
+            print("no existe")
+            passCierre = False
+        else: 
+            print("si existe")
+            passCierre = True
+
+
+        
+        valorTotalIngresos = 0
+        for ing_dia in ingresos_dia:
+            valorTotalIngresos = ing_dia.valorIngreso + valorTotalIngresos
+        
+        valorTotalFacturas = 0
+        for egresosEnFacturas in egre_facturas:
+            valorTotalFacturas = valorTotalFacturas + egresosEnFacturas.valor
+
+        valorTotalColaboradores = 0
+        for egresosPagocolaboradores in egre_colaboradores:
+            valorTotalColaboradores = valorTotalColaboradores + egresosPagocolaboradores.valor
+
+        valorTotalPlanillasIees = 0
+        for egresosPlanillasIees in egre_iess:
+            valorTotalPlanillasIees = valorTotalPlanillasIees + egresosPlanillasIees.valor
+
+        valorTotalDecinos = 0
+        for egresosPagoDecimos in egre_decimos:
+            valorTotalDecinos = valorTotalDecinos + egresosPagoDecimos.valor
+    
+        valorTotalServicios = 0
+        for egrePagoServicios in egre_servicios:
+            valorTotalServicios = valorTotalServicios + egrePagoServicios.valor
+
+        valorTotalCreditos = 0
+        for egresosPagoCreditos in egre_creditos:
+            valorTotalCreditos = valorTotalCreditos + egresosPagoCreditos.valor
+        
+        valorTotalMovimientosIngreso = 0
+        for TotalMovimientosIngreso in mov_movimientos_ingreso:
+            valorTotalMovimientosIngreso = valorTotalMovimientosIngreso + TotalMovimientosIngreso.valor
+
+        valorTotalMovimientosSalida = 0
+        for TotalMovimientosSalida in mov_movimientos_salida:
+            valorTotalMovimientosSalida = valorTotalMovimientosSalida + TotalMovimientosSalida.valor
+        
+        valorTotalEgresosSis = valorTotalFacturas + valorTotalColaboradores + valorTotalPlanillasIees + valorTotalDecinos + valorTotalServicios + valorTotalCreditos
+        EmpresaMovimientosDia = empresa.objects.get(id=request.POST['empresa_selec']) 
+        #valor_cierre_anterior = 0
+        #for valor in cierreAnterior:
+        #    valor_cierre_anterior = valor_cierre_anterior + valor.valorCierreActual
+
+        return render(request, 'mis_movimientos2.html',{
+        #'form': form_cierres,
+        'ingresos':ingresos_dia,
+        'egrefac':egre_facturas,
+        'egrecolaboradores':egre_colaboradores,
+        'egre_iess':egre_iess,
+        'egre_decimos':egre_decimos,
+        'egre_servicios':egre_servicios,
+        'egre_creditos':egre_creditos,
+        'mov_movimientos_ingreso':mov_movimientos_ingreso,
+        'mov_movimientos_salida':mov_movimientos_salida,
+
+        'caja_id':caja_cierre.id,
+        'empresa_id':request.POST['empresa_selec'],
+        'fecha_consulta':fecha_filtro,  
+        'passCierre':passCierre,
+        
+        'valorTotalEgresosSis':valorTotalEgresosSis,
+        'valorTotalIngresos':valorTotalIngresos,
+        'valorTotalFacturas' : valorTotalFacturas,
+        'valorTotalColaboradores' : valorTotalColaboradores,
+        'valorTotalPlanillasIees' : valorTotalPlanillasIees,
+        'valorTotalDecinos':valorTotalDecinos,
+        'valorTotalServicios':valorTotalServicios,
+        'valorTotalCreditos':valorTotalCreditos,
+        'valorTotalMovimientosIngreso':valorTotalMovimientosIngreso,
+        'valorTotalMovimientosSalida': valorTotalMovimientosSalida,
+
+        'EmpresaMovimientosDia':EmpresaMovimientosDia,
+
+        })
+    
