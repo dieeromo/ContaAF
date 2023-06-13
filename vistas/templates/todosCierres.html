@@ -1,0 +1,52 @@
+{% extends 'plantilla1.html' %}
+
+{% block content%}
+
+
+<h2>Resumen de cierres todas</h2>
+
+
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Empresa</th>
+        <th scope="col">Caja</th>
+        <th scope="col">Fecha</th>
+        <th scope="col">Ingresos</th>
+        <th scope="col">Egresos</th>
+        <th scope="col">Mov salida</th>
+        <th scope="col">Mov entrada</th>
+        <th scope="col">Cierre anterior</th>
+        <th scope="col">Cierre actual</th>
+  
+      </tr>
+    </thead>
+    <tbody>
+      {% for cierres in cierrest %}
+      
+
+
+      <tr>
+        <th scope="row">{{forloop.counter}}</th>
+        <td >{{cierres.empresa}}</td>
+        <td>{{cierres.caja}}</td>
+        <td>{{cierres.fecha}}</td>
+        <td>{{cierres.valorIngresos}}</td>
+        <td>{{cierres.valorEgresos}}</td>
+        <td>{{cierres.valorMovSalida}}</td>
+        <td>{{cierres.valorMovEntrada}}</td>
+        <td>{{cierres.valorCierreAnterior}}</td>
+        <td>{{cierres.valorCierreActual}}</td>
+      </tr>
+
+      {%endfor%}
+  
+    </tbody>
+  </table>
+
+ 
+
+
+
+{%endblock%}

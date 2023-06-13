@@ -8,4 +8,5 @@ urlpatterns =[
     path('cierre3/<int:caja_id>/<int:empresa_id>/<str:fecha_consulta>/',views.cierre3, name='cierre3'),
     path('cierresresumen/',views.CierresResumen, name='cierresresumen'), 
     path('mismovimientos/',views.misMovimientos, name = 'mismovimientos'),
+    path('todoscierres/',views.todosCierres, name = 'todosCierres'),
 ]
