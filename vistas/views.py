@@ -422,7 +422,10 @@ def cierre3(request, caja_id, empresa_id,fecha_consulta):
     
 
 def CierresResumen(request):
-    cierres2 = CierresCajas.objects.all().order_by('-fecha')
+    cajau = cajasReg.objects.filter(usuario=request.user)
+    cajaid = cajau[0].id
+    cierres2 = CierresCajas.objects.filter(caja=cajaid).order_by('-fecha')
+
     return render(request, 'resumenCierres.html',{
             'cierres':cierres2,
     })
@@ -628,3 +631,12 @@ def misMovimientos(request):
 
         })
     
+
+def todosCierres(request):
+    fecha_actual = datetime.now().date()
+    fecha_inicial = fecha_actual - timedelta(days=30)
+    cierrest = CierresCajas.objects.filter(fecha__range=[fecha_inicial,fecha_actual]).order_by('-fecha')
+
+    return render(request,'todosCierres.html',{
+        'cierrest':cierrest,
+    })
