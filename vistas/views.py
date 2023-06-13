@@ -422,7 +422,9 @@ def cierre3(request, caja_id, empresa_id,fecha_consulta):
     
 
 def CierresResumen(request):
-    cierres2 = CierresCajas.objects.all().order_by('-fecha')
+    cajau = cajasReg.objects.filter(usuario=request.user)
+    cajaid = cajau[0].id
+    cierres2 = CierresCajas.objects.filter(caja=cajaid).order_by('-fecha')
     return render(request, 'resumenCierres.html',{
             'cierres':cierres2,
     })
