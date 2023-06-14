@@ -6,7 +6,7 @@
 <h2>Resumen de cierres todas</h2>
 
 
-<table class="table">
+<table class="table table-sm  small-text">
     <thead>
       <tr>
         <th scope="col">#</th>
@@ -27,16 +27,16 @@
       
       {%if  cierres.fecha.day|divisibleby:2 == True %}
       <tr>
-        <th scope="row" class="table-success">{{forloop.counter}}</th>
-        <td class="table-success">{{cierres.empresa}}</td>
-        <td class="table-success">{{cierres.caja}}</td>
-        <td class="table-success">{{cierres.fecha}}</td>
-        <td class="table-success">{{cierres.valorIngresos}}</td>
-        <td class="table-success">{{cierres.valorEgresos}}</td>
-        <td class="table-success">{{cierres.valorMovSalida}}</td>
-        <td class="table-success">{{cierres.valorMovEntrada}}</td>
-        <td class="table-success">{{cierres.valorCierreAnterior}}</td>
-        <td class="table-success">{{cierres.valorCierreActual}}</td>
+        <th scope="row" class="table-info">{{forloop.counter}}</th>
+        <td class="table-info">{{cierres.empresa}}</td>
+        <td class="table-info">{{cierres.caja}}</td>
+        <td class="table-info">{{cierres.fecha}}</td>
+        <td class="table-info">{{cierres.valorIngresos}}</td>
+        <td class="table-info">{{cierres.valorEgresos}}</td>
+        <td class="table-info">{{cierres.valorMovSalida}}</td>
+        <td class="table-info">{{cierres.valorMovEntrada}}</td>
+        <td class="table-info">{{cierres.valorCierreAnterior}}</td>
+        <td class="table-info">{{cierres.valorCierreActual}}</td>
       </tr>
       {%else%}
       <tr>

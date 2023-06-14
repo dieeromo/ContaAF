@@ -2,7 +2,7 @@ from django.contrib import admin
 from . models import empresa, proveedoresProd, tipoProducto, modoCompra, estadoPago
 from . models import marcasProducto, cajasReg, pagoMeses, pagoAnio
 from . models import  serviciosMensuales, ingresosConcepto, colaboradores, empresaServicio
-from . models import institucionFinanciera
+from . models import institucionFinanciera, tipoDecimo
 # Register your models here.
 
 
@@ -20,3 +20,4 @@ admin.site.register(ingresosConcepto)
 admin.site.register(colaboradores)
 admin.site.register(empresaServicio)
 admin.site.register(institucionFinanciera)
+admin.site.register(tipoDecimo)
