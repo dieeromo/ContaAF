@@ -1,0 +1,30 @@
+{% extends 'plantilla1.html' %}
+
+{% block content%}
+
+<h2>
+    AFNET cifras
+</h2>
+
+
+
+<form method="POST">
+    {% csrf_token %}
+    {{form.as_p}}
+    <label for="fecha_inicio">Fecha Inicio:</label>
+    <input type="date" id="fecha_inicio" name="fecha_inicio">
+
+    <label for="fecha_fin">Fecha Fin:</label>
+    <input type="date" id="fecha_fin" name="fecha_fin">
+    <button>Consultar</button>
+</form>
+<h4>Periodo: {{fecha_inicio}} - {{fecha_fin}}</h4>
+<div>Ingresos = {{ingresostotalperiodo}}</div>
+<div>Egresos = {{egresostotalperiodo}}</div>
+<div>Colaboradores = {{pagoColaboradoresTotal}}</div>
+
+
+
+
+{%endblock%}
+

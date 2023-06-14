@@ -89,3 +89,9 @@ class institucionFinanciera(models.Model):
     def __str__(self):
         return "{}".format(self.nombre_finan)
     
+
+class tipoDecimo(models.Model):
+    Tipo = models.CharField(max_length=200)
+    def __str__(self):
+        return "{}".format(self.Tipo)
+    
