@@ -25,8 +25,20 @@
     <tbody>
       {% for cierres in cierrest %}
       
-
-
+      {%if  cierres.fecha.day|divisibleby:2 == True %}
+      <tr>
+        <th scope="row" class="table-success">{{forloop.counter}}</th>
+        <td class="table-success">{{cierres.empresa}}</td>
+        <td class="table-success">{{cierres.caja}}</td>
+        <td class="table-success">{{cierres.fecha}}</td>
+        <td class="table-success">{{cierres.valorIngresos}}</td>
+        <td class="table-success">{{cierres.valorEgresos}}</td>
+        <td class="table-success">{{cierres.valorMovSalida}}</td>
+        <td class="table-success">{{cierres.valorMovEntrada}}</td>
+        <td class="table-success">{{cierres.valorCierreAnterior}}</td>
+        <td class="table-success">{{cierres.valorCierreActual}}</td>
+      </tr>
+      {%else%}
       <tr>
         <th scope="row">{{forloop.counter}}</th>
         <td >{{cierres.empresa}}</td>
@@ -39,9 +51,14 @@
         <td>{{cierres.valorCierreAnterior}}</td>
         <td>{{cierres.valorCierreActual}}</td>
       </tr>
+      {%endif%}
 
       {%endfor%}
   
+
+
+
+
     </tbody>
   </table>
 
