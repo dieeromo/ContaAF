@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from general.models import proveedoresProd, modoCompra, estadoPago, empresa, cajasReg
 from general.models import colaboradores, pagoMeses,pagoAnio, serviciosMensuales
-from general.models import empresaServicio, institucionFinanciera
+from general.models import empresaServicio, institucionFinanciera, tipoDecimo
 # Create your models here.
 
 
@@ -60,6 +60,7 @@ class decimos(models.Model):
     usuario = models.ForeignKey(User, on_delete=models.CASCADE)
     creado = models.DateField(auto_now_add=True)
     id_empresa = models.ForeignKey(empresa, on_delete=models.CASCADE, default=1)
+    id_tipo = models.ForeignKey(tipoDecimo, on_delete=models.CASCADE, default=2)
     def __str__(self):
         return "{}  {}".format(self.colaborador, self.valor)
     
