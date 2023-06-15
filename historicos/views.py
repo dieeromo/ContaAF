@@ -120,7 +120,7 @@ def cifras(request):
         cifrasIess = planillasIESS.objects.filter(fecha__range=[request.POST['fecha_inicio'],request.POST['fecha_fin']])
         pagoCifrasIess = 0
         for paIes in cifrasIess:
-            pagoCifrasIess = paIes.valor
+            pagoCifrasIess = paIes.valor + pagoCifrasIess
         
         gastos_total_eg = pagoCifrasIess +pagoCifrasCreditos+pagoCifrasServicios+pagoCifrasFacturas+pagoCifrasComi+pagoCifrasDeci+pagoColaboradoresTotal
 
