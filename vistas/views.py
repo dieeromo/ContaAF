@@ -636,7 +636,16 @@ def todosCierres(request):
     fecha_actual = datetime.now().date()
     fecha_inicial = fecha_actual - timedelta(days=30)
     cierrest = CierresCajas.objects.filter(fecha__range=[fecha_inicial,fecha_actual]).order_by('-fecha')
-    print(cierrest[0].fecha.day%2)
+    gastoT = 0
+    ingreT = 0
+    for  cie in cierrest:
+        gastoT = gastoT + cie.valorEgresos
+        ingreT + ingreT + cie.valorIngresos
+
+
     return render(request,'todosCierres.html',{
         'cierrest':cierrest,
+        'gastoT':gastoT,
+        'ingreT':ingreT,
+
     })
