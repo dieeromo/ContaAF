@@ -122,7 +122,7 @@ def cifras(request):
         for paIes in cifrasIess:
             pagoCifrasIess = paIes.valor
         
-        gastos_total_eg = pagoCifrasIess +pagoCifrasCreditos+pagoCifrasServicios+pagoCifrasFacturas+pagoCifrasComi+pagoCifrasDeci+pagoColaboradoresTotal+egresostotalperiodo 
+        gastos_total_eg = pagoCifrasIess +pagoCifrasCreditos+pagoCifrasServicios+pagoCifrasFacturas+pagoCifrasComi+pagoCifrasDeci+pagoColaboradoresTotal
 
         return render (request, 'solidcifras.html',{
             'ingresostotalperiodo':ingresostotalperiodo,
