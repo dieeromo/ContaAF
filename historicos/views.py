@@ -59,7 +59,7 @@ def cifras(request):
         cifrasIess = planillasIESS.objects.filter(fecha__range=[fecha_inicial,fecha_actual])
         pagoCifrasIess = 0
         for paIes in cifrasIess:
-            pagoCifrasIess = paIes.valor
+            pagoCifrasIess = paIes.valor + pagoCifrasIess
 
         gastos_total_eg = pagoCifrasIess +pagoCifrasCreditos+pagoCifrasServicios+pagoCifrasFacturas+pagoCifrasComi+pagoCifrasDeci+pagoColaboradoresTotal
         return render (request,'solidcifras.html',{
