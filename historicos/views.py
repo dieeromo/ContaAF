@@ -31,12 +31,12 @@ def cifras(request):
         for col in cifrasPagocolaboradores:
             pagoColaboradoresTotal = pagoColaboradoresTotal + col.valor
         
-        cifrasdecimos_de = decimos.objects.filter(fecha__range=[fecha_inicial,fecha_actual],id_tipo=2)
+        cifrasdecimos_de = decimos.objects.filter(fecha__range=[fecha_inicial,fecha_actual],id_tipo=1)
         pagoCifrasDeci = 0
         for cifra_de in cifrasdecimos_de:
             pagoCifrasDeci = pagoCifrasDeci + cifra_de.valor
         
-        cifrasdecimos_comi = decimos.objects.filter(fecha__range=[fecha_inicial,fecha_actual],id_tipo=1)
+        cifrasdecimos_comi = decimos.objects.filter(fecha__range=[fecha_inicial,fecha_actual],id_tipo=2)
         pagoCifrasComi = 0
         for cifra_comi in cifrasdecimos_comi:
             pagoCifrasComi = pagoCifrasComi + cifra_comi.valor
@@ -61,7 +61,7 @@ def cifras(request):
         for paIes in cifrasIess:
             pagoCifrasIess = paIes.valor
 
-        gastos_total_eg = pagoCifrasIess +pagoCifrasCreditos+pagoCifrasServicios+pagoCifrasFacturas+pagoCifrasComi+pagoCifrasDeci+pagoColaboradoresTotal+egresostotalperiodo 
+        gastos_total_eg = pagoCifrasIess +pagoCifrasCreditos+pagoCifrasServicios+pagoCifrasFacturas+pagoCifrasComi+pagoCifrasDeci+pagoColaboradoresTotal
         return render (request,'solidcifras.html',{
             'ingresostotalperiodo':ingresostotalperiodo,
             'egresostotalperiodo':egresostotalperiodo,
