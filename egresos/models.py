@@ -21,6 +21,9 @@ class facturasProveedores(models.Model):
     id_caja = models.ForeignKey(cajasReg, on_delete=models.CASCADE)
     observacion = models.CharField(max_length=200, blank=True)
     #creado = models.DateField(auto_now_add=True, default='2023-05-05')
+    def __str__(self):
+        return "{}  {}  // {}".format(self.idproveedor, self.fechapago,  self.valor)
+    
 
 
 class pagoColaboradores(models.Model):
@@ -34,7 +37,9 @@ class pagoColaboradores(models.Model):
    id_caja = models.ForeignKey(cajasReg, on_delete=models.CASCADE)
    id_usuario = models.ForeignKey(User, on_delete=models.CASCADE)
    id_empresa = models.ForeignKey(empresa, on_delete=models.CASCADE, default=1)
-   #creado = models.DateField(auto_now_add=True, default='2023-05-05')
+   def __str__(self):
+        return "{}  {}  {}".format(self.nombre,  self.fecha_pago,self.valor)
+    
 
 
 class  planillasIESS(models.Model):
@@ -48,7 +53,7 @@ class  planillasIESS(models.Model):
     creado = models.DateTimeField(auto_now_add=True)
     id_empresa = models.ForeignKey(empresa, on_delete=models.CASCADE, default=1)
     def __str__(self):
-        return "{}  {}  {}".format(self.colaborador, self.valor, self.mesPago)
+        return "{}  {}  {}".format(self.colaborador, self.mesPago, self.valor)
     
 
 class decimos(models.Model):
@@ -62,7 +67,7 @@ class decimos(models.Model):
     id_empresa = models.ForeignKey(empresa, on_delete=models.CASCADE, default=1)
     id_tipo = models.ForeignKey(tipoDecimo, on_delete=models.CASCADE, default=2)
     def __str__(self):
-        return "{}  {}".format(self.colaborador, self.valor)
+        return "{}  {}  {}".format(self.colaborador, self.valor, self.id_tipo)
     
 class pagoServicios(models.Model):
 
