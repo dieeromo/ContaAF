@@ -3,6 +3,7 @@ from . models import empresa, proveedoresProd, tipoProducto, modoCompra, estadoP
 from . models import marcasProducto, cajasReg, pagoMeses, pagoAnio
 from . models import  serviciosMensuales, ingresosConcepto, colaboradores, empresaServicio
 from . models import institucionFinanciera, tipoDecimo
+
 # Register your models here.
 
 
