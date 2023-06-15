@@ -2,7 +2,8 @@ from datetime import datetime, timedelta
 from django.shortcuts import render
 from general.models import pagoMeses
 from cierres.models import CierresCajas
-from egresos.models import pagoColaboradores, decimos, facturasProveedores
+from egresos.models import pagoColaboradores, decimos, facturasProveedores, pagoServicios
+from egresos.models import pagoCreditos, planillasIESS
 # Create your views here.
 
 def catalogoHis(request):
@@ -17,7 +18,8 @@ def cifras(request):
         fecha_actual = datetime.now().date()
         fecha_inicial = fecha_actual - timedelta(fecha_actual.day) + timedelta(days=1)
         cifrasCierres = CierresCajas.objects.filter(fecha__range=[fecha_inicial,fecha_actual])
-        cifrasdecimos_de = decimos.objects.filter(fecha__range=[fecha_inicial,fecha_actual])
+        #cifrasdecimos_de = decimos.objects.filter(fecha__range=[fecha_inicial,fecha_actual])
+        
         ingresostotalperiodo = 0
         egresostotalperiodo = 0
         for ingresos in cifrasCierres:
@@ -44,7 +46,22 @@ def cifras(request):
         for cifFacturas in cifrasFacturas:
             pagoCifrasFacturas = pagoCifrasFacturas + cifFacturas.valor
 
+        cifrasServicios = pagoServicios.objects.filter(fecha__range=[fecha_inicial,fecha_actual])
+        pagoCifrasServicios = 0
+        for paser in cifrasServicios:
+            pagoCifrasServicios = pagoCifrasServicios + paser.valor
 
+        cifrascreditos = pagoCreditos.objects.filter(fecha__range=[fecha_inicial,fecha_actual])
+        pagoCifrasCreditos = 0
+        for pacre in cifrascreditos:
+            pagoCifrasCreditos = pagoCifrasCreditos + pacre.valor
+
+        cifrasIess = planillasIESS.objects.filter(fecha__range=[fecha_inicial,fecha_actual])
+        pagoCifrasIess = 0
+        for paIes in cifrasIess:
+            pagoCifrasIess = paIes.valor
+
+        gastos_total_eg = pagoCifrasIess +pagoCifrasCreditos+pagoCifrasServicios+pagoCifrasFacturas+pagoCifrasComi+pagoCifrasDeci+pagoColaboradoresTotal+egresostotalperiodo 
         return render (request,'solidcifras.html',{
             'ingresostotalperiodo':ingresostotalperiodo,
             'egresostotalperiodo':egresostotalperiodo,
@@ -52,6 +69,10 @@ def cifras(request):
             'pagoCifrasDeci':pagoCifrasDeci,
             'pagoCifrasComi':pagoCifrasComi,
             'pagoCifrasFacturas':pagoCifrasFacturas,
+            'pagoCifrasServicios':pagoCifrasServicios,
+            'pagoCifrasCreditos':pagoCifrasCreditos,
+            'pagoCifrasIess':pagoCifrasIess,
+            'gastos_total_eg':gastos_total_eg,
 
             'fecha_inicio':fecha_inicial,
             'fecha_fin':fecha_actual
@@ -85,7 +106,23 @@ def cifras(request):
         pagoCifrasFacturas = 0
         for cifFacturas in cifrasFacturas:
             pagoCifrasFacturas = pagoCifrasFacturas + cifFacturas.valor
+        
+        cifrasServicios = pagoServicios.objects.filter(fecha__range=[request.POST['fecha_inicio'],request.POST['fecha_fin']])
+        pagoCifrasServicios = 0
+        for paser in cifrasServicios:
+            pagoCifrasServicios = pagoCifrasServicios + paser.valor
 
+        cifrascreditos = pagoCreditos.objects.filter(fecha__range=[request.POST['fecha_inicio'],request.POST['fecha_fin']])
+        pagoCifrasCreditos = 0
+        for pacre in cifrascreditos:
+            pagoCifrasCreditos = pagoCifrasCreditos + pacre.valor
+
+        cifrasIess = planillasIESS.objects.filter(fecha__range=[request.POST['fecha_inicio'],request.POST['fecha_fin']])
+        pagoCifrasIess = 0
+        for paIes in cifrasIess:
+            pagoCifrasIess = paIes.valor
+        
+        gastos_total_eg = pagoCifrasIess +pagoCifrasCreditos+pagoCifrasServicios+pagoCifrasFacturas+pagoCifrasComi+pagoCifrasDeci+pagoColaboradoresTotal+egresostotalperiodo 
 
         return render (request, 'solidcifras.html',{
             'ingresostotalperiodo':ingresostotalperiodo,
@@ -94,6 +131,13 @@ def cifras(request):
             'pagoCifrasDeci':pagoCifrasDeci,
             'pagoCifrasComi':pagoCifrasComi,
             'pagoCifrasFacturas':pagoCifrasFacturas,
+            'pagoCifrasServicios':pagoCifrasServicios,
+            'pagoCifrasCreditos':pagoCifrasCreditos,
+            'pagoCifrasIess':pagoCifrasIess,
+            'gastos_total_eg':gastos_total_eg,
+
+
+
             'fecha_inicio':request.POST['fecha_inicio'],
             'fecha_fin':request.POST['fecha_fin'],
         })
