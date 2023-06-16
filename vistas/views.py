@@ -492,8 +492,7 @@ def misMovimientos(request):
             valor_cierre_anterior = valor_cierre_anterior + valor.valorCierreActual
 
         valorTotalEgresosSis = valorTotalFacturas + valorTotalColaboradores + valorTotalPlanillasIees + valorTotalDecinos + valorTotalServicios + valorTotalCreditos
-        valorTotalDia = valorTotalIngresos - valorTotalEgresosSis + valorTotalMovimientosIngreso - valorTotalMovimientosSalida
-        valor_cierre_dia = valorTotalDia + valor_cierre_anterior
+
         return render(request, 'mis_movimientos.html',{
             'form': form_caja_empresa_cierre,
             'ingresos':ingresos_dia,
@@ -517,9 +516,7 @@ def misMovimientos(request):
             'valorTotalMovimientosSalida': valorTotalMovimientosSalida,
 
             'valorTotalEgresosSis':valorTotalEgresosSis,
-            'valorTotalDia':valorTotalDia,
-            'valor_cierre_anterior':valor_cierre_anterior,
-            'valor_cierre_dia':valor_cierre_dia ,
+
 
 
         })
@@ -651,10 +648,8 @@ def todosCierres(request):
     })
 
 def detallesCierres(request,cajaid,empresa_id,fecha_consulta):
-    
-
-   
-
+    formato_str = "%Y-%m-%d"
+    fecha_dia_anterior  = datetime.strptime(fecha_consulta,formato_str) - timedelta(days=1)
     ingresos_dia = ingresosCajas.objects.filter(nombreCaja=cajaid,fecha=fecha_consulta)
     egre_facturas = facturasProveedores.objects.filter(id_caja=cajaid,fechapago=fecha_consulta)
     egre_colaboradores = pagoColaboradores.objects.filter(id_caja=cajaid,fecha_pago=fecha_consulta)
@@ -664,7 +659,7 @@ def detallesCierres(request,cajaid,empresa_id,fecha_consulta):
     egre_creditos = pagoCreditos.objects.filter(caja=cajaid,fecha=fecha_consulta)
     mov_movimientos_salida = movimientos.objects.filter(caja_origen_id=cajaid,fecha=fecha_consulta)
     mov_movimientos_ingreso = movimientos.objects.filter(caja_destino_id=cajaid, fecha=fecha_consulta)
-    cierreAnterior = CierresCajas.objects.filter(caja=cajaid, fecha=fecha_consulta )
+    cierreAnterior = CierresCajas.objects.filter(caja=cajaid, fecha=fecha_dia_anterior )
 
     valorTotalIngresos = 0
     for ing_dia in ingresos_dia:
