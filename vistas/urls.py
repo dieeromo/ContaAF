@@ -9,4 +9,5 @@ urlpatterns =[
     path('cierresresumen/',views.CierresResumen, name='cierresresumen'), 
     path('mismovimientos/',views.misMovimientos, name = 'mismovimientos'),
     path('todoscierres/',views.todosCierres, name = 'todosCierres'),
+    path('detallescierres/<int:cajaid>/<int:empresa_id>/<str:fecha_consulta>',views.detallesCierres, name='detallesCierres'),
 ]

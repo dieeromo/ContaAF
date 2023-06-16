@@ -29,7 +29,7 @@
       <tr>
         <th scope="row" class="table-info">{{forloop.counter}}</th>
         <td class="table-info">{{cierres.empresa}}</td>
-        <td class="table-info">{{cierres.caja}}</td>
+        <td class="table-info"><a href="{% url 'detallesCierres' cierres.caja.id cierres.empresa.id cierres.fecha%}">{{cierres.caja}}</a> </td>
         <td class="table-info">{{cierres.fecha}}</td>
         <td class="table-info">{{cierres.valorIngresos}}</td>
         <td class="table-info">{{cierres.valorEgresos}}</td>
@@ -42,7 +42,7 @@
       <tr>
         <th scope="row">{{forloop.counter}}</th>
         <td >{{cierres.empresa}}</td>
-        <td>{{cierres.caja}}</td>
+        <td> <a href="{% url 'detallesCierres' cierres.caja.id cierres.empresa.id cierres.fecha%}">{{cierres.caja}}</a> </td>
         <td>{{cierres.fecha}}</td>
         <td>{{cierres.valorIngresos}}</td>
         <td>{{cierres.valorEgresos}}</td>
