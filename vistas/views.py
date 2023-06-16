@@ -640,12 +640,99 @@ def todosCierres(request):
     ingreT = 0
     for  cie in cierrest:
         gastoT = gastoT + cie.valorEgresos
-        ingreT + ingreT + cie.valorIngresos
+        ingreT = ingreT + cie.valorIngresos
 
 
     return render(request,'todosCierres.html',{
         'cierrest':cierrest,
         'gastoT':gastoT,
         'ingreT':ingreT,
+
+    })
+
+def detallesCierres(request,cajaid,empresa_id,fecha_consulta):
+    
+
+   
+
+    ingresos_dia = ingresosCajas.objects.filter(nombreCaja=cajaid,fecha=fecha_consulta)
+    egre_facturas = facturasProveedores.objects.filter(id_caja=cajaid,fechapago=fecha_consulta)
+    egre_colaboradores = pagoColaboradores.objects.filter(id_caja=cajaid,fecha_pago=fecha_consulta)
+    egre_iess = planillasIESS.objects.filter(caja=cajaid, fecha=fecha_consulta)
+    egre_decimos = decimos.objects.filter(caja=cajaid, fecha=fecha_consulta)
+    egre_servicios = pagoServicios.objects.filter(caja=cajaid, fecha=fecha_consulta)
+    egre_creditos = pagoCreditos.objects.filter(caja=cajaid,fecha=fecha_consulta)
+    mov_movimientos_salida = movimientos.objects.filter(caja_origen_id=cajaid,fecha=fecha_consulta)
+    mov_movimientos_ingreso = movimientos.objects.filter(caja_destino_id=cajaid, fecha=fecha_consulta)
+    cierreAnterior = CierresCajas.objects.filter(caja=cajaid, fecha=fecha_consulta )
+
+    valorTotalIngresos = 0
+    for ing_dia in ingresos_dia:
+        valorTotalIngresos = ing_dia.valorIngreso + valorTotalIngresos
+        
+    valorTotalFacturas = 0
+    for egresosEnFacturas in egre_facturas:
+        valorTotalFacturas = valorTotalFacturas + egresosEnFacturas.valor
+
+    valorTotalColaboradores = 0
+    for egresosPagocolaboradores in egre_colaboradores:
+        valorTotalColaboradores = valorTotalColaboradores + egresosPagocolaboradores.valor
+
+    valorTotalPlanillasIees = 0
+    for egresosPlanillasIees in egre_iess:
+        valorTotalPlanillasIees = valorTotalPlanillasIees + egresosPlanillasIees.valor
+
+    valorTotalDecinos = 0
+    for egresosPagoDecimos in egre_decimos:
+        valorTotalDecinos = valorTotalDecinos + egresosPagoDecimos.valor
+    
+    valorTotalServicios = 0
+    for egrePagoServicios in egre_servicios:
+        valorTotalServicios = valorTotalServicios + egrePagoServicios.valor
+
+    valorTotalCreditos = 0
+    for egresosPagoCreditos in egre_creditos:
+        valorTotalCreditos = valorTotalCreditos + egresosPagoCreditos.valor
+        
+    valorTotalMovimientosIngreso = 0
+    for TotalMovimientosIngreso in mov_movimientos_ingreso:
+        valorTotalMovimientosIngreso = valorTotalMovimientosIngreso + TotalMovimientosIngreso.valor
+
+    valorTotalMovimientosSalida = 0
+    for TotalMovimientosSalida in mov_movimientos_salida:
+        valorTotalMovimientosSalida = valorTotalMovimientosSalida + TotalMovimientosSalida.valor
+
+    valor_cierre_anterior = 0
+    for valor in cierreAnterior:
+        valor_cierre_anterior = valor_cierre_anterior + valor.valorCierreActual
+
+    valorTotalEgresosSis = valorTotalFacturas + valorTotalColaboradores + valorTotalPlanillasIees + valorTotalDecinos + valorTotalServicios + valorTotalCreditos
+    valorTotalDia = valorTotalIngresos - valorTotalEgresosSis + valorTotalMovimientosIngreso - valorTotalMovimientosSalida
+    valor_cierre_dia = valorTotalDia + valor_cierre_anterior
+    return render(request, 'detallesCierres.html',{
+        'ingresos':ingresos_dia,
+        'egrefac':egre_facturas,
+        'egrecolaboradores':egre_colaboradores,
+        'egre_iess':egre_iess,
+        'egre_decimos':egre_decimos,
+        'egre_servicios':egre_servicios,
+        'egre_creditos':egre_creditos,
+        'mov_movimientos_salida':mov_movimientos_salida,
+        'mov_movimientos_ingreso':mov_movimientos_ingreso,
+
+        'valorTotalIngresos':valorTotalIngresos,
+        'valorTotalFacturas' : valorTotalFacturas,
+        'valorTotalColaboradores' : valorTotalColaboradores,
+        'valorTotalPlanillasIees' : valorTotalPlanillasIees,
+        'valorTotalDecinos':valorTotalDecinos,
+        'valorTotalServicios':valorTotalServicios,
+        'valorTotalCreditos':valorTotalCreditos,
+        'valorTotalMovimientosIngreso':valorTotalMovimientosIngreso,
+        'valorTotalMovimientosSalida': valorTotalMovimientosSalida,
+
+        'valorTotalEgresosSis':valorTotalEgresosSis,
+        'valorTotalDia':valorTotalDia,
+        'valor_cierre_anterior':valor_cierre_anterior,
+        'valor_cierre_dia':valor_cierre_dia ,
 
     })
