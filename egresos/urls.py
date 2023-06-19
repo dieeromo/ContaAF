@@ -31,5 +31,8 @@ urlpatterns =[
     path('resumenpagoiess/', views.resumenPagoIess, name='ResumenPagoIess'),
     path('jsonpagoiess/', views.jsonPagoIess, name='jsonPagoIess'),
 
+    path('facturaspagar/', views.facturasPorPagar, name='facturasPorPagar'),
+    path('pagarfacturas/<int:idfactura>', views.pagarFacturas, name='pagarFacturas'),
+
     
 ]

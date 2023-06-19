@@ -6,6 +6,7 @@ from django.http.response import JsonResponse
 from django.shortcuts import render, redirect
 from . forms import form_registroFacturas, form_pagoColaboradores, form_pagoServicios
 from . forms import form_PagoCreditos, form_pagoDecimos, form_planillasIess
+from .forms import form_pagarFacturas
 from general.models import cajasReg
 from . models import facturasProveedores, pagoColaboradores, pagoServicios, pagoCreditos
 from .models import decimos, planillasIESS
@@ -314,3 +315,35 @@ def jsonPagoIess(request):
         datai['descripcion'] = pagoIess.descripcion
         ListaPagoIess.append(datai)
     return JsonResponse({'ListaPagoIess':ListaPagoIess}, safe=False)
+
+def facturasPorPagar(request):
+    porPagar = facturasProveedores.objects.filter(id_estadoPago=2)
+    return render(request, 'facturasPagar.html',{
+        'porPagar':porPagar,
+    })
+
+def pagarFacturas(request, idfactura):
+    if request.method == 'GET':
+        facturasp = facturasProveedores.objects.filter(id=idfactura)
+        return render (request, 'pagarfacturas.html',{
+            'facturasp':facturasp,
+            'form':form_pagarFacturas,
+        })
+    else:
+        facturasp = facturasProveedores.objects.get(id=idfactura)
+        form2 = form_pagarFacturas(request.POST)
+        new_pago_f = form2.save(commit=False)
+        new_pago_f.id = facturasp.id
+        new_pago_f.idproveedor = facturasp.idproveedor
+        new_pago_f.numeroFactura = facturasp.numeroFactura
+        new_pago_f.fechafactura = facturasp.fechafactura
+        new_pago_f.valor = facturasp.valor
+        new_pago_f.id_modoCompra = facturasp.id_modoCompra
+        new_pago_f.fechapago = request.POST['fechapago']
+        new_pago_f.estadoEntrega = facturasp.estadoEntrega
+        new_pago_f.fechaEntrega = facturasp.fechaentrega
+        new_pago_f.id_empresa = facturasp.id_empresa
+        new_pago_f.id_usuario = facturasp.id_usuario
+        new_pago_f.save()
+
+        return redirect('ResumenRegistroFacturas')
