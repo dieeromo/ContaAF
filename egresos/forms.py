@@ -31,3 +31,8 @@ class form_planillasIess(ModelForm):
     class Meta:
         model = planillasIESS
         fields = ['colaborador','mesPago','anio_pago','descripcion','valor','id_empresa']
+
+class form_pagarFacturas(ModelForm):
+    class Meta:
+        model = facturasProveedores
+        fields = ['id_caja','id_estadoPago','observacion']
