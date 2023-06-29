@@ -101,7 +101,3 @@ class pagoCreditos(models.Model):
     descripcion = models.CharField(max_length=200, null=True, blank=True)
     id_empresa = models.ForeignKey(empresa, on_delete=models.CASCADE, default=1)
 
-    def __str__(self):
-        return "{} - {} - {} -  {}".format(self.nombre_coop, self.valor, self.fecha, self.caja)
-    
-  

@@ -34,5 +34,7 @@ urlpatterns =[
     path('facturaspagar/', views.facturasPorPagar, name='facturasPorPagar'),
     path('pagarfacturas/<int:idfactura>', views.pagarFacturas, name='pagarFacturas'),
 
+     path('todosegresosfacturas', views.todosEgresoFacturas, name='todoEgresoFacturas'),
+
     
 ]

@@ -347,3 +347,31 @@ def pagarFacturas(request, idfactura):
         new_pago_f.save()
 
         return redirect('ResumenRegistroFacturas')
+    
+def todosEgresoFacturas(request):
+    if request.method == 'GET':
+        fecha_actual = datetime.now().date()
+        fecha_inicial = fecha_actual - timedelta(fecha_actual.day) + timedelta(days=1)
+        facturas_pagadas = facturasProveedores.objects.filter(fechapago__range=[fecha_inicial,fecha_actual])
+        valorfacturape = 0
+        for v in facturas_pagadas:
+            valorfacturape = valorfacturape + v.valor
+
+        return render(request,'todosEgresosFacturas.html',{
+            'facturas_pagadas':facturas_pagadas,
+            'fecha_fin':fecha_actual,
+            'fecha_inicio':fecha_inicial,
+            'valorfacturape':valorfacturape,
+
+        })
+    else:
+        facturas_pagadas = facturasProveedores.objects.filter(fechapago__range=[  request.POST['fecha_inicio'],request.POST['fecha_fin']   ])
+        valorfacturape = 0
+        for v in facturas_pagadas:
+            valorfacturape = valorfacturape + v.valor
+        return render(request,'todosEgresosFacturas.html',{
+            'facturas_pagadas':facturas_pagadas,
+            'fecha_fin':request.POST['fecha_fin'], 
+            'fecha_inicio':request.POST['fecha_inicio'],
+            'valorfacturape':valorfacturape,
+        })
