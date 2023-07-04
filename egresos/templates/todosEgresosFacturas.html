@@ -55,4 +55,35 @@ Fecha consulta: {{fecha_inicio}} :  {{fecha_fin}}
     <h4>Total: {{valorfacturape}}</h4>
 </div>
 
+
+<h3>Consolidado Gasto</h3>
+
+
+
+
+<table class="table small-text">
+      
+  <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Proveedor</th>
+        <th scope="col">Valor</th>
+        <th scope="col">%</th>
+
+      </tr>
+    </thead>
+    <tbody>
+      {%for ff in Listagastos%}
+      <tr>
+        <th scope="row">{{forloop.counter}}</th>
+        <td>{{ff.proveedor}}</td>
+        <td>{{ff.vtotal}}</td>
+        <td>{{ ff.vtotal }}</td>
+   
+      </tr>
+      {% endfor %}
+
+    </tbody>
+</table>
+
 {%endblock%}
