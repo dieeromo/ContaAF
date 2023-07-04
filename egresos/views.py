@@ -2,14 +2,16 @@ from datetime import datetime, timedelta
 from django.utils.dateparse import parse_date
 #import json
 #from django.core import serializers
+from django.db.models import Sum
 from django.http.response import JsonResponse
 from django.shortcuts import render, redirect
 from . forms import form_registroFacturas, form_pagoColaboradores, form_pagoServicios
 from . forms import form_PagoCreditos, form_pagoDecimos, form_planillasIess
 from .forms import form_pagarFacturas
-from general.models import cajasReg
+from general.models import cajasReg, proveedoresProd
 from . models import facturasProveedores, pagoColaboradores, pagoServicios, pagoCreditos
 from .models import decimos, planillasIESS
+
 
 # Create your views here.
 def is_valid_date(date_string):
@@ -353,6 +355,18 @@ def todosEgresoFacturas(request):
         fecha_actual = datetime.now().date()
         fecha_inicial = fecha_actual - timedelta(fecha_actual.day) + timedelta(days=1)
         facturas_pagadas = facturasProveedores.objects.filter(fechapago__range=[fecha_inicial,fecha_actual])
+
+        resultadoProve = facturasProveedores.objects.filter(fechapago__range=[fecha_inicial,fecha_actual]).values('idproveedor').annotate(total_gastado=Sum('valor'))
+        Listagastos = []
+
+        for rp in resultadoProve:
+            datai = {}
+            datai['proveedor']= proveedoresProd.objects.filter(id=rp['idproveedor'])[0]
+            datai['vtotal']=rp['total_gastado']
+            Listagastos.append(datai)
+      
+
+        
         valorfacturape = 0
         for v in facturas_pagadas:
             valorfacturape = valorfacturape + v.valor
@@ -362,6 +376,8 @@ def todosEgresoFacturas(request):
             'fecha_fin':fecha_actual,
             'fecha_inicio':fecha_inicial,
             'valorfacturape':valorfacturape,
+            'resultadoProve':resultadoProve,
+            'Listagastos':Listagastos
 
         })
     else:
@@ -374,4 +390,6 @@ def todosEgresoFacturas(request):
             'fecha_fin':request.POST['fecha_fin'], 
             'fecha_inicio':request.POST['fecha_inicio'],
             'valorfacturape':valorfacturape,
+            'resultadoProve':resultadoProve,
+            'Listagastos':Listagastos
         })
