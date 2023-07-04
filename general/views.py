@@ -63,3 +63,6 @@ def signin(request):
             login(request, user)
             return redirect('task')
 
+
+def pagesocios(request):
+    return render(request, 'pagesocios.html')

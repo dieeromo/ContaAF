@@ -1,0 +1,20 @@
+{% extends 'plantilla1.html' %}
+
+{% block content%}
+<h3>Socios</h3>
+
+
+<li class="nav-item">
+    <a class="nav-link active" aria-current="page" href="{%url 'todosCierres'%}">Todos los cierres</a>
+</li>
+
+<li class="nav-item">
+    <a class="nav-link active" aria-current="page" href="{%url 'cifras'%}">Cifras</a>
+</li>
+
+<li class="nav-item">
+    <a class="nav-link active" aria-current="page" href="{%url 'todoEgresoFacturas'%}">Todas facturas</a>
+</li>
+
+
+{%endblock%}
