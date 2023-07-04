@@ -382,6 +382,17 @@ def todosEgresoFacturas(request):
         })
     else:
         facturas_pagadas = facturasProveedores.objects.filter(fechapago__range=[  request.POST['fecha_inicio'],request.POST['fecha_fin']   ])
+        
+        resultadoProve = facturasProveedores.objects.filter(fechapago__range=[   request.POST['fecha_inicio'],request.POST['fecha_fin']   ]).values('idproveedor').annotate(total_gastado=Sum('valor'))
+        Listagastos = []
+
+        for rp in resultadoProve:
+            datai = {}
+            datai['proveedor']= proveedoresProd.objects.filter(id=rp['idproveedor'])[0]
+            datai['vtotal']=rp['total_gastado']
+            Listagastos.append(datai)
+
+
         valorfacturape = 0
         for v in facturas_pagadas:
             valorfacturape = valorfacturape + v.valor
