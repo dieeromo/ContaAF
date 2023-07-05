@@ -483,3 +483,35 @@ def todosEgresosColaboradores(request):
             'd_feriados':d_feriados
 
         })
+    
+
+def todosEgresosCreditos(request):
+    if request.method == 'GET':
+        fecha_actual = datetime.now().date()
+        fecha_inicial = fecha_actual - timedelta(fecha_actual.day) + timedelta(days=1)
+        creditos_pagados = pagoCreditos.objects.filter(fecha__range=[fecha_inicial,fecha_actual])
+        v_creditos = 0
+        for v in creditos_pagados:
+            v_creditos = v_creditos + v.valor
+        return render(request,'todosEgresosCreditos.html',{
+            'creditos_pagados':creditos_pagados,
+            'fecha_fin':fecha_actual,
+            'fecha_inicio':fecha_inicial,
+            'v_creditos':v_creditos,
+
+
+        })
+    else: 
+        creditos_pagados = pagoCreditos.objects.filter(fecha__range=[     request.POST['fecha_inicio'],request.POST['fecha_fin']     ])
+        v_creditos = 0
+        for v in creditos_pagados:
+            v_creditos = v_creditos + v.valor
+
+        return render(request,'todosEgresosCreditos.html',{
+            'creditos_pagados':creditos_pagados,
+            'fecha_fin':request.POST['fecha_fin'], 
+            'fecha_inicio':request.POST['fecha_inicio'],
+            'v_creditos':v_creditos,
+        })
+
+    

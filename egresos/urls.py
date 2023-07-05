@@ -34,9 +34,10 @@ urlpatterns =[
     path('facturaspagar/', views.facturasPorPagar, name='facturasPorPagar'),
     path('pagarfacturas/<int:idfactura>', views.pagarFacturas, name='pagarFacturas'),
 
-     path('todosegresosfacturas', views.todosEgresoFacturas, name='todoEgresoFacturas'),
-     path('todosegresosservicios', views.todosEgresosServicios, name='todoEgresoServicios'),
-     path('todosegresoscolaboradores', views.todosEgresosColaboradores, name='todoEgresoColaboradores'),
+    path('todosegresosfacturas', views.todosEgresoFacturas, name='todoEgresoFacturas'),
+    path('todosegresosservicios', views.todosEgresosServicios, name='todoEgresoServicios'),
+    path('todosegresoscolaboradores', views.todosEgresosColaboradores, name='todoEgresoColaboradores'),
+    path('todosegresoscreditos', views.todosEgresosCreditos, name='todosEgresoCreditos'),
 
     
 ]
