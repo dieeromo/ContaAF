@@ -423,7 +423,9 @@ def todosEgresosServicios(request):
         })
     else:
         servicios_pagados = pagoServicios.objects.filter(fecha__range=[   request.POST['fecha_inicio'],request.POST['fecha_fin']    ])
-
+        v_servicios = 0
+        for v in servicios_pagados:
+            v_servicios = v_servicios + v.valor
         return render(request, 'todosEgresosServicios.html',{
             'servicios_pagados':servicios_pagados,
             'fecha_fin':request.POST['fecha_fin'], 
