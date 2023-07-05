@@ -404,3 +404,29 @@ def todosEgresoFacturas(request):
             'resultadoProve':resultadoProve,
             'Listagastos':Listagastos
         })
+    
+
+def todosEgresosServicios(request):
+    if request.method == 'GET':
+        fecha_actual = datetime.now().date()
+        fecha_inicial = fecha_actual - timedelta(fecha_actual.day) + timedelta(days=1)
+        servicios_pagados = pagoServicios.objects.filter(fecha__range=[fecha_inicial,fecha_actual])
+        v_servicios = 0
+        for v in servicios_pagados:
+            v_servicios = v_servicios + v.valor
+
+        return render(request, 'todosEgresosServicios.html',{
+            'servicios_pagados':servicios_pagados,
+            'fecha_fin':fecha_actual,
+            'fecha_inicio':fecha_inicial,
+            'v_servicios': v_servicios,
+        })
+    else:
+        servicios_pagados = pagoServicios.objects.filter(fecha__range=[   request.POST['fecha_inicio'],request.POST['fecha_fin']    ])
+
+        return render(request, 'todosEgresosServicios.html',{
+            'servicios_pagados':servicios_pagados,
+            'fecha_fin':request.POST['fecha_fin'], 
+            'fecha_inicio':request.POST['fecha_inicio'],
+            'v_servicios': v_servicios,
+        })
