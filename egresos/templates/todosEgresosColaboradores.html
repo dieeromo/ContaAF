@@ -1,0 +1,57 @@
+{% extends 'plantilla1.html' %}
+
+{% block content%}
+
+<h4>Egresos Colaboradores</h4>
+Por defecto salen del presente mes
+<form method="POST">
+    {% csrf_token %}
+    {{form.as_p}}
+    <label for="fecha_inicio">Fecha Inicio:</label>
+    <input type="date" id="fecha_inicio" name="fecha_inicio">
+
+    <label for="fecha_fin">Fecha Fin:</label>
+    <input type="date" id="fecha_fin" name="fecha_fin">
+    <button>Consultar</button>
+</form>
+Fecha consulta: {{fecha_inicio}} :  {{fecha_fin}}
+
+<table class="table small-text">
+      
+    <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Empresa</th>
+          <th scope="col">Nombre</th>
+          <th scope="col">Días normales</th>
+          <th scope="col">Días extras</th>
+          <th scope="col">Días feriados</th>
+          <th scope="col">Valor</th>
+          <th scope="col">Fecha pago</th>
+          <th scope="col">Caja</th>
+          <th scope="col">Descripcion</th>
+        </tr>
+      </thead>
+      <tbody>
+        {%for egreser in colaboradores_pagados %}
+        <tr>
+          <th scope="row">{{forloop.counter}}</th>
+          <td>{{egreser.id_empresa}}</td>
+          <td>{{egreser.nombre}}</td>
+          <td>{{egreser.dias_normales}}</td>
+          <td>{{egreser.dias_extras}}</td>
+          <td>{{egreser.dias_feriados}}</td>
+          <td>{{egreser.valor}}</td>
+          <td>{{egreser.fecha_pago}}</td>
+          <td>{{egreser.id_caja}}</td>
+          <td>{{egreser.descripcion}}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+</table>
+<h5>Total: {{v_colaboradores}}</h5>
+<h6>Dias normales: {{d_normales}}</h6>
+<h6>Dias extras: {{d_extras}}</h6>
+<h6>Dias feriados: {{d_feriados}}</h6>
+
+{%endblock%}
