@@ -432,3 +432,44 @@ def todosEgresosServicios(request):
             'fecha_inicio':request.POST['fecha_inicio'],
             'v_servicios': v_servicios,
         })
+    
+def todosEgresosColaboradores(request):
+    if request.method == 'GET':
+        fecha_actual = datetime.now().date()
+        fecha_inicial = fecha_actual - timedelta(fecha_actual.day) + timedelta(days=1)
+        colaboradores_pagados = pagoColaboradores.objects.filter(fecha_pago__range=[fecha_inicial,fecha_actual])
+        v_colaboradores = 0
+        d_normales = 0
+        d_extras = 0
+        d_feriados = 0
+        for v in colaboradores_pagados:
+            v_colaboradores = v_colaboradores + v.valor
+            d_normales = d_normales + v.dias_normales
+            d_extras = d_extras + v.dias_extras
+            d_feriados = d_feriados + v.dias_feriados
+        
+
+
+        return render(request, 'todosEgresosColaboradores.html',{
+            'colaboradores_pagados':colaboradores_pagados,
+            'fecha_fin':fecha_actual,
+            'fecha_inicio':fecha_inicial,
+            'v_colaboradores':v_colaboradores,
+
+            'd_normales':d_normales,
+            'd_extras':d_extras,
+            'd_feriados':d_feriados
+        })
+    else:
+        colaboradores_pagados = pagoColaboradores.objects.filter(fecha_pago__range=[  request.POST['fecha_inicio'],request.POST['fecha_fin']    ])
+        return render(request, 'todosEgresosColaboradores.html',{
+            'colaboradores_pagados':colaboradores_pagados,
+            'fecha_fin':request.POST['fecha_fin'], 
+            'fecha_inicio':request.POST['fecha_inicio'],
+            'v_colaboradores':v_colaboradores,
+            
+            'd_normales':d_normales,
+            'd_extras':d_extras,
+            'd_feriados':d_feriados
+
+        })

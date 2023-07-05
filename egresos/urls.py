@@ -36,6 +36,7 @@ urlpatterns =[
 
      path('todosegresosfacturas', views.todosEgresoFacturas, name='todoEgresoFacturas'),
      path('todosegresosservicios', views.todosEgresosServicios, name='todoEgresoServicios'),
+     path('todosegresoscolaboradores', views.todosEgresosColaboradores, name='todoEgresoColaboradores'),
 
     
 ]
