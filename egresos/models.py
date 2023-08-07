@@ -100,4 +100,13 @@ class pagoCreditos(models.Model):
     creado = models.DateField(auto_now_add=True)
     descripcion = models.CharField(max_length=200, null=True, blank=True)
     id_empresa = models.ForeignKey(empresa, on_delete=models.CASCADE, default=1)
+    
 
+class Socios(models.Model):
+    id_empresa = models.ForeignKey(empresa, on_delete=models.CASCADE, default=1)
+    socio = models.ForeignKey(cajasReg, on_delete=models.CASCADE)
+    fecha = models.DateField()
+    mes_de_Pago = models.ForeignKey(pagoMeses, on_delete=models.CASCADE)
+    anio_de_pago = models.ForeignKey(pagoAnio, on_delete=models.CASCADE)
+    valor = models.DecimalField(max_digits=10, decimal_places=2)
+    descripcion = models.CharField(max_length=200, null=True, blank=True)
