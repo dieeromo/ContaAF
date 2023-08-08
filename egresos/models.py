@@ -110,3 +110,7 @@ class Socios(models.Model):
     anio_de_pago = models.ForeignKey(pagoAnio, on_delete=models.CASCADE)
     valor = models.DecimalField(max_digits=10, decimal_places=2)
     descripcion = models.CharField(max_length=200, null=True, blank=True)
+
+    def __str__(self):
+        return "{} - {}/{} -  {} - {} ** {}".format(self.socio, self.mes_de_Pago, self.anio_de_pago, self.valor, self.fecha, self.id)
+    

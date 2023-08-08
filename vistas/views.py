@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from . forms import form_seleccion_caja_empresa, form_caja_empresa_cierre, form_cierres
 from ingresos.models import ingresosCajas
 from egresos.models import facturasProveedores, pagoColaboradores, planillasIESS, decimos
-from egresos.models import pagoServicios, pagoCreditos
+from egresos.models import pagoServicios, pagoCreditos, Socios
 from movimientos.models import movimientos
 from cierres.models import CierresCajas
 
@@ -62,6 +62,9 @@ def cierresDiarios(request):
         egre_decimos = decimos.objects.filter(caja=cajaid, fecha=fecha_consulta)
         egre_servicios = pagoServicios.objects.filter(caja=cajaid, fecha=fecha_consulta)
         egre_creditos = pagoCreditos.objects.filter(caja=cajaid,fecha=fecha_consulta)
+         ###########
+        egre_socio = Socios.objects.filter(socio=cajaid, fecha=fecha_consulta)
+        ######
         mov_movimientos_salida = movimientos.objects.filter(caja_origen_id=cajaid,fecha=fecha_consulta)
         mov_movimientos_ingreso = movimientos.objects.filter(caja_destino_id=cajaid, fecha=fecha_consulta)
         cierreAnterior = CierresCajas.objects.filter(caja=cajaid, fecha=fecha_consulta )
@@ -106,8 +109,12 @@ def cierresDiarios(request):
         for valor in cierreAnterior:
             valor_cierre_anterior = valor_cierre_anterior + valor.valorCierreActual
 
-        valorTotalEgresosSis = valorTotalFacturas + valorTotalColaboradores + valorTotalPlanillasIees + valorTotalDecinos + valorTotalServicios + valorTotalCreditos
-        valorTotalDia = valorTotalIngresos - valorTotalEgresosSis + valorTotalMovimientosIngreso - valorTotalMovimientosSalida
+        valor_total_socio = 0
+        for valor_s in egre_socio:
+            valor_total_socio = valor_total_socio + valor_s.valor
+
+        valorTotalEgresosSis = valorTotalFacturas + valorTotalColaboradores + valorTotalPlanillasIees + valorTotalDecinos + valorTotalServicios + valorTotalCreditos +  valor_total_socio
+        valorTotalDia = valorTotalIngresos - valorTotalEgresosSis + valorTotalMovimientosIngreso - valorTotalMovimientosSalida 
         valor_cierre_dia = valorTotalDia + valor_cierre_anterior
         return render(request, 'cierre_caja_empresa.html',{
             'form': form_caja_empresa_cierre,
@@ -118,6 +125,7 @@ def cierresDiarios(request):
             'egre_decimos':egre_decimos,
             'egre_servicios':egre_servicios,
             'egre_creditos':egre_creditos,
+            'egre_socio': egre_socio,
             'mov_movimientos_salida':mov_movimientos_salida,
             'mov_movimientos_ingreso':mov_movimientos_ingreso,
 
@@ -135,6 +143,7 @@ def cierresDiarios(request):
             'valorTotalDia':valorTotalDia,
             'valor_cierre_anterior':valor_cierre_anterior,
             'valor_cierre_dia':valor_cierre_dia ,
+            ' valor_total_socio': valor_total_socio,
 
 
         })
@@ -149,6 +158,9 @@ def cierresDiarios(request):
         egre_decimos = decimos.objects.filter(caja=caja_cierre ,id_empresa=request.POST['empresa_selec'], fecha=fecha_filtro)
         egre_servicios = pagoServicios.objects.filter(caja=caja_cierre ,empresa_nuestra=request.POST['empresa_selec'], fecha=fecha_filtro)
         egre_creditos = pagoCreditos.objects.filter(caja=caja_cierre ,id_empresa=request.POST['empresa_selec'], fecha=fecha_filtro)
+        ###########
+        egre_socio = Socios.objects.filter(socio=caja_cierre,id_empresa=request.POST['empresa_selec'], fecha=fecha_filtro)
+        ######
         mov_movimientos = movimientos.objects.filter(caja_origen_id=caja_cierre ,empresaCaja=request.POST['empresa_selec'], fecha=fecha_filtro)
         mov_movimientos_salida = movimientos.objects.filter(caja_origen_id=caja_cierre,empresaCaja=request.POST['empresa_selec'],fecha=fecha_filtro)
         mov_movimientos_ingreso = movimientos.objects.filter(caja_destino_id=caja_cierre,empresaCaja=request.POST['empresa_selec'], fecha=fecha_filtro)
@@ -207,8 +219,14 @@ def cierresDiarios(request):
         valorTotalMovimientosSalida = 0
         for TotalMovimientosSalida in mov_movimientos_salida:
             valorTotalMovimientosSalida = valorTotalMovimientosSalida + TotalMovimientosSalida.valor
+
+        valor_total_socio = 0
+        for valor_s in egre_socio:
+            valor_total_socio = valor_total_socio + valor_s.valor
+
+
         
-        valorTotalEgresosSis = valorTotalFacturas + valorTotalColaboradores + valorTotalPlanillasIees + valorTotalDecinos + valorTotalServicios + valorTotalCreditos
+        valorTotalEgresosSis = valorTotalFacturas + valorTotalColaboradores + valorTotalPlanillasIees + valorTotalDecinos + valorTotalServicios + valorTotalCreditos + valor_total_socio
         EmpresaMovimientosDia = empresa.objects.get(id=request.POST['empresa_selec']) 
         #valor_cierre_anterior = 0
         #for valor in cierreAnterior:
@@ -223,6 +241,7 @@ def cierresDiarios(request):
         'egre_decimos':egre_decimos,
         'egre_servicios':egre_servicios,
         'egre_creditos':egre_creditos,
+        'egre_socio':egre_socio,
         'mov_movimientos_ingreso':mov_movimientos_ingreso,
         'mov_movimientos_salida':mov_movimientos_salida,
 
@@ -241,6 +260,7 @@ def cierresDiarios(request):
         'valorTotalCreditos':valorTotalCreditos,
         'valorTotalMovimientosIngreso':valorTotalMovimientosIngreso,
         'valorTotalMovimientosSalida': valorTotalMovimientosSalida,
+        'valor_total_socio': valor_total_socio,
 
         'EmpresaMovimientosDia':EmpresaMovimientosDia,
 
@@ -265,6 +285,9 @@ def cierre3(request, caja_id, empresa_id,fecha_consulta):
         egre_decimos = decimos.objects.filter(caja=caja_id,id_empresa=empresa_id, fecha=fecha_consulta)
         egre_servicios = pagoServicios.objects.filter(caja=caja_id,empresa_nuestra=empresa_id, fecha=fecha_consulta)
         egre_creditos = pagoCreditos.objects.filter(caja=caja_id,id_empresa=empresa_id, fecha=fecha_consulta)
+        ###########
+        egre_socio = Socios.objects.filter(socio=caja_id,id_empresa=empresa_id, fecha=fecha_consulta)
+        ######
         mov_movimientos_salida = movimientos.objects.filter(caja_origen_id=caja_id,empresaCaja=empresa_id, fecha=fecha_consulta)
         mov_movimientos_ingreso = movimientos.objects.filter(caja_destino_id=caja_id,empresaCaja=empresa_id, fecha=fecha_consulta)
         cierreAnterior = CierresCajas.objects.filter(caja=caja_id, empresa=empresa_id, fecha=fecha_ayer )
@@ -309,7 +332,12 @@ def cierre3(request, caja_id, empresa_id,fecha_consulta):
         for valor in cierreAnterior:
             valor_cierre_anterior = valor_cierre_anterior + valor.valorCierreActual
 
-        valorTotalEgresosSis = valorTotalFacturas + valorTotalColaboradores + valorTotalPlanillasIees + valorTotalDecinos + valorTotalServicios + valorTotalCreditos
+        valor_total_socio = 0
+        for valor_s in egre_socio:
+            valor_total_socio = valor_total_socio + valor_s.valor
+
+
+        valorTotalEgresosSis = valorTotalFacturas + valorTotalColaboradores + valorTotalPlanillasIees + valorTotalDecinos + valorTotalServicios + valorTotalCreditos + valor_total_socio
         valorTotalDia = valorTotalIngresos - valorTotalEgresosSis + valorTotalMovimientosIngreso - valorTotalMovimientosSalida
         valor_cierre_dia = valorTotalDia + valor_cierre_anterior
         print('**************** caja')  
@@ -323,6 +351,7 @@ def cierre3(request, caja_id, empresa_id,fecha_consulta):
             'egre_decimos':egre_decimos,
             'egre_servicios':egre_servicios,
             'egre_creditos':egre_creditos,
+            'egre_socio': egre_socio,
             'mov_movimientos_salida':mov_movimientos_salida,
             'mov_movimientos_ingreso' : mov_movimientos_ingreso,
 
@@ -335,6 +364,7 @@ def cierre3(request, caja_id, empresa_id,fecha_consulta):
             'valorTotalCreditos':valorTotalCreditos,
             'valorTotalMovimientosIngreso':valorTotalMovimientosIngreso,
             'valorTotalMovimientosSalida': valorTotalMovimientosSalida,
+            'valor_total_socio': valor_total_socio,
 
             'valorTotalEgresosSis':valorTotalEgresosSis,
             'valorTotalDia':valorTotalDia,
@@ -355,6 +385,9 @@ def cierre3(request, caja_id, empresa_id,fecha_consulta):
         egre_decimos = decimos.objects.filter(caja=caja_id,id_empresa=empresa_id, fecha=fecha_consulta)
         egre_servicios = pagoServicios.objects.filter(caja=caja_id,empresa_nuestra=empresa_id, fecha=fecha_consulta)
         egre_creditos = pagoCreditos.objects.filter(caja=caja_id,id_empresa=empresa_id, fecha=fecha_consulta)
+        ###########
+        egre_socio = Socios.objects.filter(socio=caja_id,id_empresa=empresa_id, fecha=fecha_consulta)
+        ######
         mov_movimientos_salida = movimientos.objects.filter(caja_origen_id=caja_id,empresaCaja=empresa_id, fecha=fecha_consulta)
         mov_movimientos_ingreso = movimientos.objects.filter(caja_destino_id=caja_id,empresaCaja=empresa_id, fecha=fecha_consulta)
         cierreAnterior = CierresCajas.objects.filter(caja=caja_id, empresa=empresa_id, fecha=fecha_ayer )
@@ -387,6 +420,12 @@ def cierre3(request, caja_id, empresa_id,fecha_consulta):
         for egresosPagoCreditos in egre_creditos:
             valorTotalCreditos = valorTotalCreditos + egresosPagoCreditos.valor
         
+        valor_total_socio = 0
+        for valor_s in egre_socio:
+            valor_total_socio = valor_total_socio + valor_s.valor
+
+
+        
         valorTotalMovimientosIngreso = 0
         for TotalMovimientosIngreso in mov_movimientos_ingreso:
             valorTotalMovimientosIngreso = valorTotalMovimientosIngreso + TotalMovimientosIngreso.valor
@@ -398,8 +437,10 @@ def cierre3(request, caja_id, empresa_id,fecha_consulta):
         valor_cierre_anterior = 0
         for valor in cierreAnterior:
             valor_cierre_anterior = valor_cierre_anterior + valor.valorCierreActual
+        
 
-        valorTotalEgresosSis = valorTotalFacturas + valorTotalColaboradores + valorTotalPlanillasIees + valorTotalDecinos + valorTotalServicios + valorTotalCreditos
+
+        valorTotalEgresosSis = valorTotalFacturas + valorTotalColaboradores + valorTotalPlanillasIees + valorTotalDecinos + valorTotalServicios + valorTotalCreditos + valor_total_socio
         valorTotalDia = valorTotalIngresos - valorTotalEgresosSis + valorTotalMovimientosIngreso - valorTotalMovimientosSalida
         valor_cierre_dia = valorTotalDia + valor_cierre_anterior
         
@@ -657,6 +698,7 @@ def detallesCierres(request,cajaid,empresa_id,fecha_consulta):
     egre_decimos = decimos.objects.filter(caja=cajaid, fecha=fecha_consulta)
     egre_servicios = pagoServicios.objects.filter(caja=cajaid, fecha=fecha_consulta)
     egre_creditos = pagoCreditos.objects.filter(caja=cajaid,fecha=fecha_consulta)
+    egre_socio = Socios.objects.filter(socio=cajaid,id_empresa=empresa_id, fecha=fecha_consulta)
     mov_movimientos_salida = movimientos.objects.filter(caja_origen_id=cajaid,fecha=fecha_consulta)
     mov_movimientos_ingreso = movimientos.objects.filter(caja_destino_id=cajaid, fecha=fecha_consulta)
     cierreAnterior = CierresCajas.objects.filter(caja=cajaid, fecha=fecha_dia_anterior )
@@ -688,6 +730,11 @@ def detallesCierres(request,cajaid,empresa_id,fecha_consulta):
     valorTotalCreditos = 0
     for egresosPagoCreditos in egre_creditos:
         valorTotalCreditos = valorTotalCreditos + egresosPagoCreditos.valor
+
+    valor_retiros = 0
+    for vre in egre_socio:
+        valor_retiros = valor_retiros + vre.valor
+        
         
     valorTotalMovimientosIngreso = 0
     for TotalMovimientosIngreso in mov_movimientos_ingreso:
@@ -701,7 +748,7 @@ def detallesCierres(request,cajaid,empresa_id,fecha_consulta):
     for valor in cierreAnterior:
         valor_cierre_anterior = valor_cierre_anterior + valor.valorCierreActual
 
-    valorTotalEgresosSis = valorTotalFacturas + valorTotalColaboradores + valorTotalPlanillasIees + valorTotalDecinos + valorTotalServicios + valorTotalCreditos
+    valorTotalEgresosSis = valorTotalFacturas + valorTotalColaboradores + valorTotalPlanillasIees + valorTotalDecinos + valorTotalServicios + valorTotalCreditos + valor_retiros
     valorTotalDia = valorTotalIngresos - valorTotalEgresosSis + valorTotalMovimientosIngreso - valorTotalMovimientosSalida
     valor_cierre_dia = valorTotalDia + valor_cierre_anterior
     return render(request, 'detallesCierres.html',{
@@ -712,6 +759,7 @@ def detallesCierres(request,cajaid,empresa_id,fecha_consulta):
         'egre_decimos':egre_decimos,
         'egre_servicios':egre_servicios,
         'egre_creditos':egre_creditos,
+        'egre_socio' : egre_socio,
         'mov_movimientos_salida':mov_movimientos_salida,
         'mov_movimientos_ingreso':mov_movimientos_ingreso,
 
@@ -724,10 +772,42 @@ def detallesCierres(request,cajaid,empresa_id,fecha_consulta):
         'valorTotalCreditos':valorTotalCreditos,
         'valorTotalMovimientosIngreso':valorTotalMovimientosIngreso,
         'valorTotalMovimientosSalida': valorTotalMovimientosSalida,
+        'valor_retiros':valor_retiros,
 
         'valorTotalEgresosSis':valorTotalEgresosSis,
         'valorTotalDia':valorTotalDia,
         'valor_cierre_anterior':valor_cierre_anterior,
         'valor_cierre_dia':valor_cierre_dia ,
 
+    })
+
+
+def retiro_socios(request):
+    egre_socio = Socios.objects.all()
+    idc = cajasReg.objects.all()
+
+    jc = cajasReg.objects.get(nombreCaja='Caja Jhonny')
+    dr = cajasReg.objects.get(nombreCaja='Caja Diego')
+
+  
+
+    egre_socio_jhony = Socios.objects.filter(socio=jc)
+
+    egre_socio_diego = Socios.objects.filter(socio=dr)
+    
+    total_jhony = 0
+    for v_jhony in  egre_socio_jhony:
+        total_jhony = total_jhony + v_jhony.valor
+
+    total_diego = 0
+    for v_diego in egre_socio_diego:
+        total_diego = total_diego + v_diego.valor
+
+    
+
+
+    return render(request,'retiro_socios.html',{
+        'retiros': egre_socio,
+        'total_jhony' :total_jhony,
+        'total_diego' : total_diego,
     })

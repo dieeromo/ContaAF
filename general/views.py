@@ -6,6 +6,8 @@ from django.contrib.auth import login, logout, authenticate
 from django.db import IntegrityError
 from django.contrib.auth.decorators import login_required
 
+from afnet.decorators import custom_permission_required
+
 # Create your views here.
 
 def home(request):
@@ -63,6 +65,6 @@ def signin(request):
             login(request, user)
             return redirect('task')
 
-
+@custom_permission_required(allowed_roles=['manager'])
 def pagesocios(request):
     return render(request, 'pagesocios.html')

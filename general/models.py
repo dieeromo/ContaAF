@@ -45,7 +45,7 @@ class cajasReg(models.Model):
     statusCaja = models.BooleanField()
     usuario = models.ForeignKey(User, on_delete=models.CASCADE)
     def __str__(self):
-        return self.nombreCaja
+        return "{} ".format(self.nombreCaja)
     
 class pagoMeses(models.Model):
     mes = models.CharField(max_length=50)
