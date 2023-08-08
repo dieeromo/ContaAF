@@ -10,4 +10,5 @@ urlpatterns =[
     path('mismovimientos/',views.misMovimientos, name = 'mismovimientos'),
     path('todoscierres/',views.todosCierres, name = 'todosCierres'),
     path('detallescierres/<int:cajaid>/<int:empresa_id>/<str:fecha_consulta>',views.detallesCierres, name='detallesCierres'),
+    path('retirosocios/',views.retiro_socios, name = 'retiro_socios'),
 ]

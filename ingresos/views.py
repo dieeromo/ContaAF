@@ -6,6 +6,8 @@ from . forms import form_registroIngresos
 from general.models import cajasReg, empresa
 
 # Create your views here.
+
+
 def registroIngresos(request):
     if request.method == 'GET':
         return render(request, 'registroIngresos.html',{

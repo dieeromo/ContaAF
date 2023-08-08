@@ -8,301 +8,301 @@
 <h3>Movimientos cajas - Todas las empresas</h3>
 <p>Por defecto aparecen los movimientos del día</p>
 
-<form  method="POST">
-    {% csrf_token %}
-    {{form}}
-    <label for="fecha">Fecha:</label>
-    <input type="date" id="fecha" name="fecha">
-    <button>Seleccionar</button>
+<form method="POST">
+  {% csrf_token %}
+  {{form}}
+  <label for="fecha">Fecha:</label>
+  <input type="date" id="fecha" name="fecha">
+  <button>Seleccionar</button>
 </form>
 
 
 
 
 <div class="container text-center  ">
-    <div class="row ">
-      <div class="col">
-        <h5>Ingresos: {{valorTotalIngresos}}</h5>
+  <div class="row ">
+    <div class="col">
+      <h5>Ingresos: {{valorTotalIngresos}}</h5>
 
-        <table class="table table-sm  small-text">
-            <thead>
-                <tr>
-                  <th scope="col">#</th>
-                  <th scope="col ">Empresa</th>
-                  <th scope="col">Caja</th>
-                  <th scope="col" >Valor</th>
-                  <th scope="col" >Concepto</th>
-                  <th scope="col">Descripcion</th>
-                  <th scope="col" >Fecha</th>
-                </tr>
-              </thead>
-              <tbody>
-                {%for ing in ingresos%}
-                <tr>
-                  <th >{{forloop.counter}}</th>
-                  <td >{{ing.empresaIngreso}}</td>
-                  <td >{{ing.nombreCaja}}</td>
-                  <td >{{ing.valorIngreso}}</td>
-                  <td >{{ing.conceptoIngreso}}</td>
-                  <td >{{ing.descripcion}}</td>
-                  <td >{{ing.fecha}}</td>
-                </tr>
-                {% endfor %}
-              </tbody>
-        </table>
-        <h5>Movimientos</h5>
-        <div>Ingreso: {{valorTotalMovimientosIngreso}}</div>
-        <table class="table small-text">
-            <thead>
-                <tr>
-                  <th scope="col" >#</th>
-                  <th scope="col" >Empresa</th>
-                  <th scope="col" >Caja</th>
-                  <th scope="col" >Caja origen</th>
-                  <th scope="col" >Valor</th>
-                  <th scope="col" >Fecha</th>
-                  <th scope="col" >Descripcion</th>
-                </tr>
-              </thead>
-              <tbody>
-                {% for mov_in in mov_movimientos_ingreso %}
-                <tr>
-                  <th scope="row" >{{forloop.counter}}</th>
-                  <td >{{mov_in.empresaCaja}}</td>
-                  <td >{{mov_in.caja_destino}}</td>
-                  <td >{{mov_in.caja_origen}}</td>
-                  <td >{{mov_in.valor}}</td>
-                  <td >{{mov_in.fecha}}</td>
-                  <td >{{mov_in.descripcion}}</td>
-    
-                </tr>
-                {% endfor %}
-              </tbody>
-        </table>
-        <div>Salida: {{valorTotalMovimientosSalida}}</div>
-        <table class="table small-text">
-       
-            <thead>
-                <tr>
-                  <th scope="col" >#</th>
-                  <th scope="col" >Empresa</th>
-                  <th scope="col" >Caja</th>
-                  <th scope="col" > Caja destino</th>
-                  <th scope="col" >Valor</th>
-                  <th scope="col" >Fecha</th>
-                  <th scope="col" >Descripcion</th>
-                </tr>
-              </thead>
-              <tbody>
-                {% for mov_sal in mov_movimientos_salida %}
-                <tr>
-                  <th scope="row">{{forloop.counter}}</th>
-                  <td>{{mov_sal.empresaCaja}}</td>
-                  <td>{{mov_sal.caja_origen}}</td>
-                  <td>{{mov_sal.caja_destino}}</td>
-                  <td>{{mov_sal.valor}}</td>
-                  <td>{{mov_sal.fecha}}</td>
-                  <td>{{mov_sal.descripcion}}</td>
-    
-                </tr>
-                {% endfor %}
-              </tbody>
-        </table>
+      <table class="table table-sm  small-text">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col ">Empresa</th>
+            <th scope="col">Caja</th>
+            <th scope="col">Valor</th>
+            <th scope="col">Concepto</th>
+            <th scope="col">Descripcion</th>
+            <th scope="col">Fecha</th>
+          </tr>
+        </thead>
+        <tbody>
+          {%for ing in ingresos%}
+          <tr>
+            <th>{{forloop.counter}}</th>
+            <td>{{ing.empresaIngreso}}</td>
+            <td>{{ing.nombreCaja}}</td>
+            <td>{{ing.valorIngreso}}</td>
+            <td>{{ing.conceptoIngreso}}</td>
+            <td>{{ing.descripcion}}</td>
+            <td>{{ing.fecha}}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <h5>Movimientos</h5>
+      <div>Ingreso: {{valorTotalMovimientosIngreso}}</div>
+      <table class="table small-text">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Empresa</th>
+            <th scope="col">Caja</th>
+            <th scope="col">Caja origen</th>
+            <th scope="col">Valor</th>
+            <th scope="col">Fecha</th>
+            <th scope="col">Descripcion</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for mov_in in mov_movimientos_ingreso %}
+          <tr>
+            <th scope="row">{{forloop.counter}}</th>
+            <td>{{mov_in.empresaCaja}}</td>
+            <td>{{mov_in.caja_destino}}</td>
+            <td>{{mov_in.caja_origen}}</td>
+            <td>{{mov_in.valor}}</td>
+            <td>{{mov_in.fecha}}</td>
+            <td>{{mov_in.descripcion}}</td>
 
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <div>Salida: {{valorTotalMovimientosSalida}}</div>
+      <table class="table small-text">
 
-        
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Empresa</th>
+            <th scope="col">Caja</th>
+            <th scope="col"> Caja destino</th>
+            <th scope="col">Valor</th>
+            <th scope="col">Fecha</th>
+            <th scope="col">Descripcion</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for mov_sal in mov_movimientos_salida %}
+          <tr>
+            <th scope="row">{{forloop.counter}}</th>
+            <td>{{mov_sal.empresaCaja}}</td>
+            <td>{{mov_sal.caja_origen}}</td>
+            <td>{{mov_sal.caja_destino}}</td>
+            <td>{{mov_sal.valor}}</td>
+            <td>{{mov_sal.fecha}}</td>
+            <td>{{mov_sal.descripcion}}</td>
+
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
 
 
 
-      </div>
-<!--COLUMNA 2-->
-      <div class="col">
-        <h5>Egresos: {{valorTotalEgresosSis }}</h5>
 
-        <div class="ali-totales">Facturas: {{valorTotalFacturas}}</div>
-        <table class="table table-sm small-text">
-            <thead>
-                <tr>
-                  <th scope="col" >#</th>
-                  <th scope="col" >Empresa</th>
-                  <th scope="col" >Caja</th>
-                  <th scope="col" >Factura</th>
-                  <th scope="col" >Valor</th>
-                  <th scope="col" >Fecha Pago</th>
-                  <th scope="col" >Proveedor</th>
-                </tr>
-              </thead>
-              <tbody>
-                {%for egrefac in egrefac%}
-                <tr>
-                  <th >{{forloop.counter}}</th>
-                  <td >{{egrefac.id_empresa}}</td>
-                  <td >{{egrefac.id_caja}}</td>
-                  <td >{{egrefac.numeroFactura}}</td>
-                  <td >{{egrefac.valor}}</td>
-                  <td >{{egrefac.fechapago}}</td>
-                  <td >{{egrefac.idproveedor}}</td>
-                </tr>
-                {% endfor %}
-              </tbody>
-        </table>
 
-        <div class="ali-totales">Colaboradores: {{valorTotalColaboradores}}</div> 
-        <table class="table small-text">
-      
-            <thead>
-                <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">Empresa</th>
-                  <th scope="col">Caja</th>
-                  <th scope="col">Colaborador</th>
-                  <th scope="col">Valor</th>
-                  <th scope="col">Fecha pago</th>
-                  <th scope="col">Descripcion</th>
-                  
-                </tr>
-              </thead>
-              <tbody>
-                {%for egrecol in egrecolaboradores %}
-                <tr>
-                  <th scope="row">{{forloop.counter}}</th>
-                  <td>{{egrecol.id_empresa}}</td>
-                  <td>{{egrecol.id_caja}}</td>
-                  <td>{{egrecol.nombre}}</td>
-                  <td>{{egrecol.valor}}</td>
-                  <td>{{egrecol.fecha_pago}}</td>
-                  <td>{{egrecol.descripcion}}</td>
-                </tr>
-                {% endfor %}
-              </tbody>
-        </table>
-        <div class="ali-totales">Seguridad social: {{valorTotalPlanillasIees}}</div>
-        <table class="table small-text">
-      
-            <thead>
-                <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">Empresa</th>
-                  <th scope="col">Caja</th>
-                  <th scope="col">Colaborador</th>
-                  <th scope="col">Valor</th>
-                  <th scope="col">Fecha Pago</th>
-                  <th scope="col">Deescripción</th>
-                </tr>
-              </thead>
-              <tbody>
-                {%for egreiess in egre_iess %}
-                <tr>
-                  <th scope="row">{{forloop.counter}}</th>
-                  <td>{{egreiess.id_empresa}}</td>
-                  <td>{{egreiess.caja}}</td>
-                  <td>{{egreiess.colaborador}}</td>
-                  <td>{{egreiess.valor}}</td>
-                  <td>{{egreiess.fecha}}</td>
-                  <td>{{egreiess.descripcion}}</td>
-                </tr>
-                {% endfor %}
 
-              </tbody>
-        </table>
-
-        <div class="ali-totales">Decimos: {{valorTotalDecinos}}</div>
-        <table class="table small-text">
-            <thead>
-                <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">Empresa</th>
-                  <th scope="col">Caja</th>
-                  <th scope="col">Colaborador</th>
-                  <th scope="col">Valor</th>
-                  <th scope="col">Fecha Pago</th>
-                  <th scope="col">Deescripción</th>
-                </tr>
-              </thead>
-              <tbody>
-                {%for egrede in egre_decimos  %}
-                <tr>
-                  <th scope="row">{{forloop.counter}}</th>
-                  <td>{{egrede.id_empresa}}</td>
-                  <td>{{egrede.caja}}</td>
-                  <td>{{egrede.colaborador}}</td>
-                  <td>{{egrede.valor}}</td>
-                  <td>{{egrede.fecha}}</td>
-                  <td>{{egrede.descripcion}}</td>
-                </tr>
-                {% endfor %}
-              </tbody>
-        </table>
-        
-        <div class="ali-totales"> Servicios: {{valorTotalServicios}}</div>
-       
-        
-        <table class="table small-text">
-      
-            <thead>
-                <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">Empresa</th>
-                  <th scope="col">Caja</th>
-                  <th scope="col">Servicio</th>
-                  <th scope="col">Empresa prestadora</th>
-                  <th scope="col">Valor</th>
-                  <th scope="col">Fecha pago</th>
-                  <th scope="col">Descripcion</th>
-                </tr>
-              </thead>
-              <tbody>
-                {%for egreser in egre_servicios %}
-                <tr>
-                  <th scope="row">{{forloop.counter}}</th>
-                  <td>{{egreser.empresa_nuestra}}</td>
-                  <td>{{egreser.caja}}</td>
-                  <td>{{egreser.servicio}}</td>
-                  <td>{{egreser.empresa_servicio}}</td>
-                  <td>{{egreser.valor}}</td>
-                  <td>{{egreser.fecha}}</td>
-                  <td>{{egreser.descripcion}}</td>
-                </tr>
-                {% endfor %}
-
-              </tbody>
-        </table>
-
-        <div class="ali-totales">Creditos: {{valorTotalCreditos}}</div>
-        <table class="table small-text">
-      
-            <thead>
-                <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">Empresa</th>
-                  <th scope="col">Caja</th>
-                  <th scope="col">Institucion financiera</th>
-                  <th scope="col">Valor</th>
-                  <th scope="col">Fecha</th>
-                  <th scope="col">Descripcion</th>
-                </tr>
-              </thead>
-              <tbody>
-                {% for egrecre in egre_creditos %}
-                <tr>
-                  <th scope="row">{{forloop.counter}}</th>
-                  <td>{{egrecre.id_empresa}}</td>
-                  <td>{{egrecre.caja}}</td>
-                  <td>{{egrecre.nombre_coop}}</td>
-                  <td>{{egrecre.valor}}</td>
-                  <td>{{egrecre.fecha}}</td>
-                  <td>{{egrecre.descripcion}}</td>
-                </tr>
-                {% endfor %}
-              </tbody>
-        </table>
-
-        
-      </div>
-
-      
     </div>
+    <!--COLUMNA 2-->
+    <div class="col">
+      <h5>Egresos: {{valorTotalEgresosSis }}</h5>
+
+      <div class="ali-totales">Facturas: {{valorTotalFacturas}}</div>
+      <table class="table table-sm small-text">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Empresa</th>
+            <th scope="col">Caja</th>
+            <th scope="col">Factura</th>
+            <th scope="col">Valor</th>
+            <th scope="col">Fecha Pago</th>
+            <th scope="col">Proveedor</th>
+          </tr>
+        </thead>
+        <tbody>
+          {%for egrefac in egrefac%}
+          <tr>
+            <th>{{forloop.counter}}</th>
+            <td>{{egrefac.id_empresa}}</td>
+            <td>{{egrefac.id_caja}}</td>
+            <td>{{egrefac.numeroFactura}}</td>
+            <td>{{egrefac.valor}}</td>
+            <td>{{egrefac.fechapago}}</td>
+            <td>{{egrefac.idproveedor}}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+      <div class="ali-totales">Colaboradores: {{valorTotalColaboradores}}</div>
+      <table class="table small-text">
+
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Empresa</th>
+            <th scope="col">Caja</th>
+            <th scope="col">Colaborador</th>
+            <th scope="col">Valor</th>
+            <th scope="col">Fecha pago</th>
+            <th scope="col">Descripcion</th>
+
+          </tr>
+        </thead>
+        <tbody>
+          {%for egrecol in egrecolaboradores %}
+          <tr>
+            <th scope="row">{{forloop.counter}}</th>
+            <td>{{egrecol.id_empresa}}</td>
+            <td>{{egrecol.id_caja}}</td>
+            <td>{{egrecol.nombre}}</td>
+            <td>{{egrecol.valor}}</td>
+            <td>{{egrecol.fecha_pago}}</td>
+            <td>{{egrecol.descripcion}}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <div class="ali-totales">Seguridad social: {{valorTotalPlanillasIees}}</div>
+      <table class="table small-text">
+
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Empresa</th>
+            <th scope="col">Caja</th>
+            <th scope="col">Colaborador</th>
+            <th scope="col">Valor</th>
+            <th scope="col">Fecha Pago</th>
+            <th scope="col">Deescripción</th>
+          </tr>
+        </thead>
+        <tbody>
+          {%for egreiess in egre_iess %}
+          <tr>
+            <th scope="row">{{forloop.counter}}</th>
+            <td>{{egreiess.id_empresa}}</td>
+            <td>{{egreiess.caja}}</td>
+            <td>{{egreiess.colaborador}}</td>
+            <td>{{egreiess.valor}}</td>
+            <td>{{egreiess.fecha}}</td>
+            <td>{{egreiess.descripcion}}</td>
+          </tr>
+          {% endfor %}
+
+        </tbody>
+      </table>
+
+      <div class="ali-totales">Decimos: {{valorTotalDecinos}}</div>
+      <table class="table small-text">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Empresa</th>
+            <th scope="col">Caja</th>
+            <th scope="col">Colaborador</th>
+            <th scope="col">Valor</th>
+            <th scope="col">Fecha Pago</th>
+            <th scope="col">Deescripción</th>
+          </tr>
+        </thead>
+        <tbody>
+          {%for egrede in egre_decimos %}
+          <tr>
+            <th scope="row">{{forloop.counter}}</th>
+            <td>{{egrede.id_empresa}}</td>
+            <td>{{egrede.caja}}</td>
+            <td>{{egrede.colaborador}}</td>
+            <td>{{egrede.valor}}</td>
+            <td>{{egrede.fecha}}</td>
+            <td>{{egrede.descripcion}}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+      <div class="ali-totales"> Servicios: {{valorTotalServicios}}</div>
+
+
+      <table class="table small-text">
+
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Empresa</th>
+            <th scope="col">Caja</th>
+            <th scope="col">Servicio</th>
+            <th scope="col">Empresa prestadora</th>
+            <th scope="col">Valor</th>
+            <th scope="col">Fecha pago</th>
+            <th scope="col">Descripcion</th>
+          </tr>
+        </thead>
+        <tbody>
+          {%for egreser in egre_servicios %}
+          <tr>
+            <th scope="row">{{forloop.counter}}</th>
+            <td>{{egreser.empresa_nuestra}}</td>
+            <td>{{egreser.caja}}</td>
+            <td>{{egreser.servicio}}</td>
+            <td>{{egreser.empresa_servicio}}</td>
+            <td>{{egreser.valor}}</td>
+            <td>{{egreser.fecha}}</td>
+            <td>{{egreser.descripcion}}</td>
+          </tr>
+          {% endfor %}
+
+        </tbody>
+      </table>
+
+      <div class="ali-totales">Creditos: {{valorTotalCreditos}}</div>
+      <table class="table small-text">
+
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Empresa</th>
+            <th scope="col">Caja</th>
+            <th scope="col">Institucion financiera</th>
+            <th scope="col">Valor</th>
+            <th scope="col">Fecha</th>
+            <th scope="col">Descripcion</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for egrecre in egre_creditos %}
+          <tr>
+            <th scope="row">{{forloop.counter}}</th>
+            <td>{{egrecre.id_empresa}}</td>
+            <td>{{egrecre.caja}}</td>
+            <td>{{egrecre.nombre_coop}}</td>
+            <td>{{egrecre.valor}}</td>
+            <td>{{egrecre.fecha}}</td>
+            <td>{{egrecre.descripcion}}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+
+    </div>
+
+
   </div>
+</div>
 
 
 

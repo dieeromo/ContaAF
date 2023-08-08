@@ -300,6 +300,37 @@
               </tbody>
         </table>
 
+
+        <div class="ali-totales">Creditos 2: {{ valor_total_socio}}</div>
+        <table class="table small-text">
+      
+            <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Empresa</th>
+                  <th scope="col">Caja</th>
+                  <th scope="col">Mes</th>
+                  <th scope="col">Año</th>
+                  <th scope="col">Valor</th>
+                  <th scope="col">Fecha</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for egrecre in egre_socio %}
+                <tr>
+                  <th scope="row">{{forloop.counter}}</th>
+                  <td>{{egrecre.id_empresa}}</td>
+                  <td>{{egrecre.socio}}</td>
+                  <td>{{egrecre.mes_de_Pago}}</td>
+                  <td>{{egrecre.anio_de_pago}}</td>
+                  <td>{{egrecre.valor}}</td>
+                  <td>{{egrecre.fecha}}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+        </table>
+
+
         
       </div>
 

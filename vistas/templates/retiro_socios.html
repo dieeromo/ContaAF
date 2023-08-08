@@ -1,0 +1,49 @@
+{% extends 'plantilla1.html' %}
+
+{% block content%}
+
+<h3>Retiro socios</h3>
+
+
+<div class="container text-center  ">
+    <div class="row ">
+      <div class="col">
+  
+        <table class="table table-sm  small-text">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col ">Empresa</th>
+              <th scope="col">Socio</th>
+              <th scope="col">Fecha</th>
+              <th scope="col">Mes</th>
+              <th scope="col">Año</th>
+              <th scope="col">Valor</th>
+              <th scope="col">Descripcion</th>
+            </tr>
+          </thead>
+          <tbody>
+            {%for ing in retiros%}
+            <tr>
+              <th>{{forloop.counter}}</th>
+              <td>{{ing.id_empresa}}</td>
+              <td>{{ing.socio}}</td>
+              <td>{{ing.fecha}}</td>
+              <td>{{ing.mes_de_Pago}}</td>
+              <td>{{ing.anio_de_pago}}</td>
+              <td>{{ing.valor}}</td>
+              <td>{{ing.descripcion}}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+
+        <div>
+            <h5>Jhonny : {{total_jhony}}</h5>
+            <h5>Diego : {{total_diego}}</h5>
+
+        </div>
+  
+
+
+{%endblock%}
