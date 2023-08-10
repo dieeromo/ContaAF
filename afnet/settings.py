@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'cierres',
     'vistas',
     'historicos',
+    'inventario',
     
 ]
 
