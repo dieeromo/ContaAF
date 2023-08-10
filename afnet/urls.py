@@ -24,5 +24,6 @@ urlpatterns = [
     path('egresos/',include('egresos.urls')),
     path('movimientos/',include('movimientos.urls')),
     path('historicos/',include('historicos.urls')),
+    path('inventario/',include('inventario.urls')),
 
 ]
