@@ -3,7 +3,7 @@
 {% block content%}
 
 <h2>
-    AFNET cifras
+    AFNET en CIFRAS
 </h2>
 
 
@@ -19,8 +19,8 @@
     <button>Consultar</button>
 </form>
 <h4>Periodo: {{fecha_inicio}} - {{fecha_fin}}</h4>
-<div> <h5>Ingresos = {{ingresostotalperiodo}}</h5> </div>
-<div> <h5>Total Egresos = {{egresostotalperiodo}} -- {{gastos_total_eg}}</h5> </div>
+<div> <h5>Ingresos(cierres-filtrado) = {{ingresostotalperiodo}} - {{ingresosfiltradoperiodo}}</h5> </div>
+<div> <h5>Total Egresos (cierres - filtrado/calculado) = {{egresostotalperiodo}} -- {{gastos_total_eg}}</h5> </div>
 
 <div>Semana colaboradores  = {{pagoColaboradoresTotal}}</div>
 
@@ -31,7 +31,7 @@
 <div>Servicios = {{pagoCifrasServicios}}</div>
 <div>Creditos = {{pagoCifrasCreditos}}</div>
 <div>Planillas = {{pagoCifrasIess}}</div>
-<div>Socios Credito = 2{{pagosocios_credi2}}</div>
+<div>Socios Credito = {{pagosocios_credi2}}</div>
 
 
 
