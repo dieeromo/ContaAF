@@ -1,0 +1,31 @@
+{% extends 'plantilla1.html' %}
+
+{% block content%}
+
+Seleccio cierre inventario
+
+
+<div class="container text-start">
+    <div class="row">
+      <div class="col">
+        <!-- aqui va codigo de la colomna-->
+      </div>
+      <div class="col">
+        <div class="container text-centered">
+            <h4>Seleccion cierre inventario</h4>
+        </div>
+        <form method="POST">
+            {% csrf_token %}
+            {{form.as_p}}
+            <label for="fecha">Fecha cierre:</label>
+            <input type="date" id="fecha" name="fecha">
+            <button> Guardar</button>
+        </form>
+      </div>
+      <div class="col">
+         <!-- aqui va codigo de la colomna-->
+      </div>
+    </div>
+  </div>
+
+ {%endblock%}

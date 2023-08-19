@@ -1,0 +1,37 @@
+
+{% extends 'plantilla1.html' %}
+
+{% block content%}
+
+
+<div class="container text-start">
+    <div class="row">
+      <div class="col">
+        <!-- aqui va codigo de la colomna-->
+      </div>
+      <div class="col">
+        <div class="container text-centered">
+            <h4>Registro alidas venta contado</h4>
+        </div>
+        <form method="POST">
+            {% csrf_token %}
+            {{form.as_p}}
+            <div>
+                <label for="fecha_venta">Fecha Venta:</label>
+                <input type="date" id="fecha_venta" name="fecha_venta">
+            </div>
+
+            <div>
+                <label for="fecha_entrega">Fecha Entrga:</label>
+                <input type="date" id="fecha_entrega" name="fecha_entrega">
+            </div>
+
+            <button> Guardar</button>
+        </form>
+      </div>
+      <div class="col">
+         <!-- aqui va codigo de la colomna-->
+      </div>
+    </div>
+  </div>
+{%endblock%}

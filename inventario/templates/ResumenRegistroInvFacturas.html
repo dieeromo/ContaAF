@@ -1,0 +1,57 @@
+{% extends 'plantilla1.html' %}
+
+{% block content%}
+
+Resumen registro facturas
+
+
+<table class="table small-text">
+       
+    <thead>
+        <tr>
+          <th scope="col" >#</th>
+          <th scope="col" >Factura</th>
+          <th scope="col" >Cod</th>
+          <th scope="col" >Cantidad</th>
+          <th scope="col" >Precio In</th>
+          <th scope="col" >Fecha ingreso</th>
+          <th scope="col" >Usuario</th>
+          <th scope="col" >Bodega</th>
+          <th scope="col" >Observacion</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for f in ingresoInv%}
+        <tr>
+          <th scope="row">{{forloop.counter}}</th>
+          <td>{{f.idFactura}}</td>
+          <td>{{f.idcodigo}}</td>
+          <td>{{f.cantidad}}</td>
+          <td>{{f.precio_in}}</td>
+          <td>{{f.fecha_ingreso}}</td>
+          <td>{{f.id_usuario}}</td>
+          <td>{{f.idBodega}}</td>
+          <td>{{f.observacion}}</td>
+
+          
+        </tr>
+        {% endfor%}
+
+      </tbody>
+</table>
+<div>Total Factura calculado: {{total_calculado}}</div>
+<div>Total Factura ingreso: {{total_factura}}</div>
+
+<form method="POST">
+    {% csrf_token %}
+    {{form.as_p}}
+    <button> Cerrar Factura</button>
+</form>
+
+<div>
+    <li class="nav-item">
+        <a class="nav-link active" aria-current="page" href="{%url 'ingresosInvFacturas'%}"> Seguir ingresando</a>
+      </li>
+</div>
+
+{%endblock%}

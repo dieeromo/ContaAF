@@ -1,0 +1,43 @@
+{% extends 'plantilla1.html' %}
+
+{% block content%}
+
+<h3>Registro inventario retiros</h3>
+
+<table class="table small-text">
+       
+    <thead>
+        <tr>
+          <th scope="col" >#</th>
+          <th scope="col" >Cod</th>
+          <th scope="col" >Cantidad</th>
+          <th scope="col" >Estado uso</th>
+          <th scope="col" >Fecha</th>
+          <th scope="col" >Bodega</th>
+          <th scope="col" >Cliente</th>
+          <th scope="col" >Usuario</th>
+          <th scope="col" >Observacion</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for f in ingresoInv%}
+        <tr>
+          <th scope="row">{{forloop.counter}}</th>
+          <td>{{f.idcodigo}}</td>
+          <td>{{f.cantidad}}</td>
+          <td>{{f.idEstatusUso}}</td>
+          <td>{{f.fecha_ingreso}}</td>
+          <td>{{f.idBodega}}</td>
+          <td>{{f.idcliente}}</td>
+          <td>{{f.id_usuario}}</td>
+          <td>{{f.observacion}}</td>
+
+          
+        </tr>
+        {% endfor%}
+
+      </tbody>
+</table>
+
+
+{%endblock%}

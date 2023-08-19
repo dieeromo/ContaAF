@@ -1,0 +1,226 @@
+{% extends 'plantilla1.html' %}
+
+{% block content%}
+<h4>Ingresos inventario facturas</h4>
+<table class="table small-text">
+        
+    <thead>
+        <tr>
+        <th scope="col" >#</th>
+        <th scope="col" >Codigo</th>
+        <th scope="col" >Cantidad</th>
+        <th scope="col" >Estado</th>
+        <th scope="col" >Bodega</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for f in ingresos_fact2 %}
+        <tr>
+          <th scope="row">{{forloop.counter}}</th>
+          <td>{{f.idcodigo}}</td>
+          <td>{{f.cantidad}}</td>
+          <td>{{f.idEstatusUso}}</td>
+          <td>{{f.idBodega}}</td>
+        </tr>
+        {%endfor%}
+    
+      </tbody>
+</table>
+
+
+
+<table class="table small-text">
+        
+    <thead>
+        <tr>
+        <th scope="col" >#</th>
+        <th scope="col" >Codigo</th>
+        <th scope="col" >Cantidad</th>
+        <th scope="col" >Estado</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for f in totalesIngreFac %}
+        <tr>
+          <th scope="row">{{forloop.counter}}</th>
+          <td>{{f.codigo}}</td>
+          <td>{{f.cantidad}}</td>
+          <td>{{f.uso}}</td>
+        </tr>
+        {%endfor%}
+    
+      </tbody>
+    </table>
+      <h4>Ingresos retiros</h4>
+
+    <table class="table small-text">
+        
+        <thead>
+            <tr>
+            <th scope="col" >#</th>
+            <th scope="col" >Codigo</th>
+            <th scope="col" >Cantidad</th>
+            <th scope="col" >Estado</th>
+            <th scope="col" >Bodega</th>
+            <th scope="col" >Fecha</th>
+            <th scope="col" >Cliente</th>
+            <th scope="col" >Observacion</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for f in ingresos_retiros_inv %}
+            <tr>
+              <th scope="row">{{forloop.counter}}</th>
+              <td>{{f.idcodigo}}</td>
+              <td>{{f.cantidad}}</td>
+              <td>{{f.idEstatusUso}}</td>
+              <td>{{f.idBodega}}</td>
+              <td>{{f.fecha_ingreso}}</td>
+              <td>{{f.idcliente}}</td>
+              <td>{{f.observacion}}</td>
+            </tr>
+            {%endfor%}
+        
+          </tbody>
+</table>
+
+
+<table class="table small-text">
+        
+    <thead>
+        <tr>
+        <th scope="col" >#</th>
+        <th scope="col" >Codigo</th>
+        <th scope="col" >Estado</th>
+        <th scope="col" >Cantidad</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for f in totalesIngreRet %}
+        <tr>
+          <th scope="row">{{forloop.counter}}</th>
+          <td>{{f.codigo}}</td>
+          <td>{{f.uso}}</td>
+          <td>{{f.cantidad}}</td>
+        </tr>
+        {%endfor%}
+    
+      </tbody>
+    </table>
+
+<h4>Ingresos totales</h4>
+<table class="table small-text">
+        
+    <thead>
+        <tr>
+        <th scope="col" >#</th>
+        <th scope="col" >Codigo</th>
+        <th scope="col" >Estado</th>
+        <th scope="col" >Cantidad</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for f in total_ingreso_inventario %}
+        <tr>
+          <th scope="row">{{forloop.counter}}</th>
+          <td>{{f.codigo}}</td>
+          <td>{{f.uso}}</td>
+          <td>{{f.cantidad}}</td>
+        </tr>
+        {%endfor%}
+    
+      </tbody>
+    </table>
+
+
+
+
+
+<h4>Salida instalaciones</h4>
+<table class="table small-text">
+        
+    <thead>
+        <tr>
+        <th scope="col" >#</th>
+        <th scope="col" >Codigo</th>
+        <th scope="col" >Estado</th>
+        <th scope="col" >Cantidad</th>
+        <th scope="col" >Cliente</th>
+        <th scope="col" >Empresa</th>
+        <th scope="col" >Fecha</th>
+        <th scope="col" >Digitador</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for f in salida_instalaciones %}
+        <tr>
+          <th scope="row">{{forloop.counter}}</th>
+          <td>{{f.idcodigo}}</td>
+          <td>{{f.idEstatusUso}}</td>
+          <td>{{f.cantidad}}</td>
+          <td>{{f.idcliente}}</td>
+          <td>{{f.id_empresa}}</td>
+          <td>{{f.fecha_instalacion}}</td>
+          <td>{{f.idBodega}}</td>
+        </tr>
+        {%endfor%}
+    
+      </tbody>
+    </table>
+
+
+
+<table class="table small-text">
+        
+    <thead>
+        <tr>
+        <th scope="col" >#</th>
+        <th scope="col" >Codigo</th>
+        <th scope="col" >Estado</th>
+        <th scope="col" >Cantidad</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for f in totalesSalInstalaciones %}
+        <tr>
+          <th scope="row">{{forloop.counter}}</th>
+          <td>{{f.codigo}}</td>
+          <td>{{f.uso}}</td>
+          <td>{{f.cantidad}}</td>
+        </tr>
+        {%endfor%}
+    
+      </tbody>
+    </table>
+
+    <h4>Salida ventas contado</h4>
+
+
+
+<table class="table small-text">
+        
+    <thead>
+        <tr>
+        <th scope="col" >#</th>
+        <th scope="col" >Codigo</th>
+        <th scope="col" >Estado</th>
+        <th scope="col" >Cantidad</th>
+        <th scope="col" >Precio</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for f in salida_ventascontado %}
+        <tr>
+          <th scope="row">{{forloop.counter}}</th>
+          <td>{{f.idcodigo}}</td>
+          <td>{{f.idEstatusUso}}</td>
+          <td>{{f.cantidad}}</td>
+          <td>{{f.precio}}</td>
+        </tr>
+        {%endfor%}
+    
+      </tbody>
+    </table>
+
+
+ {%endblock%}

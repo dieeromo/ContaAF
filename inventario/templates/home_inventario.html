@@ -1,3 +1,51 @@
 
-<h4> Inventario AFCorp</h4>
-<h3>Inicio</h3>
+
+
+  {% extends 'plantilla1.html' %}
+
+  {% block content%}
+  <h4> Inventario AFCorp</h4>
+  <h3>Inicio</h3>
+  
+  <div>
+      <div>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="{%url 'ingresosInvRetiros'%}">Ingresos Retiros</a>
+      </li>
+      </div>
+      <div>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="{%url 'ResumenIngInvRetiros'%}"> Resumen Ingresos Retiros</a>
+        </li>
+      </div>
+
+
+      <li class="nav-item">
+        <a class="nav-link active" aria-current="page" href="{%url 'ingresosInvFacturas'%}"> Ingreso facturas</a>
+      </li>
+
+
+      <li class="nav-item">
+        <a class="nav-link active" aria-current="page" href="{%url 'ResgistroSalidaInstalacion'%}"> Registro Salida Instalación</a>
+      </li>
+
+
+      <li class="nav-item">
+        <a class="nav-link active" aria-current="page" href="{%url 'preCierreInventario'%}"> Cierre inventario</a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link active" aria-current="page" href="{%url 'RegistroSalidaVentasContado'%}"> Registro Salida ventas contado</a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link active" aria-current="page" href="{%url 'ResumenSalidaVentasContado'%}"> Resumen Salida ventas contado</a>
+      </li>
+
+
+
+
+  </div>
+
+
+  {%endblock%}

@@ -1,0 +1,43 @@
+
+{% extends 'plantilla1.html' %}
+
+{% block content%}
+
+
+Resumen Ventas contado
+
+
+<table class="table small-text">
+        
+    <thead>
+        <tr>
+        <th scope="col" >#</th>
+        <th scope="col" >Codigo</th>
+        <th scope="col" >Estado</th>
+        <th scope="col" >Cantidad</th>
+        <th scope="col" >precio</th>
+        <th scope="col" >Cliente</th>
+        <th scope="col" >Fecha venta</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for f in salidacontado %}
+        <tr>
+          <th scope="row">{{forloop.counter}}</th>
+          <td>{{f.idcodigo}}</td>
+          <td>{{f.idEstatusUso}}</td>
+          <td>{{f.cantidad}}</td>
+          <td>{{f.precio}}</td>
+          <td>{{f.idcliente}}</td>
+          <td>{{f.fecha_venta}}</td>
+
+        </tr>
+        {%endfor%}
+    
+      </tbody>
+
+
+</table>
+
+
+{%endblock%}
