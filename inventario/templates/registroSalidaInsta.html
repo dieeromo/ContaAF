@@ -1,0 +1,30 @@
+{% extends 'plantilla1.html' %}
+
+{% block content%}
+
+ 
+
+ <div class="container text-start">
+    <div class="row">
+      <div class="col">
+        <!-- aqui va codigo de la colomna-->
+      </div>
+      <div class="col">
+        <div class="container text-centered">
+            <h4>Registro salida instalaciones</h4>
+        </div>
+        <form method="POST">
+            {% csrf_token %}
+            {{form.as_p}}
+            <label for="fecha_instalacion">Fecha instalacion:</label>
+            <input type="date" id="fecha_instalacion" name="fecha_instalacion">
+            <button> Guardar</button>
+        </form>
+      </div>
+      <div class="col">
+         <!-- aqui va codigo de la colomna-->
+      </div>
+    </div>
+  </div>
+
+ {%endblock%}

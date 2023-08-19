@@ -3,7 +3,7 @@ from django.shortcuts import render
 from general.models import pagoMeses
 from cierres.models import CierresCajas
 from egresos.models import pagoColaboradores, decimos, facturasProveedores, pagoServicios
-from egresos.models import pagoCreditos, planillasIESS
+from egresos.models import pagoCreditos, planillasIESS,Socios
 # Create your views here.
 
 def catalogoHis(request):
@@ -121,12 +121,18 @@ def cifras(request):
         pagoCifrasIess = 0
         for paIes in cifrasIess:
             pagoCifrasIess = paIes.valor + pagoCifrasIess
+
+        egreSopcios = Socios.objects.filter(fecha__range=[request.POST['fecha_inicio'],request.POST['fecha_fin']])
+        pagosocios_credi2 = 0
+        for i in egreSopcios:
+            pagosocios_credi2 = i.valor + pagosocios_credi2
         
-        gastos_total_eg = pagoCifrasIess +pagoCifrasCreditos+pagoCifrasServicios+pagoCifrasFacturas+pagoCifrasComi+pagoCifrasDeci+pagoColaboradoresTotal
+        gastos_total_eg = pagoCifrasIess +pagoCifrasCreditos+pagoCifrasServicios+pagoCifrasFacturas+pagoCifrasComi+pagoCifrasDeci+pagoColaboradoresTotal+pagosocios_credi2
 
         return render (request, 'solidcifras.html',{
             'ingresostotalperiodo':ingresostotalperiodo,
             'egresostotalperiodo':egresostotalperiodo,
+
             'pagoColaboradoresTotal':pagoColaboradoresTotal,
             'pagoCifrasDeci':pagoCifrasDeci,
             'pagoCifrasComi':pagoCifrasComi,
@@ -135,6 +141,7 @@ def cifras(request):
             'pagoCifrasCreditos':pagoCifrasCreditos,
             'pagoCifrasIess':pagoCifrasIess,
             'gastos_total_eg':gastos_total_eg,
+            'pagosocios_credi2':pagosocios_credi2,
 
 
 
