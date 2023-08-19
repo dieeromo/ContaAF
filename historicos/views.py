@@ -4,6 +4,8 @@ from general.models import pagoMeses
 from cierres.models import CierresCajas
 from egresos.models import pagoColaboradores, decimos, facturasProveedores, pagoServicios
 from egresos.models import pagoCreditos, planillasIESS,Socios
+from ingresos.models import ingresosCajas
+
 # Create your views here.
 
 def catalogoHis(request):
@@ -18,6 +20,10 @@ def cifras(request):
         fecha_actual = datetime.now().date()
         fecha_inicial = fecha_actual - timedelta(fecha_actual.day) + timedelta(days=1)
         cifrasCierres = CierresCajas.objects.filter(fecha__range=[fecha_inicial,fecha_actual])
+        cierrefinal = CierresCajas.objects.filter(fecha=fecha_actual)
+
+        
+
         #cifrasdecimos_de = decimos.objects.filter(fecha__range=[fecha_inicial,fecha_actual])
         
         ingresostotalperiodo = 0
@@ -25,7 +31,15 @@ def cifras(request):
         for ingresos in cifrasCierres:
             ingresostotalperiodo = ingresostotalperiodo + ingresos.valorIngresos
             egresostotalperiodo = egresostotalperiodo + ingresos.valorEgresos
+        
        
+        ingresos_periodo = ingresosCajas.objects.filter(fecha__range=[fecha_inicial,fecha_actual])
+        ingresosfiltradoperiodo = 0
+        for ii in ingresos_periodo:
+            ingresosfiltradoperiodo = ingresosfiltradoperiodo + ii.valorIngreso
+    
+    
+
         cifrasPagocolaboradores = pagoColaboradores.objects.filter(fecha_pago__range=[fecha_inicial,fecha_actual])
         pagoColaboradoresTotal= 0
         for col in cifrasPagocolaboradores:
@@ -60,11 +74,26 @@ def cifras(request):
         pagoCifrasIess = 0
         for paIes in cifrasIess:
             pagoCifrasIess = paIes.valor + pagoCifrasIess
+        
+        egreSocios = Socios.objects.filter(fecha__range=[fecha_inicial,fecha_actual])
+        pagosocios_credi2 = 0
 
-        gastos_total_eg = pagoCifrasIess +pagoCifrasCreditos+pagoCifrasServicios+pagoCifrasFacturas+pagoCifrasComi+pagoCifrasDeci+pagoColaboradoresTotal
+        for ii in egreSocios:
+            pagosocios_credi2 = ii.valor + pagosocios_credi2
+        
+
+        gastos_total_eg = pagoCifrasIess +pagoCifrasCreditos+pagoCifrasServicios+pagoCifrasFacturas+pagoCifrasComi+pagoCifrasDeci+pagoColaboradoresTotal+pagosocios_credi2
+       
+        totalfinalcierre = 0
+        for  ii in cierrefinal:
+            totalfinalcierre = totalfinalcierre + ii.valorCierreActual
+
+        balance = ingresostotalperiodo - gastos_total_eg + totalfinalcierre
         return render (request,'solidcifras.html',{
             'ingresostotalperiodo':ingresostotalperiodo,
             'egresostotalperiodo':egresostotalperiodo,
+            'ingresosfiltradoperiodo':ingresosfiltradoperiodo,
+            
             'pagoColaboradoresTotal':pagoColaboradoresTotal,
             'pagoCifrasDeci':pagoCifrasDeci,
             'pagoCifrasComi':pagoCifrasComi,
@@ -73,6 +102,9 @@ def cifras(request):
             'pagoCifrasCreditos':pagoCifrasCreditos,
             'pagoCifrasIess':pagoCifrasIess,
             'gastos_total_eg':gastos_total_eg,
+            'pagosocios_credi2':pagosocios_credi2,
+            'totalfinalcierre ':totalfinalcierre,
+            'balance':balance,
 
             'fecha_inicio':fecha_inicial,
             'fecha_fin':fecha_actual
@@ -80,13 +112,20 @@ def cifras(request):
         })
     else:
         cifrasCierres = CierresCajas.objects.filter(fecha__range=[request.POST['fecha_inicio'],request.POST['fecha_fin']])
-        
+        cierrefinal = CierresCajas.objects.filter(fecha=request.POST['fecha_fin'])
         ingresostotalperiodo = 0
         egresostotalperiodo = 0
         for ingresos in cifrasCierres:
             ingresostotalperiodo = ingresostotalperiodo + ingresos.valorIngresos
             egresostotalperiodo = egresostotalperiodo + ingresos.valorEgresos
         
+        ingresos_periodo = ingresosCajas.objects.filter(fecha__range=[request.POST['fecha_inicio'],request.POST['fecha_fin']])
+        ingresosfiltradoperiodo = 0
+        for ii in ingresos_periodo:
+            ingresosfiltradoperiodo = ingresosfiltradoperiodo + ii.valorIngreso
+    
+    
+
         cifrasPagocolaboradores = pagoColaboradores.objects.filter(fecha_pago__range=[request.POST['fecha_inicio'],request.POST['fecha_fin']])
         pagoColaboradoresTotal= 0
         for col in cifrasPagocolaboradores:
@@ -121,17 +160,26 @@ def cifras(request):
         pagoCifrasIess = 0
         for paIes in cifrasIess:
             pagoCifrasIess = paIes.valor + pagoCifrasIess
-
-        egreSopcios = Socios.objects.filter(fecha__range=[request.POST['fecha_inicio'],request.POST['fecha_fin']])
+        
+  
+        egreSocios = Socios.objects.filter(fecha__range=[request.POST['fecha_inicio'],request.POST['fecha_fin']])
         pagosocios_credi2 = 0
-        for i in egreSopcios:
+
+        for i in egreSocios:
             pagosocios_credi2 = i.valor + pagosocios_credi2
         
         gastos_total_eg = pagoCifrasIess +pagoCifrasCreditos+pagoCifrasServicios+pagoCifrasFacturas+pagoCifrasComi+pagoCifrasDeci+pagoColaboradoresTotal+pagosocios_credi2
 
+
+        totalfinalcierre = 0
+        for  ii in cierrefinal:
+            totalfinalcierre = totalfinalcierre + ii.valorCierreActual
+
+        balance = ingresostotalperiodo - gastos_total_eg + totalfinalcierre
         return render (request, 'solidcifras.html',{
             'ingresostotalperiodo':ingresostotalperiodo,
             'egresostotalperiodo':egresostotalperiodo,
+            'ingresosfiltradoperiodo':ingresosfiltradoperiodo,
 
             'pagoColaboradoresTotal':pagoColaboradoresTotal,
             'pagoCifrasDeci':pagoCifrasDeci,
@@ -142,8 +190,6 @@ def cifras(request):
             'pagoCifrasIess':pagoCifrasIess,
             'gastos_total_eg':gastos_total_eg,
             'pagosocios_credi2':pagosocios_credi2,
-
-
 
             'fecha_inicio':request.POST['fecha_inicio'],
             'fecha_fin':request.POST['fecha_fin'],
