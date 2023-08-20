@@ -92,6 +92,46 @@
 
 
 
+<table class="table small-text">
+       
+    <thead>
+        <tr>
+          <th scope="col" >#</th>
+          <th scope="col" >Empresa</th>
+          <th scope="col" >Caja</th>
+          <th scope="col" >Fecha</th>
+          <th scope="col" >Ingreso</th>
+          <th scope="col" >Egresos</th>
+          <th scope="col" >Mov salida</th>
+          <th scope="col" >Mov entrada</th>
+          <th scope="col" >Cierre Anterior</th>
+          <th scope="col" >Cierre Actual</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {% for f in cierrefinal%}
+        <tr>
+          <th scope="row">{{forloop.counter}}</th>
+          <td>{{f.empresa}}</td>
+          <td>{{f.caja}}</td>
+          <td>{{f.fecha}}</td>
+          <td>{{f.valorIngresos}}</td>
+          <td>{{f.valorEgresos}}</td>
+          <td>{{f.valorMovSalida}}</td>
+          <td>{{f.valorMovEntrada}}</td>
+          <td>{{f.valorCierreAnterior}}</td>
+          <td>{{f.valorCierreActual}}</td>
+
+          
+        </tr>
+        {% endfor%}
+
+      </tbody>
+</table>
+
+Cierre = {{vtcierrefinal}}
+
 
 {%endblock%}
 
