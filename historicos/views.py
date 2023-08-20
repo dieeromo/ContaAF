@@ -21,6 +21,16 @@ def cifras(request):
         fecha_inicial = fecha_actual - timedelta(fecha_actual.day) + timedelta(days=1)
         cifrasCierres = CierresCajas.objects.filter(fecha__range=[fecha_inicial,fecha_actual])
         cierrefinal = CierresCajas.objects.filter(fecha=fecha_actual)
+        
+        ingreso_inicial = 0
+        egreso_inicial = 0
+        cierre_inicial = CierresCajas.objects.filter(fecha='2023-05-31')
+        for ii in cierre_inicial:
+            ingreso_inicial = ingreso_inicial + ii.valorIngresos
+            egreso_inicial = egreso_inicial + ii.valorEgresos
+            
+        balance_inicial = ingreso_inicial - egreso_inicial
+       
 
         
 
@@ -88,12 +98,17 @@ def cifras(request):
         for  ii in cierrefinal:
             totalfinalcierre = totalfinalcierre + ii.valorCierreActual
 
-        balance = ingresostotalperiodo - gastos_total_eg + totalfinalcierre
+        balance = ingresosfiltradoperiodo - gastos_total_eg
         return render (request,'solidcifras.html',{
+            'cierre_inicial' : cierre_inicial,
+            'ingreso_inicial' : ingreso_inicial,
+            'egreso_inicial' :  egreso_inicial,
+            'balance_inicial':balance_inicial,
+
             'ingresostotalperiodo':ingresostotalperiodo,
             'egresostotalperiodo':egresostotalperiodo,
             'ingresosfiltradoperiodo':ingresosfiltradoperiodo,
-            
+
             'pagoColaboradoresTotal':pagoColaboradoresTotal,
             'pagoCifrasDeci':pagoCifrasDeci,
             'pagoCifrasComi':pagoCifrasComi,
@@ -113,6 +128,19 @@ def cifras(request):
     else:
         cifrasCierres = CierresCajas.objects.filter(fecha__range=[request.POST['fecha_inicio'],request.POST['fecha_fin']])
         cierrefinal = CierresCajas.objects.filter(fecha=request.POST['fecha_fin'])
+
+        cierre_inicial = CierresCajas.objects.filter(fecha='2023-05-31')
+        ingreso_inicial = 0
+        egreso_inicial = 0
+        cierre_inicial = CierresCajas.objects.filter(fecha='2023-05-31')
+        for ii in cierre_inicial:
+            ingreso_inicial = ingreso_inicial + ii.valorIngresos
+            egreso_inicial = egreso_inicial + ii.valorEgresos
+            
+        balance_inicial = ingreso_inicial - egreso_inicial
+       
+
+
         ingresostotalperiodo = 0
         egresostotalperiodo = 0
         for ingresos in cifrasCierres:
@@ -175,8 +203,14 @@ def cifras(request):
         for  ii in cierrefinal:
             totalfinalcierre = totalfinalcierre + ii.valorCierreActual
 
-        balance = ingresostotalperiodo - gastos_total_eg + totalfinalcierre
+        balance = ingresosfiltradoperiodo - gastos_total_eg
         return render (request, 'solidcifras.html',{
+            'cierre_inicial' : cierre_inicial,
+            'ingreso_inicial' : ingreso_inicial,
+            'egreso_inicial' :  egreso_inicial,
+            'balance_inicial':balance_inicial,
+
+
             'ingresostotalperiodo':ingresostotalperiodo,
             'egresostotalperiodo':egresostotalperiodo,
             'ingresosfiltradoperiodo':ingresosfiltradoperiodo,
@@ -190,6 +224,9 @@ def cifras(request):
             'pagoCifrasIess':pagoCifrasIess,
             'gastos_total_eg':gastos_total_eg,
             'pagosocios_credi2':pagosocios_credi2,
+            
+            'totalfinalcierre ':totalfinalcierre,
+            'balance':balance,
 
             'fecha_inicio':request.POST['fecha_inicio'],
             'fecha_fin':request.POST['fecha_fin'],

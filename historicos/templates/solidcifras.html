@@ -7,6 +7,50 @@
 </h2>
 
 
+<table class="table small-text">
+       
+    <thead>
+        <tr>
+          <th scope="col" >#</th>
+          <th scope="col" >Empresa</th>
+          <th scope="col" >Caja</th>
+          <th scope="col" >Fecha</th>
+          <th scope="col" >Ingreso</th>
+          <th scope="col" >Egresos</th>
+          <th scope="col" >Mov salida</th>
+          <th scope="col" >Mov entrada</th>
+          <th scope="col" >Cierre Anterior</th>
+          <th scope="col" >Cierre Actual</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {% for f in cierre_inicial%}
+        <tr>
+          <th scope="row">{{forloop.counter}}</th>
+          <td>{{f.empresa}}</td>
+          <td>{{f.caja}}</td>
+          <td>{{f.fecha}}</td>
+          <td>{{f.valorIngresos}}</td>
+          <td>{{f.valorEgresos}}</td>
+          <td>{{f.valorMovSalida}}</td>
+          <td>{{f.valorMovEntrada}}</td>
+          <td>{{f.valorCierreAnterior}}</td>
+          <td>{{f.valorCierreActual}}</td>
+
+          
+        </tr>
+        {% endfor%}
+
+      </tbody>
+</table>
+
+<div>
+    <div>Ingreso inicial = {{ingreso_inicial}}</div>
+    <div>Egreso inicial = {{egreso_inicial}}</div>
+    <div>Balance inicial = {{balance_inicial}}</div>
+</div>
+
 
 <form method="POST">
     {% csrf_token %}
@@ -18,7 +62,17 @@
     <input type="date" id="fecha_fin" name="fecha_fin">
     <button>Consultar</button>
 </form>
+
+
+
+
+
 <h4>Periodo: {{fecha_inicio}} - {{fecha_fin}}</h4>
+
+
+
+
+
 <div> <h5>Ingresos(cierres-filtrado) = {{ingresostotalperiodo}} - {{ingresosfiltradoperiodo}}</h5> </div>
 <div> <h5>Total Egresos (cierres - filtrado/calculado) = {{egresostotalperiodo}} -- {{gastos_total_eg}}</h5> </div>
 
@@ -33,6 +87,7 @@
 <div>Planillas = {{pagoCifrasIess}}</div>
 <div>Socios Credito = {{pagosocios_credi2}}</div>
 
+<div>Total</div>
 
 
 
