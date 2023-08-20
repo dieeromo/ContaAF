@@ -38,12 +38,7 @@ def cifras(request):
         for ii in cierrefinal:
             vtcierrefinal = vtcierrefinal + ii.valorCierreActual
     
-
-
-        
-
-        #cifrasdecimos_de = decimos.objects.filter(fecha__range=[fecha_inicial,fecha_actual])
-        
+        #cifrasdecimos_de = decimos.objects.filter(fecha__range=[fecha_inicial,fecha_actual])    
         ingresostotalperiodo = 0
         egresostotalperiodo = 0
 
