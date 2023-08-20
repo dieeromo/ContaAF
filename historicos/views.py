@@ -20,7 +20,7 @@ def cifras(request):
         fecha_actual = datetime.now().date()
         fecha_inicial = fecha_actual - timedelta(fecha_actual.day) + timedelta(days=1)
         cifrasCierres = CierresCajas.objects.filter(fecha__range=[fecha_inicial,fecha_actual])
-        cierrefinal = CierresCajas.objects.filter(fecha=fecha_actual)
+        
         
         ingreso_inicial = 0
         egreso_inicial = 0
@@ -33,6 +33,12 @@ def cifras(request):
             
         balance_inicial = ingreso_inicial - egreso_inicial + cierre_anterior_inicial
        
+        cierrefinal = CierresCajas.objects.filter(fecha=fecha_actual)
+        vtcierrefinal = 0
+        for ii in cierrefinal:
+            vtcierrefinal = vtcierrefinal + ii.valorCierreActual
+    
+
 
         
 
@@ -109,6 +115,9 @@ def cifras(request):
             'cierre_anterior_inicial':cierre_anterior_inicial,
             'balance_inicial':balance_inicial,
 
+            'vtcierrefinal':vtcierrefinal,
+            'cierrefinal':cierrefinal,
+
             'ingresostotalperiodo':ingresostotalperiodo,
             'egresostotalperiodo':egresostotalperiodo,
             'ingresosfiltradoperiodo':ingresosfiltradoperiodo,
@@ -131,7 +140,7 @@ def cifras(request):
         })
     else:
         cifrasCierres = CierresCajas.objects.filter(fecha__range=[request.POST['fecha_inicio'],request.POST['fecha_fin']])
-        cierrefinal = CierresCajas.objects.filter(fecha=request.POST['fecha_fin'])
+        
 
         cierre_inicial = CierresCajas.objects.filter(fecha='2023-05-31')
         ingreso_inicial = 0
@@ -144,7 +153,12 @@ def cifras(request):
             cierre_anterior_inicial = cierre_anterior_inicial + ii.valorCierreAnterior
             
         balance_inicial = ingreso_inicial - egreso_inicial + cierre_anterior_inicial
-       
+
+
+        cierrefinal = CierresCajas.objects.filter(fecha=request.POST['fecha_fin'])
+        vtcierrefinal = 0
+        for ii in cierrefinal:
+            vtcierrefinal = vtcierrefinal + ii.valorCierreActual
 
 
         ingresostotalperiodo = 0
@@ -216,6 +230,9 @@ def cifras(request):
             'egreso_inicial' :  egreso_inicial,
             'cierre_anterior_inicial':cierre_anterior_inicial,
             'balance_inicial':balance_inicial,
+
+            'vtcierrefinal':vtcierrefinal,
+            'cierrefinal':cierrefinal,
 
 
             'ingresostotalperiodo':ingresostotalperiodo,
