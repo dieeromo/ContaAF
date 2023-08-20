@@ -672,7 +672,7 @@ def misMovimientos(request):
 
 def todosCierres(request):
     fecha_actual = datetime.now().date()
-    fecha_inicial = fecha_actual - timedelta(days=30)
+    fecha_inicial = fecha_actual - timedelta(days=90)
     cierrest = CierresCajas.objects.filter(fecha__range=[fecha_inicial,fecha_actual]).order_by('-fecha')
     gastoT = 0
     ingreT = 0
