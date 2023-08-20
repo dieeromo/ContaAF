@@ -24,12 +24,14 @@ def cifras(request):
         
         ingreso_inicial = 0
         egreso_inicial = 0
+        cierre_anterior_inicial = 0
         cierre_inicial = CierresCajas.objects.filter(fecha='2023-05-31')
         for ii in cierre_inicial:
-            ingreso_inicial = ingreso_inicial + ii.valorIngresos + ii.valorCierreAnterior
+            ingreso_inicial = ingreso_inicial + ii.valorIngresos 
             egreso_inicial = egreso_inicial + ii.valorEgresos
+            cierre_anterior_inicial = cierre_anterior_inicial + ii.valorCierreAnterior
             
-        balance_inicial = ingreso_inicial - egreso_inicial
+        balance_inicial = ingreso_inicial - egreso_inicial + cierre_anterior_inicial
        
 
         
@@ -38,6 +40,7 @@ def cifras(request):
         
         ingresostotalperiodo = 0
         egresostotalperiodo = 0
+
         for ingresos in cifrasCierres:
             ingresostotalperiodo = ingresostotalperiodo + ingresos.valorIngresos
             egresostotalperiodo = egresostotalperiodo + ingresos.valorEgresos
@@ -103,6 +106,7 @@ def cifras(request):
             'cierre_inicial' : cierre_inicial,
             'ingreso_inicial' : ingreso_inicial,
             'egreso_inicial' :  egreso_inicial,
+            'cierre_anterior_inicial':cierre_anterior_inicial,
             'balance_inicial':balance_inicial,
 
             'ingresostotalperiodo':ingresostotalperiodo,
@@ -132,12 +136,14 @@ def cifras(request):
         cierre_inicial = CierresCajas.objects.filter(fecha='2023-05-31')
         ingreso_inicial = 0
         egreso_inicial = 0
+        cierre_anterior_inicial = 0
         cierre_inicial = CierresCajas.objects.filter(fecha='2023-05-31')
         for ii in cierre_inicial:
-            ingreso_inicial = ingreso_inicial + ii.valorIngresos + ii.valorCierreAnterior
+            ingreso_inicial = ingreso_inicial + ii.valorIngresos
             egreso_inicial = egreso_inicial + ii.valorEgresos
+            cierre_anterior_inicial = cierre_anterior_inicial + ii.valorCierreAnterior
             
-        balance_inicial = ingreso_inicial - egreso_inicial
+        balance_inicial = ingreso_inicial - egreso_inicial + cierre_anterior_inicial
        
 
 
@@ -208,6 +214,7 @@ def cifras(request):
             'cierre_inicial' : cierre_inicial,
             'ingreso_inicial' : ingreso_inicial,
             'egreso_inicial' :  egreso_inicial,
+            'cierre_anterior_inicial':cierre_anterior_inicial,
             'balance_inicial':balance_inicial,
 
 
