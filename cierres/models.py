@@ -16,3 +16,7 @@ class CierresCajas(models.Model):
     valorCierreActual = models.DecimalField(max_digits=10, decimal_places=2)
     creado = models.DateField(auto_now_add=True)
     usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+    def __str__(self):
+        return "{}|{}|{}".format(self.caja, self.fecha, self.valorCierreActual)
+    
+

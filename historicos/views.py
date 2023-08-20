@@ -26,7 +26,7 @@ def cifras(request):
         egreso_inicial = 0
         cierre_inicial = CierresCajas.objects.filter(fecha='2023-05-31')
         for ii in cierre_inicial:
-            ingreso_inicial = ingreso_inicial + ii.valorIngresos
+            ingreso_inicial = ingreso_inicial + ii.valorIngresos + ii.valorCierreAnterior
             egreso_inicial = egreso_inicial + ii.valorEgresos
             
         balance_inicial = ingreso_inicial - egreso_inicial
@@ -134,7 +134,7 @@ def cifras(request):
         egreso_inicial = 0
         cierre_inicial = CierresCajas.objects.filter(fecha='2023-05-31')
         for ii in cierre_inicial:
-            ingreso_inicial = ingreso_inicial + ii.valorIngresos
+            ingreso_inicial = ingreso_inicial + ii.valorIngresos + ii.valorCierreAnterior
             egreso_inicial = egreso_inicial + ii.valorEgresos
             
         balance_inicial = ingreso_inicial - egreso_inicial
