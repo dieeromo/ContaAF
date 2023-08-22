@@ -1,0 +1,25 @@
+{% extends 'plantilla1.html' %}
+
+{% block content%}
+<h5>Listado Clientes</h5>
+
+<table class="table small-text">
+    <thead>
+      <tr>
+      <th scope="col" >#</th>
+      <th scope="col" >Apellido</th>
+      <th scope="col" >Nombre</th>
+      </tr>
+   </thead>
+   <tbody>
+      {% for f in clientesList %}
+      <tr>
+        <th scope="row">{{forloop.counter}}</th>
+        <td>{{f.apenomb}}</td>
+        <td>{{f.nombre}}</td>
+
+      </tr>
+      {%endfor%}
+    </tbody>
+   </table>
+{%endblock%}
