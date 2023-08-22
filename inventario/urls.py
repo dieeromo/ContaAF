@@ -25,6 +25,10 @@ urlpatterns =[
 
      path('registroclientes/', views.RegistroClientes , name='RegistroClientes'),
      path('resumenclientes/', views.ResumenClientes , name='ResumenClientes'),
+     
+     path('actualizacion/', views.actualizacionFacturas , name='actualizacionFacturas'),
+
+     
     
    
 
