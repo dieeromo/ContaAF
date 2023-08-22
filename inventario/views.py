@@ -641,3 +641,11 @@ def ResumenClientes(request):
     return render(request,'listadoClientes.html',{
         'clientesList':clientesList,
     })
+
+def actualizacionFacturas(request):
+    act = facturasProveedores.objects.all()
+    for item in act:
+        item.estadoEntrega =True
+        item.save()
+    return render(request,'actualizacionfacturas.html')
+
