@@ -50,7 +50,7 @@ def ingresosInvFacturas(request):
         nuevoRegInv.estadoIngreso = False#
         
         VTFactura = facturasProveedores.objects.get(id=request.POST['idFactura'])
-        nuevoRegInv.precio_factura = VTFactura.valor
+        nuevoRegInv.precio_factura =VTFactura.valor
         #print(VTFactura.valor)
         #nue_usa = nuevo_usado.objects.get(estatus_uso = 'Nuevo')
         #print(nue_usa)
