@@ -39,7 +39,7 @@ class clientes(models.Model):
 class ingresoFacturas(models.Model):
     idcodigo = models.ForeignKey(codigo_prod, on_delete=models.CASCADE)
     cantidad = models.DecimalField(max_digits=5, decimal_places=2)
-    precio_in = models.DecimalField(max_digits=5, decimal_places=2)
+    precio_in = models.DecimalField(max_digits=7, decimal_places=2)
     idFactura = models.ForeignKey(facturasProveedores, on_delete=models.CASCADE)
     idTipoProducto = models.ForeignKey(tipoProducto, on_delete=models.CASCADE)
     fecha_ingreso = models.DateField()
@@ -47,7 +47,7 @@ class ingresoFacturas(models.Model):
     estadoIngreso = models.BooleanField() #false abierto - true cerrado
     idEstatusUso = models.ForeignKey(nuevo_usado, on_delete=models.CASCADE)
     idBodega = models.ForeignKey(bodega, on_delete=models.CASCADE)
-    precio_factura = models.DecimalField(max_digits=5, decimal_places=2)
+    precio_factura = models.DecimalField(max_digits=7, decimal_places=2)
     observacion = models.CharField(max_length=200, blank=True, null=True)
 
 
