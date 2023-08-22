@@ -12,6 +12,7 @@ class empresa(models.Model):
 class proveedoresProd(models.Model):
     nombreProveedor = models.CharField(max_length=100)
     fechaCreacion = models.DateTimeField(auto_now=True)
+    seguimientoFacturas = models.BooleanField(default=True)
 
     def __str__(self):
         return self.nombreProveedor

@@ -4,48 +4,104 @@
   {% extends 'plantilla1.html' %}
 
   {% block content%}
-  <h4> Inventario AFCorp</h4>
-  <h3>Inicio</h3>
-  
-  <div>
-      <div>
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="{%url 'ingresosInvRetiros'%}">Ingresos Retiros</a>
-      </li>
-      </div>
-      <div>
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="{%url 'ResumenIngInvRetiros'%}"> Resumen Ingresos Retiros</a>
-        </li>
-      </div>
-
-
-      <li class="nav-item">
-        <a class="nav-link active" aria-current="page" href="{%url 'ingresosInvFacturas'%}"> Ingreso facturas</a>
-      </li>
-
-
-      <li class="nav-item">
-        <a class="nav-link active" aria-current="page" href="{%url 'ResgistroSalidaInstalacion'%}"> Registro Salida Instalación</a>
-      </li>
-
-
-      <li class="nav-item">
-        <a class="nav-link active" aria-current="page" href="{%url 'preCierreInventario'%}"> Cierre inventario</a>
-      </li>
-
-      <li class="nav-item">
-        <a class="nav-link active" aria-current="page" href="{%url 'RegistroSalidaVentasContado'%}"> Registro Salida ventas contado</a>
-      </li>
-
-      <li class="nav-item">
-        <a class="nav-link active" aria-current="page" href="{%url 'ResumenSalidaVentasContado'%}"> Resumen Salida ventas contado</a>
-      </li>
-
-
-
-
+  <div class="alert alert-secondary" role="alert">
+    
   </div>
+
+  <div class="container text-center">
+    <div class="row">
+      <div class="col">
+       
+      </div>
+      <div class="col">
+        <h2> Inventario AFCorp</h2>
+      </div>
+      <div class="col">
+       
+      </div>
+    </div>
+  </div>
+
+  <div class="container text-center">
+    <div class="row">
+      <div class="col">
+
+        <div class="alert alert-success" role="alert">
+          <a class="nav-link active" aria-current="page" href="{%url 'ingresosInvRetiros'%}">Ingresos: Retiros</a>
+        </div>
+
+        <div class="alert alert-success" role="alert">
+          <a class="nav-link active" aria-current="page" href="{%url 'ingresosInvFacturas'%}"> Ingresos: Facturas</a>
+        </div>
+
+
+        <div class="alert alert-warning" role="alert">
+          <a class="nav-link active" aria-current="page" href="{%url 'ResgistroSalidaInstalacion'%}"> Registro salida: Instalaciones</a>
+        </div>
+
+        <div class="alert alert-warning" role="alert">
+          <a class="nav-link active" aria-current="page" href="{%url 'RegistroSalidaVentasContado'%}"> Registro salida: Ventas al contado</a>
+        </div>
+
+        <div class="alert alert-warning" role="alert">
+          <a class="nav-link active" aria-current="page" href=""> Registro salida: Ventas a credito</a>
+        </div>
+
+        <div class="alert alert-primary" role="alert">
+          <a class="nav-link active" aria-current="page" href="{%url 'registroMovimientosInv'%}"> Registro movimientos</a>
+        </div>
+
+
+
+
+      </div>
+      <div class="col">
+
+        <div class="alert alert-success" role="alert">
+          <a class="nav-link active" aria-current="page" href="{%url 'ResumenIngInvRetiros'%}"> Resumen ingresos: Retiros</a>
+        </div>
+
+        <div class="alert alert-success" role="alert">
+          <a class="nav-link active" aria-current="page" href="{%url 'PreResumenInvFacturas'%}"> Resumen ingresos: Facturas</a>
+        </div>
+
+        <div class="alert alert-warning" role="alert">
+          <a class="nav-link active" aria-current="page" href=""> Resumen salida: Instalaciones</a>
+        </div>
+
+        <div class="alert alert-warning" role="alert">
+          <a class="nav-link active" aria-current="page" href="{%url 'ResumenSalidaVentasContado'%}"> Resumen salida: Ventas al contado</a>
+        </div>
+        <div class="alert alert-warning" role="alert">
+          <a class="nav-link active" aria-current="page" href=""> Resumen salida: Ventas a credito</a>
+        </div>
+        <div class="alert alert-primary" role="alert">
+          <a class="nav-link active" aria-current="page" href="{%url 'resumenMovimientosInv'%}"> Resumen movimientos</a>
+        </div>
+
+
+
+
+      </div>
+      <div class="col">
+ 
+
+        <div class="alert alert-danger" role="alert">
+          <a class="nav-link active" aria-current="page" href="{%url 'preCierreInventario'%}"> Registrar cierre</a>
+        </div>
+
+        <div class="alert alert-danger" role="alert">
+          <a class="nav-link active" aria-current="page" href=""> Resumen cierres</a>
+        </div>
+
+
+
+      </div>
+    </div>
+  </div>
+
+
+
 
 
   {%endblock%}

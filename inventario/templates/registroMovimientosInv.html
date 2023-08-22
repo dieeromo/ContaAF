@@ -1,0 +1,16 @@
+{% extends 'plantilla1.html' %}
+
+{% block content%}
+<h5> Registro de movimientos de inventario   </h5>
+
+<form method="POST" >
+    {% csrf_token %}
+    {{form.as_p}}
+    <div>
+        <label for="fecha">Fecha:</label>
+        <input type="date" id="fecha" name="fecha">
+    </div>
+    <button>Guardar</button>
+</form>
+
+{%endblock%}

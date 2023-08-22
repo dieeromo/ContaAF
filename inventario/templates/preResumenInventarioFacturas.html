@@ -1,0 +1,72 @@
+{% extends 'plantilla1.html' %}
+
+{% block content%}
+
+<div class="container text-center">
+  <div class="row">
+    <div class="col">
+     
+    </div>
+    <div class="col">
+
+      <h5>Registro facturas</h5>
+  
+      <form method="POST" >
+          {% csrf_token %}
+          {{form.as_p}}
+          <button> Guardar</button>
+      
+       </form>
+
+
+
+    </div>
+    <div class="col">
+   
+    </div>
+  </div>
+</div>
+
+<table class="table small-text">
+       
+    <thead>
+        <tr>
+          <th scope="col" >#</th>
+          <th scope="col" ># Factura</th>
+          <th scope="col" >Codigo</th>
+          <th scope="col" >Uso</th>
+          <th scope="col" >Cantidad</th>
+          <th scope="col" >Precio in</th>
+          <th scope="col" >Tipo</th>
+          <th scope="col" >Bodega</th>
+          <th scope="col" >Fecha</th>
+          <th scope="col" >Digitador</th>
+          <th scope="col" >Observacion</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for f in ingresoInv%}
+        <tr>
+          <th scope="row">{{forloop.counter}}</th>
+          <td>{{f.idFactura}}</td>
+          <td>{{f.idcodigo}}</td>
+          <td>{{f.idEstatusUso}}</td>
+          <td>{{f.cantidad}}</td>
+          <td>{{f.precio_in}}</td>
+          <td>{{f.idTipoProducto}}</td>
+          <td>{{f.idBodega}}</td>
+          <td>{{f.fecha_ingreso}}</td>
+          <td>{{f.id_usuario}}</td>
+          <td>{{f.observacion}}</td>
+
+          
+        </tr>
+        {% endfor%}
+
+      </tbody>
+</table>
+
+
+
+
+{%endblock%}

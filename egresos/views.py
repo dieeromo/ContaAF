@@ -44,10 +44,12 @@ def registroFacturas(request):
         nuevo_regfactura.id_caja = caja_regfactura
         nuevo_regfactura.id_usuario = request.user
 
-        print(request.POST['fechapago'])
         #if is_valid_date(request.POST['fechapago']):
         #    nuevo_regfactura.fechapago = request.POST['fechapago']
         #    print("guardo fecha")
+        proveedo_seg = proveedoresProd.objects.get(nombreProveedor = nuevo_regfactura.idproveedor)
+        if proveedo_seg.seguimientoFacturas == False:
+            nuevo_regfactura.estadoEntrega = True
 
         if parse_date(request.POST['fechapago']) is not None:
             nuevo_regfactura.fechapago = request.POST['fechapago']

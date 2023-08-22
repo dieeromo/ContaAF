@@ -9,8 +9,10 @@ class codigo_prod(models.Model):
     codigo = models.CharField(max_length=70)
     descripcion = models.CharField(max_length=250)
     fechaCreacion = models.DateTimeField(auto_now=True)
+    seguimientoProducto = models.BooleanField(default=True)
+
     def __str__(self):
-        return "{} - {} ".format(self.codigo, self.descripcion)
+        return "{}".format(self.codigo)
 
 class nuevo_usado(models.Model):
     estatus_uso = models.CharField(max_length=50)
@@ -95,7 +97,17 @@ class salidaVentasContado(models.Model):
     id_estadoPago = models.ForeignKey(estadoPago, on_delete=models.CASCADE)
     fecha_entrega = models.DateField(blank=True, null=True)
 
-
+class movimimientosInventario(models.Model):
+    id_empresa = models.ForeignKey(empresa, on_delete=models.CASCADE, default=1)
+    idBodega_origen = models.ForeignKey(bodega, on_delete=models.CASCADE,related_name='movimientos_salida_inventario')
+    idBodega_destino = models.ForeignKey(bodega, on_delete=models.CASCADE,related_name='movimientos_entrada_inventario')
+    fecha = models.DateField()
+    idcodigo = models.ForeignKey(codigo_prod, on_delete=models.CASCADE)
+    idEstatusUso = models.ForeignKey(nuevo_usado, on_delete=models.CASCADE)
+    cantidad = models.DecimalField(max_digits=4, decimal_places=2)
+    digitador = models.ForeignKey(User, on_delete=models.CASCADE)
+    observacion = models.CharField(max_length=150, blank=True, null=True)
+    creado = models.DateField(auto_now_add=True)
 
 class cierreInventario(models.Model):
     idcodigo = models.ForeignKey(codigo_prod, on_delete=models.CASCADE)
@@ -114,6 +126,17 @@ class cierreInventario(models.Model):
     movimientos_salida = models.DecimalField(max_digits=4, decimal_places=2)
     total = models.DecimalField(max_digits=4, decimal_places=2)
     observacion = models.CharField(max_length=100, blank=True, null=True)
+
+class cierreInventario2(models.Model):
+    id_empresa = models.ForeignKey(empresa, on_delete=models.CASCADE, default=1)
+    idBodega = models.ForeignKey(bodega, on_delete=models.CASCADE)
+    idcodigo = models.ForeignKey(codigo_prod, on_delete=models.CASCADE)
+    idEstatusUso = models.ForeignKey(nuevo_usado, on_delete=models.CASCADE)
+    cantidad = models.DecimalField(max_digits=4, decimal_places=2)
+    digitador = models.ForeignKey(User, on_delete=models.CASCADE)
+    fecha = models.DateField()
+    observacion = models.CharField(max_length=100, blank=True, null=True)
+    
 
 
 

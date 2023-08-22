@@ -1,0 +1,505 @@
+{% extends 'plantilla1.html' %}
+
+{% block content%}
+
+<h3>Registro Cierre inventario Bodega</h3>
+
+<div class="container text-center">
+  <div class="row">
+    <div class="col">
+      Column
+      <h6>Total ingreso facturas</h6>
+
+      <table class="table small-text">
+      <thead>
+        <tr>
+        <th scope="col" >#</th>
+        <th scope="col" >Codigo</th>
+        <th scope="col" >Estado</th>
+        <th scope="col" >Cantidad</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for f in totalesIngreFac %}
+        <tr>
+          <th scope="row">{{forloop.counter}}</th>
+          <td>{{f.codigo}}</td>
+          <td>{{f.uso}}</td>
+          <td>{{f.cantidad}}</td>
+        </tr>
+        {%endfor%}
+      </tbody>
+      </table>
+
+
+      <h6>Total ingreso retiros</h6>
+      <table class="table small-text">
+          <thead>
+            <tr>
+            <th scope="col" >#</th>
+            <th scope="col" >Codigo</th>
+            <th scope="col" >Estado</th>
+            <th scope="col" >Cantidad</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for f in totalesIngreRet%}
+            <tr>
+              <th scope="row">{{forloop.counter}}</th>
+              <td>{{f.codigo}}</td>
+              <td>{{f.uso}}</td>
+              <td>{{f.cantidad}}</td>
+            </tr>
+            {%endfor%}
+          </tbody>
+        </table>
+
+
+        <h5>Total ingresos</h5>
+        <table class="table small-text">
+            <thead>
+              <tr>
+              <th scope="col" >#</th>
+              <th scope="col" >Codigo</th>
+              <th scope="col" >Estado</th>
+              <th scope="col" >Cantidad</th>
+              </tr>
+           </thead>
+           <tbody>
+              {% for f in total_ingreso_inventario %}
+              <tr>
+                <th scope="row">{{forloop.counter}}</th>
+                <td>{{f.codigo}}</td>
+                <td>{{f.uso}}</td>
+                <td>{{f.cantidad}}</td>
+              </tr>
+              {%endfor%}
+            </tbody>
+           </table>
+
+           <h6>Movimientos entrada</h6>
+          <table class="table small-text">
+            <thead>
+              <tr>
+              <th scope="col" >#</th>
+              <th scope="col" >Codigo</th>
+              <th scope="col" >Estado</th>
+              <th scope="col" >Cantidad</th>
+              </tr>
+          </thead>
+          <tbody>
+              {% for f in total_ingreso_movimiento_inv %}
+              <tr>
+                <th scope="row">{{forloop.counter}}</th>
+                <td>{{f.codigo}}</td>
+                <td>{{f.uso}}</td>
+                <td>{{f.cantidad}}</td>
+              </tr>
+              {%endfor%}
+            </tbody>
+          </table>
+
+
+    </div>
+    <div class="col">
+      Column
+
+      <h6>Total salida instalaciones</h6>
+
+      <table class="table small-text">
+      <thead>
+        <tr>
+        <th scope="col" >#</th>
+        <th scope="col" >Codigo</th>
+        <th scope="col" >Estado</th>
+        <th scope="col" >Cantidad</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for f in totalesSalInstalaciones %}
+        <tr>
+          <th scope="row">{{forloop.counter}}</th>
+          <td>{{f.codigo}}</td>
+          <td>{{f.uso}}</td>
+          <td>{{f.cantidad}}</td>
+        </tr>
+        {%endfor%}
+      </tbody>
+      </table>
+
+      <h6>Total salida ventas contado</h6>
+      <table class="table small-text">
+      <thead>
+        <tr>
+        <th scope="col" >#</th>
+        <th scope="col" >Codigo</th>
+        <th scope="col" >Estado</th>
+        <th scope="col" >Cantidad</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for f in totalesSalidaVentasContado %}
+        <tr>
+          <th scope="row">{{forloop.counter}}</th>
+          <td>{{f.codigo}}</td>
+          <td>{{f.uso}}</td>
+          <td>{{f.cantidad}}</td>
+        </tr>
+        {%endfor%}
+      </tbody>
+      </table>
+
+      <h5>Total salida inventario</h5>
+
+      <table class="table small-text">
+      <thead>
+        <tr>
+        <th scope="col" >#</th>
+        <th scope="col" >Codigo</th>
+        <th scope="col" >Estado</th>
+        <th scope="col" >Cantidad</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for f in total_salida_inventario %}
+        <tr>
+          <th scope="row">{{forloop.counter}}</th>
+          <td>{{f.codigo}}</td>
+          <td>{{f.uso}}</td>
+          <td>{{f.cantidad}}</td>
+        </tr>
+        {%endfor%}
+      </tbody>
+      </table>
+
+      <h6>Movimientos salida</h6>
+      <table class="table small-text">
+        <thead>
+          <tr>
+          <th scope="col" >#</th>
+          <th scope="col" >Codigo</th>
+          <th scope="col" >Estado</th>
+          <th scope="col" >Cantidad</th>
+          </tr>
+      </thead>
+      <tbody>
+          {% for f in total_salida_movimiento_inv %}
+          <tr>
+            <th scope="row">{{forloop.counter}}</th>
+            <td>{{f.codigo}}</td>
+            <td>{{f.uso}}</td>
+            <td>{{f.cantidad}}</td>
+          </tr>
+          {%endfor%}
+        </tbody>
+      </table>
+
+
+
+
+
+
+
+    </div>
+    <div class="col">
+      Column
+      <h6>Cierre anterior</h6>
+      <table class="table small-text">
+        <thead>
+          <tr>
+          <th scope="col" >#</th>
+          <th scope="col" >Codigo</th>
+          <th scope="col" >Uso</th>
+          <th scope="col" >Cantidad</th>
+          </tr>
+      </thead>
+      <tbody>
+          {% for f in cierreAnteriorInv %}
+          <tr>
+            <th scope="row">{{forloop.counter}}</th>
+            <td>{{f.idcodigo}}</td>
+            <td>{{f.idEstatusUso}}</td>
+            <td>{{f.cantidad}}</td>
+          </tr>
+          {%endfor%}
+        </tbody>
+      </table>
+ 
+
+      <h6>Cierre inventario</h6>
+      <table class="table small-text">
+       <thead>
+         <tr>
+         <th scope="col" >#</th>
+         <th scope="col" >Codigo</th>
+         <th scope="col" >Uso</th>
+         <th scope="col" >Cantidad</th>
+         </tr>
+      </thead>
+      <tbody>
+         {% for f in resultados %}
+         <tr>
+           <th scope="row">{{forloop.counter}}</th>
+           <td>{{f.codigo}}</td>
+           <td>{{f.uso}}</td>
+           <td>{{f.cantidad}}</td>
+         </tr>
+         {%endfor%}
+       </tbody>
+      </table>
+      
+
+
+    </div>
+  </div>
+</div>
+<!--
+<h5>Total ingreso Facturas</h5>
+
+<table class="table small-text">
+ <thead>
+   <tr>
+   <th scope="col" >#</th>
+   <th scope="col" >Codigo</th>
+   <th scope="col" >Estado</th>
+   <th scope="col" >Cantidad</th>
+   </tr>
+</thead>
+<tbody>
+   {% for f in totalesIngreFac %}
+   <tr>
+     <th scope="row">{{forloop.counter}}</th>
+     <td>{{f.codigo}}</td>
+     <td>{{f.uso}}</td>
+     <td>{{f.cantidad}}</td>
+   </tr>
+   {%endfor%}
+ </tbody>
+</table>
+
+
+<h5>Total ingreso Retiros</h5>
+<table class="table small-text">
+    <thead>
+      <tr>
+      <th scope="col" >#</th>
+      <th scope="col" >Codigo</th>
+      <th scope="col" >Estado</th>
+      <th scope="col" >Cantidad</th>
+      </tr>
+   </thead>
+   <tbody>
+      {% for f in totalesIngreRet%}
+      <tr>
+        <th scope="row">{{forloop.counter}}</th>
+        <td>{{f.codigo}}</td>
+        <td>{{f.uso}}</td>
+        <td>{{f.cantidad}}</td>
+      </tr>
+      {%endfor%}
+    </tbody>
+   </table>
+
+   <h5>Total ingreso</h5>
+   <table class="table small-text">
+       <thead>
+         <tr>
+         <th scope="col" >#</th>
+         <th scope="col" >Codigo</th>
+         <th scope="col" >Estado</th>
+         <th scope="col" >Cantidad</th>
+         </tr>
+      </thead>
+      <tbody>
+         {% for f in total_ingreso_inventario %}
+         <tr>
+           <th scope="row">{{forloop.counter}}</th>
+           <td>{{f.codigo}}</td>
+           <td>{{f.uso}}</td>
+           <td>{{f.cantidad}}</td>
+         </tr>
+         {%endfor%}
+       </tbody>
+      </table>
+   
+
+
+<h5>Total salida instalaciones</h5>
+
+<table class="table small-text">
+ <thead>
+   <tr>
+   <th scope="col" >#</th>
+   <th scope="col" >Codigo</th>
+   <th scope="col" >Estado</th>
+   <th scope="col" >Cantidad</th>
+   </tr>
+</thead>
+<tbody>
+   {% for f in totalesSalInstalaciones %}
+   <tr>
+     <th scope="row">{{forloop.counter}}</th>
+     <td>{{f.codigo}}</td>
+     <td>{{f.uso}}</td>
+     <td>{{f.cantidad}}</td>
+   </tr>
+   {%endfor%}
+ </tbody>
+</table>
+
+<h5>Total salida ventas contado</h5>
+<table class="table small-text">
+ <thead>
+   <tr>
+   <th scope="col" >#</th>
+   <th scope="col" >Codigo</th>
+   <th scope="col" >Estado</th>
+   <th scope="col" >Cantidad</th>
+   </tr>
+</thead>
+<tbody>
+   {% for f in totalesSalidaVentasContado %}
+   <tr>
+     <th scope="row">{{forloop.counter}}</th>
+     <td>{{f.codigo}}</td>
+     <td>{{f.uso}}</td>
+     <td>{{f.cantidad}}</td>
+   </tr>
+   {%endfor%}
+ </tbody>
+</table>
+
+<h5>Total salida inventario</h5>
+
+<table class="table small-text">
+ <thead>
+   <tr>
+   <th scope="col" >#</th>
+   <th scope="col" >Codigo</th>
+   <th scope="col" >Estado</th>
+   <th scope="col" >Cantidad</th>
+   </tr>
+</thead>
+<tbody>
+   {% for f in total_salida_inventario %}
+   <tr>
+     <th scope="row">{{forloop.counter}}</th>
+     <td>{{f.codigo}}</td>
+     <td>{{f.uso}}</td>
+     <td>{{f.cantidad}}</td>
+   </tr>
+   {%endfor%}
+</tbody>
+</table>
+
+
+<h5>Movimientos entrada</h5>
+
+<table class="table small-text">
+  <thead>
+    <tr>
+    <th scope="col" >#</th>
+    <th scope="col" >Codigo</th>
+    <th scope="col" >Estado</th>
+    <th scope="col" >Cantidad</th>
+    </tr>
+</thead>
+<tbody>
+    {% for f in total_ingreso_movimiento_inv %}
+    <tr>
+      <th scope="row">{{forloop.counter}}</th>
+      <td>{{f.codigo}}</td>
+      <td>{{f.uso}}</td>
+      <td>{{f.cantidad}}</td>
+    </tr>
+    {%endfor%}
+  </tbody>
+</table>
+
+
+<h5>Movimientos salida</h5>
+<table class="table small-text">
+  <thead>
+    <tr>
+    <th scope="col" >#</th>
+    <th scope="col" >Codigo</th>
+    <th scope="col" >Estado</th>
+    <th scope="col" >Cantidad</th>
+    </tr>
+</thead>
+<tbody>
+    {% for f in total_salida_movimiento_inv %}
+    <tr>
+      <th scope="row">{{forloop.counter}}</th>
+      <td>{{f.codigo}}</td>
+      <td>{{f.uso}}</td>
+      <td>{{f.cantidad}}</td>
+    </tr>
+    {%endfor%}
+  </tbody>
+</table>
+
+<h4>Cierre anterior</h4>
+<table class="table small-text">
+  <thead>
+    <tr>
+    <th scope="col" >#</th>
+    <th scope="col" >Codigo</th>
+    <th scope="col" >Uso</th>
+    <th scope="col" >Cantidad</th>
+    </tr>
+ </thead>
+ <tbody>
+    {% for f in cierreAnteriorInv %}
+    <tr>
+      <th scope="row">{{forloop.counter}}</th>
+      <td>{{f.idcodigo}}</td>
+      <td>{{f.idEstatusUso}}</td>
+      <td>{{f.cantidad}}</td>
+    </tr>
+    {%endfor%}
+  </tbody>
+ </table>
+ 
+
+
+   <h5>Cierre inventario</h5>
+   <table class="table small-text">
+    <thead>
+      <tr>
+      <th scope="col" >#</th>
+      <th scope="col" >Codigo</th>
+      <th scope="col" >Uso</th>
+      <th scope="col" >Cantidad</th>
+      </tr>
+   </thead>
+   <tbody>
+      {% for f in resultados %}
+      <tr>
+        <th scope="row">{{forloop.counter}}</th>
+        <td>{{f.codigo}}</td>
+        <td>{{f.uso}}</td>
+        <td>{{f.cantidad}}</td>
+      </tr>
+      {%endfor%}
+    </tbody>
+   </table>
+
+   -->
+   
+
+   <form method="POST">
+    {% csrf_token %}
+    {{form.as_p}}
+    <label for="observacion">Comentario:</label><br>
+    <textarea id="observacion" name="observacion"></textarea><br><br>
+    <button>Guardar</button>
+
+   </form>
+
+
+
+
+
+
+{%endblock%}

@@ -2,17 +2,34 @@
 {% extends 'plantilla1.html' %}
 
 {% block content%}
-RegistroInvRetiros.html
 
-<form method="POST" >
-    {% csrf_token %}
-    {{form.as_p}}
-    <div>
-        <label for="fecha_ingreso">Fecha ingreso:</label>
-        <input type="date" id="fecha_ingreso" name="fecha_ingreso">
+<div class="container text-center">
+    <div class="row">
+      <div class="col">
+       
+      </div>
+      <div class="col">
+        <h5>Registro de inventario proveniente de retiros</h5>
+        <form method="POST" >
+            {% csrf_token %}
+            {{form.as_p}}
+            <div>
+                <label for="fecha_ingreso">Fecha ingreso:</label>
+                <input type="date" id="fecha_ingreso" name="fecha_ingreso">
+            </div>
+            <button>Guardar</button>
+        </form>
+        
+      </div>
+      <div class="col">
+        
+      </div>
     </div>
-    <button>Guardar</button>
-</form>
+  </div>
+
+
+
+
 
 
 
