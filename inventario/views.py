@@ -3,9 +3,10 @@ from datetime import datetime, timedelta
 from django.db.models import Sum
 from .forms import form_registroInvRetiros, form_registroInvFacturas, form_registroSalidasInstalaciones
 from .forms import form_precierre, form_salidaVentasContado, form_movimientosInventario,form_selecResumenInvFacturas
+from .forms import  form_clientes_reg
 from . models import ingresosRetiros, nuevo_usado, ingresoFacturas, salidaInstalaciones
 from . models import codigo_prod, salidaVentasContado,  movimimientosInventario, cierreInventario2
-from . models import bodega
+from . models import bodega,clientes
 from egresos.models import facturasProveedores
 from general.models import empresa
 
@@ -622,4 +623,21 @@ def ResumenCierreInventarioBodega(request):
     cierresInventario = cierreInventario2.objects.filter(fecha__range=[fecha_inicial,fecha_actual]).order_by('-fecha')
     return render(request,'ResumenCierreInventarioBod.html',{
         'cierresInventario':cierresInventario,
+    })
+
+def RegistroClientes(request):
+    if request.method == 'GET':
+        return render(request,'registroClientes.html',{
+            'form':form_clientes_reg,
+        })
+    else:
+        form2 = form_clientes_reg(request.POST)
+        nuevoregistro = form2.save(commit=False)
+        nuevoregistro.save()
+       
+        return redirect('ResumenClientes')
+def ResumenClientes(request):
+    clientesList = clientes.objects.all()
+    return render(request,'listadoClientes.html',{
+        'clientesList':clientesList,
     })

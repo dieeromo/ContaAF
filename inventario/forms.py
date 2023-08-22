@@ -1,6 +1,6 @@
 from django.forms import ModelForm
 from . models import ingresosRetiros, ingresoFacturas, salidaInstalaciones,cierreInventario2
-from . models import salidaVentasContado, movimimientosInventario
+from . models import salidaVentasContado, movimimientosInventario, clientes
 from egresos.models import facturasProveedores
 
 class form_registroInvRetiros(ModelForm):
@@ -61,3 +61,11 @@ class form_movimientosInventario(ModelForm):
         model = movimimientosInventario
         fields = ['id_empresa','idBodega_origen','idBodega_destino','idcodigo','idEstatusUso','cantidad','observacion']
 
+class form_clientes_reg(ModelForm):
+    class Meta:
+        model = clientes
+        fields = ['apenomb', 'nombre']
+        labels = {
+            'apenomb': 'Apellidos',
+            'nombre':'Nombres'
+        }

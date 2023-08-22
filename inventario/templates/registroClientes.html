@@ -1,0 +1,13 @@
+{% extends 'plantilla1.html' %}
+
+{% block content%}
+<h5>Registro Clientes</h5>
+<form method="POST" >
+    {% csrf_token %}
+    {{form.as_p}}
+
+    <button>Guardar</button>
+</form>
+
+
+{%endblock%}

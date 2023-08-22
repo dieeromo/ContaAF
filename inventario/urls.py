@@ -22,6 +22,9 @@ urlpatterns =[
      path('precierre/', views.preCierreInventario , name='preCierreInventario'),
      path('registrocierrebodega/<int:idBodega>/<str:fecha>/<int:id_empresa>', views.cierreInventarioBodega , name='cierreInventarioBodega'),
      path('resumencierrebodega/', views.ResumenCierreInventarioBodega , name='ResumenCierreInventarioBodega'),
+
+     path('registroclientes/', views.RegistroClientes , name='RegistroClientes'),
+     path('resumenclientes/', views.ResumenClientes , name='ResumenClientes'),
     
    
 
