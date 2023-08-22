@@ -22,7 +22,7 @@ class facturasProveedores(models.Model):
     observacion = models.CharField(max_length=200, blank=True)
     #creado = models.DateField(auto_now_add=True, default='2023-05-05')
     def __str__(self):
-        return "{}*{}*{}*{}".format(self.numeroFactura, self.fechapago,  self.valor,self.id_empresa)
+        return "{}*{}*{}".format(self.numeroFactura, self.idproveedor,self.id_empresa)
     
 
 

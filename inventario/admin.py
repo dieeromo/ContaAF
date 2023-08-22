@@ -1,6 +1,7 @@
 from django.contrib import admin
 from .models import codigo_prod, nuevo_usado, bodega, ingresoFacturas, ingresosRetiros, clientes
 from .models import  precioSalida, salidaInstalaciones, cierreInventario, salidaVentasContado
+from .models import  movimimientosInventario, cierreInventario2
 # Register your models here.
 
 
@@ -14,6 +15,8 @@ admin.site.register(precioSalida)
 admin.site.register(salidaInstalaciones)
 admin.site.register(cierreInventario)
 admin.site.register(salidaVentasContado)
+admin.site.register(movimimientosInventario)
+admin.site.register(cierreInventario2)
 
 
 

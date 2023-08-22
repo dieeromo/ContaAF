@@ -1,0 +1,35 @@
+{% extends 'plantilla1.html' %}
+
+{% block content%}
+RESUMEN CIERRE INVENTARIO
+
+<table class="table small-text">
+    <thead>
+      <tr>
+      <th scope="col" >#</th>
+      <th scope="col" >Bodega</th>
+      <th scope="col" >Codigo</th>
+      <th scope="col" >Uso</th>
+      <th scope="col" >Cantidad</th>
+      <th scope="col" >Fecha</th>
+      <th scope="col" >Digitador</th>
+      <th scope="col" >Observacion</th>
+      </tr>
+   </thead>
+   <tbody>
+      {% for f in cierresInventario %}
+      <tr>
+        <th scope="row">{{forloop.counter}}</th>
+        <td>{{f.idBodega}}</td>
+        <td>{{f.idcodigo}}</td>
+        <td>{{f.idEstatusUso}}</td>
+        <td>{{f.cantidad}}</td>
+        <td>{{f.fecha}}</td>
+        <td>{{f.digitador}}</td>
+        <td>{{f.observacion}}</td>
+      </tr>
+      {%endfor%}
+   
+    </tbody>
+   </table>
+{%endblock%}

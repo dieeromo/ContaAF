@@ -39,19 +39,57 @@ Resumen registro facturas
 
       </tbody>
 </table>
-<div>Total Factura calculado: {{total_calculado}}</div>
-<div>Total Factura ingreso: {{total_factura}}</div>
 
-<form method="POST">
-    {% csrf_token %}
-    {{form.as_p}}
-    <button> Cerrar Factura</button>
-</form>
 
-<div>
-    <li class="nav-item">
-        <a class="nav-link active" aria-current="page" href="{%url 'ingresosInvFacturas'%}"> Seguir ingresando</a>
-      </li>
+<div class="container text-center">
+  <div class="row">
+    <div class="col">
+
+    </div>
+    <div class="col">
+      <div>Total: Ingreso productos: {{total_calculado}}</div>
+      <div>Total: Factura ingresada: {{total_factura}}</div>
+
+      {%if permiso%}
+      {%else%}
+
+        <div class="alert alert-success" role="alert">
+          <a class="nav-link active" aria-current="page" href="{%url 'ingresosInvFacturas'%}"> Seguir ingresando</a>
+        </div>
+
+        <form method="POST">
+          {% csrf_token %}
+          {{form.as_p}}
+          <button> Cerrar Factura</button>
+      </form>
+    
+      {%endif%}
+    
+
+
+
+    </div>
+
+
+
+
+
+    <div class="col">
+    
+    </div>
+  </div>
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
 
 {%endblock%}

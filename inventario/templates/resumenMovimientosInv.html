@@ -1,0 +1,43 @@
+{% extends 'plantilla1.html' %}
+
+{% block content%}
+Resumende movimientos
+
+<table class="table small-text">
+       
+    <thead>
+        <tr>
+          <th scope="col" >#</th>
+          <th scope="col" >Empresa</th>
+          <th scope="col" >Bod Origen</th>
+          <th scope="col" >Bod Destino</th>
+          <th scope="col" >Fecha</th>
+          <th scope="col" >Codigo</th>
+          <th scope="col" >Uso</th>
+          <th scope="col" >Cantidad</th>
+          <th scope="col" >Observacion</th>
+          <th scope="col" >Digitador</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for f in resumen_mov_inv%}
+        <tr>
+          <th scope="row">{{forloop.counter}}</th>
+          <td>{{f.id_empresa}}</td>
+          <td>{{f.idBodega_origen}}</td>
+          <td>{{f.idBodega_destino}}</td>
+          <td>{{f.fecha}}</td>
+          <td>{{f.idcodigo}}</td>
+          <td>{{f.idEstatusUso}}</td>
+          <td>{{f.cantidad}}</td>
+          <td>{{f.observacion}}</td>
+          <td>{{f.digitador}}</td>
+
+          
+        </tr>
+        {% endfor%}
+
+      </tbody>
+</table>
+
+{%endblock%}
