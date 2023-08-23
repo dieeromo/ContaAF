@@ -82,6 +82,8 @@ class salidaInstalaciones(models.Model):
     idBodega = models.ForeignKey(bodega, on_delete=models.CASCADE)
     id_empresa = models.ForeignKey(empresa, on_delete=models.CASCADE, default=1)
     observacion = models.CharField(max_length=100, blank=True, null=True)
+    def __str__(self):
+        return "{}-{}-{} ".format(self.idBodega, self.idcodigo, self.fecha_instalacion)
 
 
 class salidaVentasContado(models.Model):
@@ -97,6 +99,13 @@ class salidaVentasContado(models.Model):
     id_empresa = models.ForeignKey(empresa, on_delete=models.CASCADE, default=1)
     id_estadoPago = models.ForeignKey(estadoPago, on_delete=models.CASCADE)
     fecha_entrega = models.DateField(blank=True, null=True)
+    def __str__(self):
+        return "{}-{}-{} ".format(self.idBodega, self.idcodigo, self.fecha_venta)
+
+    
+
+
+
 
 class movimimientosInventario(models.Model):
     id_empresa = models.ForeignKey(empresa, on_delete=models.CASCADE, default=1)
@@ -109,6 +118,8 @@ class movimimientosInventario(models.Model):
     digitador = models.ForeignKey(User, on_delete=models.CASCADE)
     observacion = models.CharField(max_length=150, blank=True, null=True)
     creado = models.DateField(auto_now_add=True)
+    def __str__(self):
+        return "{}-{}-{}-{} ".format(self.idBodega_origen, self.idBodega_destino, self.fecha, self.idcodigo)
 
 class cierreInventario(models.Model):
     idcodigo = models.ForeignKey(codigo_prod, on_delete=models.CASCADE)
@@ -137,6 +148,9 @@ class cierreInventario2(models.Model):
     digitador = models.ForeignKey(User, on_delete=models.CASCADE)
     fecha = models.DateField()
     observacion = models.CharField(max_length=100, blank=True, null=True)
+    def __str__(self):
+        return "{}-{}-{} ".format(self.idBodega, self.idcodigo, self.fecha)
+
     
 
 
