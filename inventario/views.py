@@ -278,7 +278,7 @@ def preCierreInventario(request):
                     total_salida_inventario.append(data6)
 
         fecha_ayer = fecha_actual - timedelta(days=1)
-        cierreAnteriorInv = cierreInventario2.objects.filter(fecha=fecha_ayer)
+        cierreAnteriorInv = cierreInventario2.objects.filter(fecha=fecha_ayer,idBodega = request.POST['idBodega'])
         paasCierreInv = False
         if not cierreAnteriorInv.exists():
             paasCierreInv = False
@@ -421,7 +421,7 @@ def cierreInventarioBodega(request, idBodega, fecha, id_empresa):
 
      
         fecha_ayer = fecha - timedelta(days=1)
-        cierreAnteriorInv = cierreInventario2.objects.filter(fecha=fecha_ayer)
+        cierreAnteriorInv = cierreInventario2.objects.filter(fecha=fecha_ayer,idBodega = idBodega)
 
 
         inventario = {}
@@ -575,7 +575,7 @@ def cierreInventarioBodega(request, idBodega, fecha, id_empresa):
         fecha = fecha.date()
              
         fecha_ayer = fecha - timedelta(days=1)
-        cierreAnteriorInv = cierreInventario2.objects.filter(fecha=fecha_ayer)
+        cierreAnteriorInv = cierreInventario2.objects.filter(fecha=fecha_ayer, idBodega = idBodega)
 
        
         inventario = {}
