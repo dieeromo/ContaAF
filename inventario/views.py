@@ -422,37 +422,46 @@ def cierreInventarioBodega(request, idBodega, fecha, id_empresa):
      
         fecha_ayer = fecha - timedelta(days=1)
         cierreAnteriorInv = cierreInventario2.objects.filter(fecha=fecha_ayer,idBodega = idBodega)
+        #lista_cierreAnterior = []
+        #for ii in cierreAnteriorInv:
+        #    tempoList = {}
+        #    tempoList['codigo'] = str(ii.idcodigo)
+        #    tempoList['uso'] = str(ii.idEstatusUso).strip()
+        #    tempoList['cantidad']= int(ii.cantidad or 0)
+        #    lista_cierreAnterior.append(tempoList)
+      
 
 
         inventario = {}
         for item in total_ingreso_inventario:
-            clave = (item["codigo"], item["uso"])
+            clave = (item['codigo'], item['uso'])
             cantidad = item["cantidad"]
             inventario[clave] = inventario.get(clave, 0) + cantidad
 
         for item in total_salida_inventario:
-            clave = (item["codigo"], item["uso"])
-            cantidad = item["cantidad"]
+            clave = (item['codigo'], item['uso'])
+            cantidad = item['cantidad']
             inventario[clave] = inventario.get(clave, 0) - cantidad
 
         for item in total_ingreso_movimiento_inv:
-            clave = (item["codigo"], item["uso"])
-            cantidad = item["cantidad"]
+            clave = (item['codigo'], item['uso'])
+            cantidad = item['cantidad']
             inventario[clave] = inventario.get(clave, 0) + cantidad
 
         for item in total_salida_movimiento_inv :
-            clave = (item["codigo"], item["uso"])
-            cantidad = item["cantidad"]
+            clave = (item['codigo'], item['uso'])
+            cantidad = item['cantidad']
             inventario[clave] = inventario.get(clave, 0) - cantidad
-        
+
+
         for item in cierreAnteriorInv:
-            clave = (item.idcodigo,item.idEstatusUso)
-            cantidad = item.cantidad
+            clave = (str(item.idcodigo).strip(),str(item.idEstatusUso).strip())
+            cantidad = int(item.cantidad or 0)
             inventario[clave] = inventario.get(clave, 0) + cantidad
         
 
-        resultados = [{"codigo": codigo, "uso": uso, "cantidad": cantidad} for (codigo, uso), cantidad in inventario.items()]
-
+        resultados = [{'codigo': codigo, 'uso': uso, 'cantidad': cantidad} for (codigo, uso), cantidad in inventario.items()]
+                
 
         return render (request, 'RegistroCierreInventarioBod.html',{
             'totalesIngreFac':totalesIngreFac,
@@ -469,8 +478,6 @@ def cierreInventarioBodega(request, idBodega, fecha, id_empresa):
             'cierreAnteriorInv':cierreAnteriorInv,
 
             
-
-
         })
     else:
 
@@ -643,9 +650,9 @@ def ResumenClientes(request):
     })
 
 def actualizacionFacturas(request):
-    act = facturasProveedores.objects.all()
-    for item in act:
-        item.estadoEntrega =True
-        item.save()
+    #act = facturasProveedores.objects.all()
+    #for item in act:
+    #    item.estadoEntrega =True
+    #    item.save()
     return render(request,'actualizacionfacturas.html')
 
