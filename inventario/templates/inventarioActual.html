@@ -1,0 +1,33 @@
+
+{% extends 'plantilla1.html' %}
+
+{% block content%}
+
+<table class="table small-text">
+    <thead>
+      <tr>
+      <th scope="col" >#</th>
+      <th scope="col" >Codigo</th>
+      {%for f in uso2%}
+      <th scope="col" >{{f.estatus_uso}}</th>
+      {%endfor%}
+
+      </tr>
+   </thead>
+   <tbody>
+      {% for f in consolidado_inve %}
+      <tr>
+        <th scope="row">{{forloop.counter}}</th>
+        <td>{{f.codigo}}</td>
+        <td>{{f.cantidad1}}</td>
+        <td>{{f.cantidad2}}</td>
+        <td>{{f.cantidad3}}</td>
+ 
+        
+      </tr>
+      {%endfor%}
+    </tbody>
+   </table>
+   
+
+{%endblock%}

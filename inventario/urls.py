@@ -28,6 +28,8 @@ urlpatterns =[
      
      path('actualizacion/', views.actualizacionFacturas , name='actualizacionFacturas'),
 
+     path('inventarioactual/', views.inventarioActual , name='ineventarioActual'),
+
      
     
    
