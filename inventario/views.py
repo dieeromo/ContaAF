@@ -656,3 +656,44 @@ def actualizacionFacturas(request):
     #    item.save()
     return render(request,'actualizacionfacturas.html')
 
+
+        #ingreso_inv_mov = movimimientosInventario.objects.filter(idcodigo=i.id, idEstatusUso= j.id, fecha = fecha, idBodega_destino = idBodega).aggregate( ingreso_inv_mov=Sum('cantidad'))['ingreso_inv_mov']
+
+
+def inventarioActual(request):
+    fecha_actual = datetime.now().date()
+    fecha_ayer = fecha_actual - timedelta(days=1)
+    equipos2 = codigo_prod.objects.filter(seguimientoProducto=True)
+
+    uso2 = nuevo_usado.objects.all()
+
+    consolidado_inve = []
+    
+    for i in equipos2:
+        tempo = {}
+        tempo['codigo'] = i.codigo
+        conta = 1
+        for  j in uso2:
+            resultado_inv = cierreInventario2.objects.filter(fecha =fecha_ayer,idcodigo=i.id, idEstatusUso= j.id,).aggregate(resultado_inv=Sum('cantidad'))['resultado_inv']
+            if conta == 1:
+                tempo['uso1'] = j.estatus_uso
+                tempo['cantidad1'] = int(resultado_inv or 0)
+            if conta == 2:
+                tempo['uso2'] = j.estatus_uso
+                tempo['cantidad2'] = int(resultado_inv or 0)
+            if conta == 3:
+                tempo['uso3'] = j.estatus_uso
+                tempo['cantidad3'] = int(resultado_inv or 0)
+            conta = conta + 1
+        consolidado_inve.append(tempo)
+    
+    print(consolidado_inve)
+            
+
+
+    return render(request, 'inventarioActual.html',{
+        'consolidado_inve':consolidado_inve,
+        'uso2':uso2,
+
+    })
+
