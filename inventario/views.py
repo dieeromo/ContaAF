@@ -3,7 +3,7 @@ from datetime import datetime, timedelta
 from django.db.models import Sum
 from .forms import form_registroInvRetiros, form_registroInvFacturas, form_registroSalidasInstalaciones
 from .forms import form_precierre, form_salidaVentasContado, form_movimientosInventario,form_selecResumenInvFacturas
-from .forms import  form_clientes_reg
+from .forms import  form_clientes_reg,  form_selec_resumen_inv_bod
 from . models import ingresosRetiros, nuevo_usado, ingresoFacturas, salidaInstalaciones
 from . models import codigo_prod, salidaVentasContado,  movimimientosInventario, cierreInventario2
 from . models import bodega,clientes
@@ -625,12 +625,21 @@ def cierreInventarioBodega(request, idBodega, fecha, id_empresa):
         return redirect('ResumenCierreInventarioBodega')
     
 def ResumenCierreInventarioBodega(request):
-    fecha_actual = datetime.now().date()
-    fecha_inicial = fecha_actual - timedelta(days=90)
-    cierresInventario = cierreInventario2.objects.filter(fecha__range=[fecha_inicial,fecha_actual]).order_by('-fecha')
-    return render(request,'ResumenCierreInventarioBod.html',{
-        'cierresInventario':cierresInventario,
-    })
+    if request.method == 'GET':
+        fecha_actual = datetime.now().date()
+        fecha_inicial = fecha_actual - timedelta(days=90)
+        cierresInventario = cierreInventario2.objects.filter(fecha__range=[fecha_inicial,fecha_actual]).order_by('-fecha')
+        return render(request,'ResumenCierreInventarioBod.html',{
+            'cierresInventario':cierresInventario,
+            'form': form_selec_resumen_inv_bod
+        })
+    else:
+        fecha_actual = datetime.now().date()
+        fecha_inicial = fecha_actual - timedelta(days=90)
+        cierresInventario = cierreInventario2.objects.filter(fecha__range=[fecha_inicial,fecha_actual],idBodega=request.POST['idBodega']).order_by('-fecha')
+        return render(request,'ResumenCierreInventarioBodFiltrado.html',{
+            'cierresInventario':cierresInventario,
+        })
 
 def RegistroClientes(request):
     if request.method == 'GET':
