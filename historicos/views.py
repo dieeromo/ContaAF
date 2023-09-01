@@ -111,13 +111,12 @@ def cifras(request):
         })
     else:
         
-        cierre_inicial = CierresCajas.objects.filter(fecha='2023-05-31')
+        cierre_inicial = CierresCajas.objects.filter(empresa=request.POST['empresa'],fecha='2023-05-31')
         
         ingreso_inicial = 0
         egreso_inicial = 0
         cierre_anterior_inicial = 0
        
-        cierre_inicial = CierresCajas.objects.filter(fecha='2023-05-31')
         for ii in cierre_inicial:
             ingreso_inicial = ingreso_inicial + ii.valorIngresos
             egreso_inicial = egreso_inicial + ii.valorEgresos
@@ -126,12 +125,11 @@ def cifras(request):
         balance_inicial = ingreso_inicial - egreso_inicial + cierre_anterior_inicial
 
 
-        cierrefinal = CierresCajas.objects.filter(fecha=request.POST['fecha_fin'])
+        cierrefinal = CierresCajas.objects.filter(empresa=request.POST['empresa'],fecha=request.POST['fecha_fin'])
         vtcierrefinal = 0
         for ii in cierrefinal:
             vtcierrefinal = vtcierrefinal + ii.valorCierreActual
-        print("jhdbshjbdscjhbdshjbchjdsbchjdsbhjbsdchjbcdshjbdscjhbdscjhbdhjsbchjdsc%%%%%")
-        print(request.POST['empresa'])
+
 
         #se calcula el total de ingresos y egresos desde los cierres de caja
         cifrasCierres = CierresCajas.objects.filter(empresa=request.POST['empresa'],fecha__range=[request.POST['fecha_inicio'],request.POST['fecha_fin']])
@@ -184,7 +182,7 @@ def cifras(request):
         for cifFacturas in cifrasFacturas:
             pagoCifrasFacturas = pagoCifrasFacturas + cifFacturas.valor
         
-        cifrasServicios = pagoServicios.objects.filter(empresa_servicio=request.POST['empresa'],fecha__range=[request.POST['fecha_inicio'],request.POST['fecha_fin']])
+        cifrasServicios = pagoServicios.objects.filter(empresa_nuestra=request.POST['empresa'],fecha__range=[request.POST['fecha_inicio'],request.POST['fecha_fin']])
         pagoCifrasServicios = 0
         for paser in cifrasServicios:
             pagoCifrasServicios = pagoCifrasServicios + paser.valor
@@ -206,7 +204,8 @@ def cifras(request):
         for i in egreSocios:
             pagosocios_credi2 = i.valor + pagosocios_credi2
         
-        gastos_total_eg = pagoCifrasIess +pagoCifrasCreditos+pagoCifrasServicios+pagoCifrasFacturas+pagoCifrasComi+pagoCifrasDeci+pagoColaboradoresTotal+pagosocios_credi2
+
+        gastos_total_eg = pagoCifrasIess + pagoCifrasCreditos+pagoCifrasServicios+pagoCifrasFacturas+pagoCifrasComi+pagoCifrasDeci+pagoColaboradoresTotal+pagosocios_credi2
 
 
         totalfinalcierre = 0
