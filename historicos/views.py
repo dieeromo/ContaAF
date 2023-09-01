@@ -154,7 +154,7 @@ def cifras(request):
             totalIngreConcepto = ingresosCajas.objects.filter( empresaIngreso = request.POST['empresa'],conceptoIngreso = ii.id, fecha__range=[request.POST['fecha_inicio'],request.POST['fecha_fin']]).aggregate(totalIngreConcepto =Sum('valorIngreso'))['totalIngreConcepto']
             data = {}
             data['concepto'] = ii.concepto
-            data['valor']= int(totalIngreConcepto or 0)
+            data['valor']= totalIngreConcepto
             ingresos_detalle.append(data)
         
         print(ingresos_detalle)
