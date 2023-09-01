@@ -3,7 +3,7 @@
 {% block content%}
 
 <h2>
-    AFNET en CIFRAS
+    AFCORP en CIFRAS
 </h2>
 
 
@@ -56,6 +56,7 @@
 <form method="POST">
     {% csrf_token %}
     {{form.as_p}}
+    
     <label for="fecha_inicio">Fecha Inicio:</label>
     <input type="date" id="fecha_inicio" name="fecha_inicio">
 
