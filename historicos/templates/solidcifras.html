@@ -56,7 +56,7 @@
 <form method="POST">
     {% csrf_token %}
     {{form.as_p}}
-    
+
     <label for="fecha_inicio">Fecha Inicio:</label>
     <input type="date" id="fecha_inicio" name="fecha_inicio">
 
@@ -76,6 +76,12 @@
 
 
 <div> <h5>Ingresos(cierres-filtrado) = {{ingresostotalperiodo}} - {{ingresosfiltradoperiodo}}</h5> </div>
+{% for f in  ingresos_detalle %}
+<div>
+  {{f.concepto}} = {{f.valor}}
+</div>
+
+{%endfor%}
 <div> <h5>Total Egresos (cierres - filtrado/calculado) = {{egresostotalperiodo}} -- {{gastos_total_eg}}</h5> </div>
 <div> <h5> balance={{balance}}  </h5></div>
 <div>Semana colaboradores  = {{pagoColaboradoresTotal}}</div>
