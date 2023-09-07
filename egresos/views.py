@@ -7,7 +7,7 @@ from django.http.response import JsonResponse
 from django.shortcuts import render, redirect
 from . forms import form_registroFacturas, form_pagoColaboradores, form_pagoServicios
 from . forms import form_PagoCreditos, form_pagoDecimos, form_planillasIess
-from .forms import form_pagarFacturas
+from .forms import form_pagarFacturas, form_todasfacturas
 from general.models import cajasReg, proveedoresProd
 from . models import facturasProveedores, pagoColaboradores, pagoServicios, pagoCreditos
 from .models import decimos, planillasIESS
@@ -374,6 +374,7 @@ def todosEgresoFacturas(request):
             valorfacturape = valorfacturape + v.valor
 
         return render(request,'todosEgresosFacturas.html',{
+            'form':form_todasfacturas,
             'facturas_pagadas':facturas_pagadas,
             'fecha_fin':fecha_actual,
             'fecha_inicio':fecha_inicial,

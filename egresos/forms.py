@@ -7,6 +7,10 @@ class form_registroFacturas(ModelForm):
         model = facturasProveedores
         fields = ['idproveedor', 'numeroFactura','valor','id_modoCompra','id_estadoPago','id_empresa','observacion']
     
+class form_todasfacturas(ModelForm):
+    class Meta:
+        model = facturasProveedores
+        fields = ['id_empresa','id_caja']
 class form_pagoColaboradores(ModelForm):
     class Meta:
         model = pagoColaboradores
