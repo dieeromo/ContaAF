@@ -1,5 +1,6 @@
 from datetime import datetime, timedelta
-from django.db.models import Sum
+from django.db.models import Sum, Q
+from django.db.models.functions import ExtractMonth
 from django.shortcuts import render
 from general.models import pagoMeses, ingresosConcepto, empresa
 from cierres.models import CierresCajas
@@ -21,7 +22,9 @@ def cifras(request):
     if request.method == 'GET':
         empresa_cifra = empresa.objects.get(nombreEmpresa="AFnet")
         fecha_inicio = '2023-05-31'
-        fecha_fin = datetime.now().date()
+        
+        fecha_actual = datetime.now().date()
+        fecha_fin = fecha_actual - timedelta(days=3)
         
         cierre_inicial = CierresCajas.objects.filter(empresa=empresa_cifra,fecha=fecha_inicio)
         
@@ -109,7 +112,7 @@ def cifras(request):
             pagoCifrasIess = paIes.valor + pagoCifrasIess
         
   
-        egreSocios = Socios.objects.filter(fecha__range=[fecha_inicio,fecha_fin])
+        egreSocios = Socios.objects.filter(id_empresa=empresa_cifra,fecha__range=[fecha_inicio,fecha_fin])
         pagosocios_credi2 = 0
 
         for i in egreSocios:
@@ -248,7 +251,7 @@ def cifras(request):
             pagoCifrasIess = paIes.valor + pagoCifrasIess
         
   
-        egreSocios = Socios.objects.filter(fecha__range=[request.POST['fecha_inicio'],request.POST['fecha_fin']])
+        egreSocios = Socios.objects.filter(id_empresa=request.POST['empresa'],fecha__range=[request.POST['fecha_inicio'],request.POST['fecha_fin']])
         pagosocios_credi2 = 0
 
         for i in egreSocios:
@@ -297,3 +300,28 @@ def cifras(request):
             'fecha_fin':request.POST['fecha_fin'],
         })
 
+def historicos_mensuales(request):
+    formato_str = "%Y-%m-%d"
+    fecha_inicio_mano =  '2023-05-31'
+    fecha_inicio = datetime.strptime(fecha_inicio_mano,formato_str)
+    #mes_a_filtrar = 8
+
+    meses_filtrar = [1,2,3,4,5,6,7,8,9,10,11,12]
+    
+
+
+
+    # Obtiene los registros del mes seleccionado
+    for mes_a_filtrar in meses_filtrar:
+        ingresoCajaMes = ingresosCajas.objects.filter(
+            Q(empresaIngreso = 1 )&
+            Q(fecha__month=mes_a_filtrar) &
+            Q(fecha__year = datetime.now().year)
+        ).aggregate(ingresoCajaMes=Sum('valorIngreso'))['ingresoCajaMes']  # Puedes ajustar el año si es necesario
+
+        print(ingresoCajaMes)
+
+
+
+
+    return render(request, 'historicosmensuales.html')
