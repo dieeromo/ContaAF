@@ -38,7 +38,7 @@ class clientes(models.Model):
 
 class ingresoFacturas(models.Model):
     idcodigo = models.ForeignKey(codigo_prod, on_delete=models.CASCADE)
-    cantidad = models.DecimalField(max_digits=5, decimal_places=2)
+    cantidad = models.DecimalField(max_digits=8, decimal_places=2)
     precio_in = models.DecimalField(max_digits=7, decimal_places=2)
     idFactura = models.ForeignKey(facturasProveedores, on_delete=models.CASCADE)
     idTipoProducto = models.ForeignKey(tipoProducto, on_delete=models.CASCADE)
@@ -53,7 +53,7 @@ class ingresoFacturas(models.Model):
 
 class ingresosRetiros(models.Model):
     idcodigo = models.ForeignKey(codigo_prod, on_delete=models.CASCADE)
-    cantidad = models.DecimalField(max_digits=5, decimal_places=2)
+    cantidad = models.DecimalField(max_digits=8, decimal_places=2)
     idEstatusUso = models.ForeignKey(nuevo_usado, on_delete=models.CASCADE)
     idBodega = models.ForeignKey(bodega, on_delete=models.CASCADE)
     fecha_ingreso = models.DateField()
@@ -144,7 +144,7 @@ class cierreInventario2(models.Model):
     idBodega = models.ForeignKey(bodega, on_delete=models.CASCADE)
     idcodigo = models.ForeignKey(codigo_prod, on_delete=models.CASCADE)
     idEstatusUso = models.ForeignKey(nuevo_usado, on_delete=models.CASCADE)
-    cantidad = models.DecimalField(max_digits=4, decimal_places=2)
+    cantidad = models.DecimalField(max_digits=8, decimal_places=2)
     digitador = models.ForeignKey(User, on_delete=models.CASCADE)
     fecha = models.DateField()
     observacion = models.CharField(max_length=100, blank=True, null=True)
