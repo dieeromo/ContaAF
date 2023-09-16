@@ -13,6 +13,9 @@
         <div class="container text-centered">
             <h4>Registro pago servicios</h4>
         </div>
+        <h6>Servicio: {{servicio_nom}}</h6>
+        <h6>Empresa servicio: {{empresa_servicio_nom}}</h6>
+        <h6>Empresa : {{empresa_nu}}</h6>
         
             <form method="POST">
                 {% csrf_token %}
@@ -28,3 +31,6 @@
     </div>
   </div>
 {%endblock%}
+
+
+

@@ -12,7 +12,8 @@ urlpatterns =[
     path('resumenpagocolaboradores/', views.resumenPagoColaboradores , name='ResumenPagoColaboradores'),
     path('jsoncolaboradores/',views.jsonColaboradores,name='jsonColaboradores'),
 
-    path('registropagoservicios/', views.registroPagoServicios, name='RegistroPagoServicios'),
+    path('preregistropagoservicios/', views.pre_registroPagoServicios, name='pre_registroPagoServicios'),
+    path('registropagoservicios/<int:idservicio>/<int:idempresa_pro>/<int:idempresa_nu>', views.registroPagoServicios, name='RegistroPagoServicios'),
     path('resumenpagoservicios/', views.resumenPagoServicios, name='ResumenPagoServicios'),
     path('jsonpagoservicios/', views.JsonPagoServicios, name='jsonpagoservicios'),
 
@@ -35,6 +36,7 @@ urlpatterns =[
     path('pagarfacturas/<int:idfactura>', views.pagarFacturas, name='pagarFacturas'),
 
     path('todosegresosfacturas', views.todosEgresoFacturas, name='todoEgresoFacturas'),
+    
     path('todosegresosservicios', views.todosEgresosServicios, name='todoEgresoServicios'),
     path('todosegresoscolaboradores', views.todosEgresosColaboradores, name='todoEgresoColaboradores'),
     path('todosegresoscreditos', views.todosEgresosCreditos, name='todosEgresoCreditos'),

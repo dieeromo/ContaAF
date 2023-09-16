@@ -1,0 +1,46 @@
+{% extends 'plantilla1.html' %}
+
+{% block content%}
+<h5>Ultmos pagos servicio: {{servicio_nom}}</h5>
+<h6>Empresa servicio: {{empresa_servicio_nom}}</h6>
+
+<table class="table small-text">
+       
+    <thead>
+        <tr>
+          <th scope="col" >#</th>
+          <th scope="col" >Fecha</th>
+          <th scope="col" >Servicio</th>
+          <th scope="col" >Empresa pro</th>
+          <th scope="col" >Mes</th>
+          <th scope="col" >Año</th>
+          <th scope="col" >Valor</th>
+          <th scope="col" >Caja</th>
+          <th scope="col" >descripcion</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for f in pago_servicios_ultimos%}
+        <tr>
+          <th scope="row">{{forloop.counter}}</th>
+          <td>{{f.fecha}}</td>
+          <td>{{f.servicio}}</td>
+          <td>{{f.empresa_servicio}}</td>
+          <td>{{f.mes_de_Pago}}</td>
+          <td>{{f.anio_de_pago}}</td>
+          <td>{{f.valor}}</td>
+          <td>{{f.caja}}</td>
+          <td>{{f.descripcion}}</td>
+        </tr>
+        {% endfor%}
+
+      </tbody>
+</table>
+
+<div class="alert alert-success" role="alert">
+    <a href="{% url 'RegistroPagoServicios' servicio  empresa_servicio  empresa_nuestra %}"> Registrar cierre</a>
+</div>
+
+
+
+{%endblock%}
