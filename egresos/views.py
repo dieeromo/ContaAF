@@ -303,9 +303,9 @@ def jsonPagoDecimos(request):
 
 def resumenPagoDecimos(request):
     fecha_actual = datetime.now().date()
-    fecha_inicial = fecha_actual - timedelta(days=0)
+    fecha_inicial = fecha_actual - timedelta(days=90)
     caja_decimos = cajasReg.objects.get(usuario=request.user)
-    decimosConsulta = decimos.objects.filter(fecha__range=[fecha_inicial,fecha_actual],caja=caja_decimos)
+    decimosConsulta = decimos.objects.filter(fecha__range=[fecha_inicial,fecha_actual],caja=caja_decimos).order_by('-fecha')
     return render(request, 'resumenPagodecimos.html',{
         'decimosConsulta':decimosConsulta,
     })

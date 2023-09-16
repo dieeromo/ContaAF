@@ -33,7 +33,7 @@ class form_PagoCreditos(ModelForm):
 class form_pagoDecimos(ModelForm):
     class Meta:
         model = decimos
-        fields = ['colaborador','descripcion','valor','id_empresa']
+        fields = ['id_empresa','colaborador','valor','id_tipo','descripcion',]
 
 class form_planillasIess(ModelForm):
     class Meta:

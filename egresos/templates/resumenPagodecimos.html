@@ -11,11 +11,13 @@ Resumen pago decimos
         <thead>
             <tr>
             <th scope="col" >#</th>
-            <th scope="col" >Colaborador</th>
             <th scope="col" >Fecha</th>
+            <th scope="col" >Empresa</th>
+            <th scope="col" >Colaborador</th>
+            <th scope="col" >Tipo</th>
             <th scope="col" >Valor</th>
             <th scope="col" >Descripcion</th>
-            <th scope="col" >Empresa</th>
+            
             <th scope="col" >Caja</th>
             </tr>
         </thead>
@@ -23,11 +25,13 @@ Resumen pago decimos
             {% for f in decimosConsulta %}
             <tr>
               <th scope="row">{{forloop.counter}}</th>
-              <td>{{f.colaborador}}</td>
               <td>{{f.fecha}}</td>
+              <td>{{f.id_empresa}}</td>
+              <td>{{f.colaborador}}</td>
+              <td>{{f.id_tipo}}</td>
               <td>{{f.valor}}</td>
               <td>{{f.descripcion}}</td>
-              <td>{{f.id_empresa}}</td>
+              
               <td>{{f.caja}}</td>
 
             </tr>
