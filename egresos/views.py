@@ -127,13 +127,17 @@ def jsonColaboradores(request):
 
 def resumenPagoColaboradores(request):
     fecha_actual = datetime.now().date()
+    fecha_inicial = fecha_actual - timedelta(days=90)
     caja_col = cajasReg.objects.get(usuario=request.user)
     
-    colaboradoresConsulta = pagoColaboradores.objects.filter(fecha_ingreso=fecha_actual,id_caja=caja_col,estadoPagado=False)
+    colaboradoresConsulta = pagoColaboradores.objects.filter(fecha_ingreso__range=[fecha_inicial,fecha_actual],id_caja=caja_col,estadoPagado=False).order_by('-fecha_ingreso')
     
     return render(request,'resumenPagoColaboradores.html',{
         'colaboradoresConsulta':colaboradoresConsulta,
     })
+
+
+
 def pre_registroPagoServicios(request):
     if request.method == 'GET':
         return render(request, 'selec_registroServicios.html',{
