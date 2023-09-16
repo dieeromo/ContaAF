@@ -32,7 +32,9 @@ class pagoColaboradores(models.Model):
    dias_normales = models.DecimalField(max_digits=4, decimal_places=2)
    dias_extras = models.DecimalField(max_digits=4, decimal_places=2)
    dias_feriados = models.DecimalField(max_digits=4, decimal_places=2)
-   fecha_pago = models.DateField()
+   fecha_pago = models.DateField(blank=True, null=True)
+   fecha_ingreso = models.DateField(auto_now_add=True)
+   estadoPagado = models.BooleanField(default=False)#False-no pagado   True-pagado
    valor = models.DecimalField(max_digits=6, decimal_places=2)
    id_caja = models.ForeignKey(cajasReg, on_delete=models.CASCADE)
    id_usuario = models.ForeignKey(User, on_delete=models.CASCADE)

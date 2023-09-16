@@ -14,7 +14,7 @@ class form_todasfacturas(ModelForm):
 class form_pagoColaboradores(ModelForm):
     class Meta:
         model = pagoColaboradores
-        fields = ['nombre','descripcion','dias_normales','dias_extras','dias_feriados','valor','id_empresa']
+        fields = ['nombre','dias_normales','dias_extras','dias_feriados','valor','id_empresa','descripcion','estadoPagado']
 
 class form_pre_pagoServicios(ModelForm):
     class Meta:

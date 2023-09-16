@@ -97,7 +97,6 @@ def registroPagoColaboradores(request):
         caja_pagoColaboradores = cajasReg.objects.get(usuario=request.user)
         nuevo_PagoColaboradores.id_caja = caja_pagoColaboradores
         nuevo_PagoColaboradores.id_usuario = request.user
-        nuevo_PagoColaboradores.fecha_pago = request.POST['fecha_pago']
 
         nuevo_PagoColaboradores.save()
 
@@ -130,7 +129,7 @@ def resumenPagoColaboradores(request):
     fecha_actual = datetime.now().date()
     caja_col = cajasReg.objects.get(usuario=request.user)
     
-    colaboradoresConsulta = pagoColaboradores.objects.filter(fecha_pago=fecha_actual,id_caja=caja_col)
+    colaboradoresConsulta = pagoColaboradores.objects.filter(fecha_ingreso=fecha_actual,id_caja=caja_col,estadoPagado=False)
     
     return render(request,'resumenPagoColaboradores.html',{
         'colaboradoresConsulta':colaboradoresConsulta,
