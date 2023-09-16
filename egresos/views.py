@@ -7,8 +7,8 @@ from django.http.response import JsonResponse
 from django.shortcuts import render, redirect
 from . forms import form_registroFacturas, form_pagoColaboradores, form_pagoServicios
 from . forms import form_PagoCreditos, form_pagoDecimos, form_planillasIess
-from .forms import form_pagarFacturas, form_todasfacturas
-from general.models import cajasReg, proveedoresProd
+from .forms import form_pagarFacturas, form_todasfacturas, form_pre_pagoServicios
+from general.models import cajasReg, proveedoresProd, empresaServicio, serviciosMensuales, empresa
 from . models import facturasProveedores, pagoColaboradores, pagoServicios, pagoCreditos
 from .models import decimos, planillasIESS
 
@@ -61,7 +61,7 @@ def resumenRegistroFacturas(request):
     fecha_actual = datetime.now().date()
     fecha_inicial = fecha_actual - timedelta(days=0)
     caja_fac = cajasReg.objects.get(usuario=request.user)
-    facturasConsulta = facturasProveedores.objects.filter(fechapago__range=[fecha_inicial,fecha_actual],id_caja=caja_fac)
+    facturasConsulta = facturasProveedores.objects.filter(fechapago__range=[fecha_inicial,fecha_actual],id_caja=caja_fac).order_by('-fechapago')
     return render(request, 'resumenFacturas.html',{
         'facturasConsulta':facturasConsulta,
     })
@@ -135,10 +135,37 @@ def resumenPagoColaboradores(request):
     return render(request,'resumenPagoColaboradores.html',{
         'colaboradoresConsulta':colaboradoresConsulta,
     })
-
-def registroPagoServicios(request):
+def pre_registroPagoServicios(request):
     if request.method == 'GET':
+        return render(request, 'selec_registroServicios.html',{
+            'form':form_pre_pagoServicios,
+        })
+    else:
+        pago_servicos_ultimos = pagoServicios.objects.filter(servicio=request.POST['servicio'],empresa_servicio=request.POST['empresa_servicio'],empresa_nuestra=request.POST['empresa_nuestra']).order_by('-fecha')
+        empresa_servicio_nom = empresaServicio.objects.get(id=request.POST['empresa_servicio'])
+        servicio_nom = serviciosMensuales.objects.get(id=request.POST['servicio'])
+        return render(request, 'ultimosPagosServicios.html',{
+            'pago_servicios_ultimos':  pago_servicos_ultimos,
+            'servicio':request.POST['servicio'],
+            'servicio_nom':servicio_nom.nombreServicio,
+
+            'empresa_servicio':request.POST['empresa_servicio'],
+            'empresa_servicio_nom':empresa_servicio_nom.nombre_empresa,
+
+            'empresa_nuestra':request.POST['empresa_nuestra'],
+        })
+    
+
+def registroPagoServicios(request,idservicio,idempresa_pro, idempresa_nu):
+    if request.method == 'GET':
+        empresa_servicio_nom = empresaServicio.objects.get(id=idempresa_pro)
+        servicio_nom = serviciosMensuales.objects.get(id=idservicio)
+        empresa_nu = empresa.objects.get(id=idempresa_nu)
         return render(request, 'registroPagoServicios.html',{
+            'empresa_servicio_nom':empresa_servicio_nom,
+            'servicio_nom':servicio_nom,
+            'empresa_nu':empresa_nu,
+
             'form':form_pagoServicios,
         })
     else:
@@ -149,10 +176,15 @@ def registroPagoServicios(request):
         nuevo_pago_serv.caja = caja_reg_servicio
         nuevo_pago_serv.usuario = request.user
         nuevo_pago_serv.fecha = request.POST['fecha']
+        nuevo_pago_serv.servicio = serviciosMensuales.objects.get(id=idservicio)
+        nuevo_pago_serv.empresa_servicio = empresaServicio.objects.get(id=idempresa_pro)
+        nuevo_pago_serv.empresa_nuestra= empresa.objects.get(id=idempresa_nu)
+
 
         nuevo_pago_serv.save()
 
         return redirect('ResumenPagoServicios')
+
 
 def JsonPagoServicios(request):
     caja_ser = cajasReg.objects.get(usuario=request.user)
@@ -177,8 +209,8 @@ def JsonPagoServicios(request):
 def resumenPagoServicios(request):
     caja_ser = cajasReg.objects.get(usuario=request.user)
     fecha_actual = datetime.now().date()
-    fecha_inicial = fecha_actual - timedelta(days=0)
-    PagoServiciosConsulta = pagoServicios.objects.filter(fecha__range=[fecha_inicial,fecha_actual], caja=caja_ser).order_by('-caja')
+    fecha_inicial = fecha_actual - timedelta(days=90)
+    PagoServiciosConsulta = pagoServicios.objects.filter(fecha__range=[fecha_inicial,fecha_actual], caja=caja_ser).order_by('-fecha')
 
     return render(request, 'resumenPagoServicios.html',{
         'PagoServiciosConsulta':PagoServiciosConsulta,
