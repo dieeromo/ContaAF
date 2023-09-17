@@ -659,10 +659,10 @@ def ResumenClientes(request):
     })
 
 def actualizacionFacturas(request):
-    act = pagoColaboradores.objects.all()
-    for item in act:
-        item.estadoPagado =True
-        item.save()
+    #act = pagoColaboradores.objects.all()
+    #for item in act:
+    #    item.estadoPagado =True
+    #    item.save()
     return render(request,'actualizacionfacturas.html')
 
 

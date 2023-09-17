@@ -6,6 +6,14 @@
 <h2>Resumen de cierres todas</h2>
 
 
+<form method="POST">
+  {% csrf_token %}
+  {{form.as_p}}
+
+  <button> Filtrar</button>
+</form>
+
+
 <table class="table table-sm  small-text">
     <thead>
       <tr>
