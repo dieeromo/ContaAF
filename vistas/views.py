@@ -691,7 +691,7 @@ def todosCierres(request):
     else:
         fecha_actual = datetime.now().date()
         fecha_inicial = fecha_actual - timedelta(days=90)
-        cierrest = CierresCajas.objects.filter(fecha__range=[fecha_inicial,fecha_actual],caja=request.POST['caja']).order_by('-fecha')
+        cierrest = CierresCajas.objects.filter(fecha__range=[fecha_inicial,fecha_actual],empresa=request.POST['empresa']).order_by('-fecha')
         gastoT = 0
         ingreT = 0
         for  cie in cierrest:

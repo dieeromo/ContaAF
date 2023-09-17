@@ -28,4 +28,4 @@ class form_cierres(ModelForm):
 class form_Todoscierres(ModelForm):
     class Meta:
         model = CierresCajas
-        fields = ['caja']
+        fields = ['empresa']
