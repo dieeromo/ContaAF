@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
-from . forms import form_seleccion_caja_empresa, form_caja_empresa_cierre, form_cierres
+from . forms import form_seleccion_caja_empresa, form_caja_empresa_cierre, form_cierres,form_Todoscierres
 from ingresos.models import ingresosCajas
 from egresos.models import facturasProveedores, pagoColaboradores, planillasIESS, decimos
 from egresos.models import pagoServicios, pagoCreditos, Socios
@@ -671,22 +671,41 @@ def misMovimientos(request):
     
 
 def todosCierres(request):
-    fecha_actual = datetime.now().date()
-    fecha_inicial = fecha_actual - timedelta(days=90)
-    cierrest = CierresCajas.objects.filter(fecha__range=[fecha_inicial,fecha_actual]).order_by('-fecha')
-    gastoT = 0
-    ingreT = 0
-    for  cie in cierrest:
-        gastoT = gastoT + cie.valorEgresos
-        ingreT = ingreT + cie.valorIngresos
+    if request.method == 'GET':
+        fecha_actual = datetime.now().date()
+        fecha_inicial = fecha_actual - timedelta(days=90)
+        cierrest = CierresCajas.objects.filter(fecha__range=[fecha_inicial,fecha_actual]).order_by('-fecha')
+        gastoT = 0
+        ingreT = 0
+        for  cie in cierrest:
+            gastoT = gastoT + cie.valorEgresos
+            ingreT = ingreT + cie.valorIngresos
+
+        return render(request,'todosCierres.html',{
+            'form':form_Todoscierres,
+            'cierrest':cierrest,
+            'gastoT':gastoT,
+            'ingreT':ingreT,
+
+        })
+    else:
+        fecha_actual = datetime.now().date()
+        fecha_inicial = fecha_actual - timedelta(days=90)
+        cierrest = CierresCajas.objects.filter(fecha__range=[fecha_inicial,fecha_actual],caja=request.POST['caja']).order_by('-fecha')
+        gastoT = 0
+        ingreT = 0
+        for  cie in cierrest:
+            gastoT = gastoT + cie.valorEgresos
+            ingreT = ingreT + cie.valorIngresos
 
 
-    return render(request,'todosCierres.html',{
-        'cierrest':cierrest,
-        'gastoT':gastoT,
-        'ingreT':ingreT,
+        return render(request,'todosCierres.html',{
+            'form':form_Todoscierres,
+            'cierrest':cierrest,
+            'gastoT':gastoT,
+            'ingreT':ingreT,
 
-    })
+        })
 
 def detallesCierres(request,cajaid,empresa_id,fecha_consulta):
     formato_str = "%Y-%m-%d"

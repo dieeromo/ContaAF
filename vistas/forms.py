@@ -24,3 +24,8 @@ class form_cierres(ModelForm):
         model = CierresCajas
         #fields = ['valorIngresos','valorEgresos','valorMovSalida', 'valorMovEntrada', 'valorCierreAnterior', 'valorCierreActual']
         fields = []
+
+class form_Todoscierres(ModelForm):
+    class Meta:
+        model = CierresCajas
+        fields = ['caja']
