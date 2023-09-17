@@ -7,7 +7,7 @@ from .forms import  form_clientes_reg,  form_selec_resumen_inv_bod
 from . models import ingresosRetiros, nuevo_usado, ingresoFacturas, salidaInstalaciones
 from . models import codigo_prod, salidaVentasContado,  movimimientosInventario, cierreInventario2
 from . models import bodega,clientes
-from egresos.models import facturasProveedores
+from egresos.models import facturasProveedores, pagoColaboradores
 from general.models import empresa
 
 
@@ -659,10 +659,10 @@ def ResumenClientes(request):
     })
 
 def actualizacionFacturas(request):
-    #act = facturasProveedores.objects.all()
-    #for item in act:
-    #    item.estadoEntrega =True
-    #    item.save()
+    act = pagoColaboradores.objects.all()
+    for item in act:
+        item.estadoPagado =True
+        item.save()
     return render(request,'actualizacionfacturas.html')
 
 
