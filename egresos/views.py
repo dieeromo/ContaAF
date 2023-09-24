@@ -9,6 +9,7 @@ from . forms import form_registroFacturas, form_pagoColaboradores, form_pagoServ
 from . forms import form_PagoCreditos, form_pagoDecimos, form_planillasIess
 from .forms import form_pagarFacturas, form_todasfacturas, form_pre_pagoServicios
 from general.models import cajasReg, proveedoresProd, empresaServicio, serviciosMensuales, empresa
+from general.models import colaboradores
 from . models import facturasProveedores, pagoColaboradores, pagoServicios, pagoCreditos
 from .models import decimos, planillasIESS
 
@@ -557,8 +558,25 @@ def porPagarColaboradores(request):
     total_p_col = 0
     for i in por_pagar_col:
         total_p_col = total_p_col + i.valor
+    
+    todoscolaboradores = colaboradores.objects.all()
+    list_colaboradores = []
+    for i in todoscolaboradores:
+        total_pago_mes = pagoColaboradores.objects.filter(nombre = i.id, estadoPagado = False).aggregate(total_pago_mes = Sum('valor'))['total_pago_mes']
+        total_dias_mes_normales = pagoColaboradores.objects.filter(nombre = i.id, estadoPagado = False).aggregate(total_dias_mes_normales = Sum('dias_normales'))['total_dias_mes_normales']
+        total_dias_mes_extras = pagoColaboradores.objects.filter(nombre = i.id, estadoPagado = False).aggregate(total_dias_mes_extras = Sum('dias_extras'))['total_dias_mes_extras']
+        total_dias_mes_feriados = pagoColaboradores.objects.filter(nombre = i.id, estadoPagado = False).aggregate(total_dias_mes_feriados = Sum('dias_feriados'))['total_dias_mes_feriados']
+        datac = {}
+        datac['colaborador'] = i.nombreColaborador
+        datac['valor'] = total_pago_mes
+        datac['dias_normales'] = total_dias_mes_normales
+        datac['dias_extras'] = total_dias_mes_extras
+        datac['dias_feriados'] = total_dias_mes_feriados
+        list_colaboradores.append(datac)
+
     return render(request,'porPagarColaboradores.html',{
         'por_pagar_col': por_pagar_col,
         'total_p_col':total_p_col,
+        'list_colaboradores': list_colaboradores,
     })
     
