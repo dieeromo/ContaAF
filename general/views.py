@@ -65,6 +65,8 @@ def signin(request):
             login(request, user)
             return redirect('task')
 
+
 @custom_permission_required(allowed_roles=['manager'])
 def pagesocios(request):
+    
     return render(request, 'pagesocios.html')

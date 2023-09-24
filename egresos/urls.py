@@ -41,5 +41,8 @@ urlpatterns =[
     path('todosegresoscolaboradores', views.todosEgresosColaboradores, name='todoEgresoColaboradores'),
     path('todosegresoscreditos', views.todosEgresosCreditos, name='todosEgresoCreditos'),
 
+
+    path('porpagarcolaboradores', views.porPagarColaboradores, name='porPagarColaboradores'),
+
     
 ]
