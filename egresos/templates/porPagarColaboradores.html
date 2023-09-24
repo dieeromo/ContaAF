@@ -45,6 +45,36 @@
       </tbody>
 </table>
 
+<table class="table small-text">
+       
+    <thead>
+        <tr>
+          <th scope="col" >#</th>
+          <th scope="col" >Colaborador</th>
+          <th scope="col" >Dias normales</th>
+          <th scope="col" >Dias extras</th>
+          <th scope="col" >Feriados</th>
+          <th scope="col" >Valor</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for f in list_colaboradores%}
+        <tr>
+          <th scope="row">{{forloop.counter}}</th>
+          <td>{{f.colaborador}}</td>
+          <td>{{f.dias_normales}}</td>
+          <td>{{f.dias_extras}}</td>
+          <td>{{f.dias_feriados}}</td>
+          <td>{{f.valor}}</td>
+
+          
+        </tr>
+        {% endfor%}
+
+      </tbody>
+</table>
+
+
 <h5>Total : {{total_p_col}}</h5>
 
 {% endblock %}
