@@ -552,4 +552,13 @@ def todosEgresosCreditos(request):
             'v_creditos':v_creditos,
         })
 
+def porPagarColaboradores(request):
+    por_pagar_col = pagoColaboradores.objects.filter(estadoPagado= False)
+    total_p_col = 0
+    for i in por_pagar_col:
+        total_p_col = total_p_col + i.valor
+    return render(request,'porPagarColaboradores.html',{
+        'por_pagar_col': por_pagar_col,
+        'total_p_col':total_p_col,
+    })
     
