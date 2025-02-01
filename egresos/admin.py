@@ -14,7 +14,7 @@ class PagoDecimosAdmin(admin.ModelAdmin):
     list_display = ( 'colaborador','id_tipo','descripcion','fecha','valor','caja')
 admin.site.register(decimos, PagoDecimosAdmin)
 
-admin.site.register(pagoServicios)
+admin.site.register(pagoServicios)  #son los pagos de servicios
 admin.site.register(pagoCreditos)
 admin.site.register(Socios)
 
