@@ -22,7 +22,7 @@ class facturasProveedores(models.Model):
     observacion = models.CharField(max_length=200, blank=True)
     #creado = models.DateField(auto_now_add=True, default='2023-05-05')
     def __str__(self):
-        return "{}*{}*{}".format(self.numeroFactura, self.idproveedor,self.id_empresa)
+        return "fecha: {} #F:{} **Obs:{} **Prov: {}*{}*{} --- {}".format(self.fechafactura, self.numeroFactura, self.observacion, self.idproveedor,self.id_empresa,self.estadoEntrega, self.valor)
     
 
 
@@ -40,7 +40,7 @@ class pagoColaboradores(models.Model):
    id_usuario = models.ForeignKey(User, on_delete=models.CASCADE)
    id_empresa = models.ForeignKey(empresa, on_delete=models.CASCADE, default=1)
    def __str__(self):
-        return "{}  {}  {}".format(self.nombre,  self.fecha_pago,self.valor)
+        return "{}  {}  {} -- {} * {}".format( self.fecha_pago, self.id_caja,self.nombre, self.valor, self.estadoPagado)
     
 
 
@@ -69,7 +69,7 @@ class decimos(models.Model):
     id_empresa = models.ForeignKey(empresa, on_delete=models.CASCADE, default=1)
     id_tipo = models.ForeignKey(tipoDecimo, on_delete=models.CASCADE, default=2)
     def __str__(self):
-        return "{}  {}  {}".format(self.colaborador, self.valor, self.id_tipo)
+        return "{} {} -- {}  {}  {}".format(self.fecha, self.caja,self.colaborador, self.valor, self.id_tipo)
     
 class pagoServicios(models.Model):
 

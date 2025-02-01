@@ -12,11 +12,22 @@ admin.site.register(ingresoFacturas)
 admin.site.register(ingresosRetiros)
 admin.site.register(clientes)
 admin.site.register(precioSalida)
-admin.site.register(salidaInstalaciones)
-admin.site.register(cierreInventario)
+
+class SalidasInstalacionesAdmin(admin.ModelAdmin):
+    list_display = ('fecha_instalacion','idcodigo', 'cantidad','idEstatusUso','idcliente','idBodega')
+    
+admin.site.register(salidaInstalaciones,SalidasInstalacionesAdmin)
+
+
+
+#admin.site.register(cierreInventario, CierreInventarioAdmin)
+
 admin.site.register(salidaVentasContado)
 admin.site.register(movimimientosInventario)
-admin.site.register(cierreInventario2)
+class CierreInventarioAdmin(admin.ModelAdmin):
+    list_display = ('fecha','idBodega', 'idcodigo','idEstatusUso','cantidad','observacion')
+    list_filter = ('fecha','idBodega')
+admin.site.register(cierreInventario2,CierreInventarioAdmin)
 
 
 

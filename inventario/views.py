@@ -32,7 +32,7 @@ def ingresosInvRetiros(request):
     
 def ResumenIngInvRetiros(request):
     fecha_actual = datetime.now().date()
-    fecha_inicial = fecha_actual - timedelta(days=30)
+    fecha_inicial = fecha_actual - timedelta(days=15)
     ingresoInv = ingresosRetiros.objects.filter(fecha_ingreso__range=[fecha_inicial,fecha_actual])
     return render(request, 'ResumenRegistroInvRetiros.html',{
         'ingresoInv' : ingresoInv,
@@ -80,7 +80,7 @@ def ResumenInvFacturas(request,idfactura):
     
     total_calculado = 0
     for i in ingresoInv:
-        subtotal = float(i.cantidad*i.precio_in)*(1.12)
+        subtotal = float(i.cantidad*i.precio_in)*(1.15)
         total_calculado = total_calculado + subtotal
     total_calculado = round(total_calculado, 3)
 
@@ -117,7 +117,7 @@ def ResgistroSalidaInstalacion(request):
     
 def ResumenSalidaInstalacion(request):
     fecha_actual = datetime.now().date()
-    fecha_inicial = fecha_actual - timedelta(days=30)
+    fecha_inicial = fecha_actual - timedelta(days=15)
     SalidaIns = salidaInstalaciones.objects.filter(fecha_instalacion__range=[fecha_inicial,fecha_actual])
     return render(request,'ResumenSalidaInstalaciones.html',{
         'SalidaIns':SalidaIns,
@@ -160,7 +160,7 @@ def registroMovimientosInv(request):
         return redirect('resumenMovimientosInv')
 def resumenMovimientosInv(request):
     fecha_actual = datetime.now().date()
-    fecha_inicial = fecha_actual - timedelta(days=30)
+    fecha_inicial = fecha_actual - timedelta(days=15)
     resumen_mov_inv =  movimimientosInventario.objects.filter(fecha__range=[fecha_inicial,fecha_actual])
 
     return render(request, 'resumenMovimientosInv.html',{
@@ -627,7 +627,7 @@ def cierreInventarioBodega(request, idBodega, fecha, id_empresa):
 def ResumenCierreInventarioBodega(request):
     if request.method == 'GET':
         fecha_actual = datetime.now().date()
-        fecha_inicial = fecha_actual - timedelta(days=90)
+        fecha_inicial = fecha_actual - timedelta(days=15)
         cierresInventario = cierreInventario2.objects.filter(fecha__range=[fecha_inicial,fecha_actual]).order_by('-fecha')
         return render(request,'ResumenCierreInventarioBod.html',{
             'cierresInventario':cierresInventario,
